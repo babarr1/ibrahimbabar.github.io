@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ibrahim Babar - Portfolio</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
+  color: #e0e0e0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #00D9FF;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.header-links { text-align: right; }
+
+.header-links a {
+  color: #00D9FF;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.header-links a:hover { text-shadow: 0 0 10px rgba(0,217,255,0.5); }
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: #888;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-btn.active {
+  color: #00D9FF;
+  border-bottom-color: #00D9FF;
+}
+
+.nav-btn:hover { color: #00D9FF; }
+
+.content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section-panel {
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  scroll-margin-top: 1.25rem;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-kicker {
+  color: #888;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.3rem;
+}
+
+.section-title {
+  color: #00D9FF;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.section-action {
+  background: none;
+  border: 1px solid #00D9FF;
+  color: #00D9FF;
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.section-action:hover {
+  background: rgba(0, 217, 255, 0.12);
+}
+
+.project-card {
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.project-card:hover {
+  border-color: #00D9FF;
+  background: rgba(0, 217, 255, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.project-title {
+  font-size: 1.2rem;
+  color: #00D9FF;
+  margin: 0 0 0.5rem 0;
+}
+
+.project-tech {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.project-desc {
+  color: #ccc;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.project-toggle {
+  color: #00D9FF;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.project-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+  display: none;
+  animation: slideDown 0.3s ease;
+}
+
+.project-details.show { display: block; }
+
+.project-details p {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 0;
+}
+
+.stat-card {
+  background: rgba(0, 217, 255, 0.1);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #00D9FF;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+.skill-group {
+  margin-bottom: 2rem;
+}
+
+.skill-group h3 {
+  color: #00D9FF;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.skill-tag {
+  background: rgba(0, 217, 255, 0.15);
+  border: 1px solid #00D9FF;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  color: #00D9FF;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.skill-tag:hover {
+  background: #00D9FF;
+  color: #0a0e27;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+}
+
+.contact-card {
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid #00D9FF;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 500px;
+}
+
+.contact-card h3 {
+  color: #00D9FF;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.contact-item {
+  margin-bottom: 1.5rem;
+}
+
+.contact-label {
+  color: #888;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.contact-value {
+  color: #00D9FF;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.contact-value:hover { text-decoration: underline; }
+
+.intro-box {
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid #00D9FF;
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.intro-box p { margin: 0.5rem 0; }
+
+.highlight { color: #00D9FF; }
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+svg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+</style>
+</head>
+<body>
+
+<svg id="trailSvg"></svg>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>IBRAHIM BABAR</h1>
+      <p class="subtitle">CS @ FAST | AI/ML Specialist | Full-Stack Developer</p>
+    </div>
+    <div class="header-links">
+      <a href="https://instagram.com/babarpov" target="_blank">Instagram @babarpov</a>
+      <a href="https://github.com" target="_blank">GitHub</a>
+    </div>
+  </header>
+
+  <div class="nav">
+    <button class="nav-btn active" data-target="home" onclick="scrollToSection('home')">→ home</button>
+    <button class="nav-btn" data-target="projects" onclick="scrollToSection('projects')">→ projects</button>
+    <button class="nav-btn" data-target="skills" onclick="scrollToSection('skills')">→ skills</button>
+    <button class="nav-btn" data-target="contact" onclick="scrollToSection('contact')">→ contact</button>
+  </div>
+
+  <div class="content">
+    <section id="home" class="section-panel">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">01</div>
+          <h2 class="section-title">Home</h2>
+        </div>
+        <button class="section-action" onclick="scrollToSection('projects')">Next section</button>
+      </div>
+
+      <div class="intro-box">
+        <p>Hey! I'm a 3rd-year CS student passionate about building <span class="highlight">intelligent systems</span> that solve real problems.</p>
+        <p>I specialize in <strong>AI/ML (especially NLP)</strong>, but I'm equally comfortable with mobile apps, game dev, and full-stack architecture. The distractor generation logic in my quiz generator is the kind of creative problem-solving I love.</p>
+        <p style="color: #888;">Use the sections below one by one, and the page will move downward as you go.</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-value">4+</div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">8+</div>
+          <div class="stat-label">Tech Stack</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">10K+</div>
+          <div class="stat-label">Lines of Code</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section-panel">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">02</div>
+          <h2 class="section-title">Projects</h2>
+        </div>
+        <button class="section-action" onclick="scrollToSection('skills')">Next section</button>
+      </div>
+
+      <div class="project-card" onclick="toggleProject(this)">
+        <div class="project-header">
+          <div>
+            <h3 class="project-title">AI Quiz Generator</h3>
+            <p class="project-tech">Python, Streamlit, NLP</p>
+            <p class="project-desc">Automated multi-choice quiz generation from any text using NLTK for sentence processing, WordNet for distractor generation, and SVM classification.</p>
+          </div>
+          <div class="project-toggle">▶</div>
+        </div>
+        <div class="project-details">
+          <p>• NLTK-based sentence parsing and fact extraction</p>
+          <p>• WordNet synonym generation for challenging distractors</p>
+          <p>• SVM classifier for answer quality validation</p>
+          <p>• Interactive Streamlit dashboard with PDF upload</p>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="toggleProject(this)">
+        <div class="project-header">
+          <div>
+            <h3 class="project-title">Real-Time Social Media App</h3>
+            <p class="project-tech">Kotlin, Firebase, WebRTC</p>
+            <p class="project-desc">Full-stack social media platform with instant messaging, video calling, and real-time synchronization using MVVM architecture.</p>
+          </div>
+          <div class="project-toggle">▶</div>
+        </div>
+        <div class="project-details">
+          <p>• MVVM architecture with LiveData state management</p>
+          <p>• Firebase real-time database for instant sync</p>
+          <p>• WebRTC for low-latency video calling</p>
+          <p>• Firebase Authentication and optimized image loading</p>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="toggleProject(this)">
+        <div class="project-header">
+          <div>
+            <h3 class="project-title">Task Management Platform</h3>
+            <p class="project-tech">Desktop App, Scrum</p>
+            <p class="project-desc">Enterprise task distribution system designed using Scrum methodology as Product Owner. Integrated automated allocation and sprint tracking.</p>
+          </div>
+          <div class="project-toggle">▶</div>
+        </div>
+        <div class="project-details">
+          <p>• Architected system design and product roadmap</p>
+          <p>• Scrum sprint planning and backlog management</p>
+          <p>• Automated task allocation algorithms</p>
+          <p>• Trello integration for team workflows</p>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="toggleProject(this)">
+        <div class="project-header">
+          <div>
+            <h3 class="project-title">Arcade Game Suite</h3>
+            <p class="project-tech">C++, SFML, OOP</p>
+            <p class="project-desc">High-performance recreations of classic arcade games with custom collision detection and real-time input handling.</p>
+          </div>
+          <div class="project-toggle">▶</div>
+        </div>
+        <div class="project-details">
+          <p>• Centipede and Xonic full implementations</p>
+          <p>• Custom collision detection algorithms</p>
+          <p>• Real-time input handling and game state</p>
+          <p>• Object-oriented design patterns</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section-panel">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">03</div>
+          <h2 class="section-title">Skills</h2>
+        </div>
+        <button class="section-action" onclick="scrollToSection('contact')">Next section</button>
+      </div>
+
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Kotlin</span>
+          <span class="skill-tag">HTML/CSS</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>ML/Data</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">NLTK</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Tools</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Firebase</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Android Studio</span>
+          <span class="skill-tag">Jira</span>
+          <span class="skill-tag">Trello</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-panel">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">04</div>
+          <h2 class="section-title">Contact</h2>
+        </div>
+        <button class="section-action" onclick="scrollToSection('home')">Back to top</button>
+      </div>
+
+      <div class="contact-card">
+        <h3>Let's build something cool</h3>
+        <div class="contact-item">
+          <div class="contact-label">Email</div>
+          <a href="mailto:ibrahimbabar0.10e@gmail.com" class="contact-value">ibrahimbabar0.10e@gmail.com</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">Phone</div>
+          <a href="tel:+923328407750" class="contact-value">+92 332 8407750</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">Location</div>
+          <div class="contact-value">Islamabad, Pakistan</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-label">Social</div>
+          <a href="https://instagram.com/babarpov" target="_blank" class="contact-value">Instagram: @babarpov →</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function toggleProject(card) {
+  const details = card.querySelector('.project-details');
+  const toggle = card.querySelector('.project-toggle');
+
+  details.classList.toggle('show');
+  toggle.textContent = details.classList.contains('show') ? '▼' : '▶';
+}
+
+const navButtons = document.querySelectorAll('.nav-btn');
+const sections = document.querySelectorAll('.section-panel');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    navButtons.forEach(btn => btn.classList.remove('active'));
+    const activeButton = document.querySelector(`.nav-btn[data-target="${entry.target.id}"]`);
+    if (activeButton) activeButton.classList.add('active');
+  });
+}, { threshold: 0.4 });
+
+sections.forEach(section => observer.observe(section));
+
+const svg = document.getElementById('trailSvg');
+let particles = [];
+
+document.addEventListener('mousemove', (e) => {
+  particles.push({
+    x: e.clientX,
+    y: e.clientY,
+    life: 100
+  });
+
+  if (particles.length > 20) particles.shift();
+
+  svg.innerHTML = '';
+  particles.forEach((p) => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', p.x);
+    circle.setAttribute('cy', p.y);
+    circle.setAttribute('r', 2);
+    circle.setAttribute('fill', '#00D9FF');
+    circle.setAttribute('opacity', p.life / 100);
+    svg.appendChild(circle);
+  });
+
+  particles.forEach(p => p.life -= 5);
+  particles = particles.filter(p => p.life > 0);
+});
+</script>
+
+</body>
+</html>
