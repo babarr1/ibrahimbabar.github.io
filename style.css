@@ -90,9 +90,13 @@ body {
     animation-play-state: paused;
 }
 
-.tech-logo {
-    transition: transform 0.3s ease;
-}
-.tech-logo:hover {
-    transform: scale(1.12);
-}
+.native-logo {
+            opacity: 0.85; /* Softened slightly so colors match the editorial style guide */
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+            will-change: transform;
+        }
+        
+        .native-logo:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
