@@ -45,24 +45,10 @@ body {
     transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1), color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* --- SYSTEM DESIGN ARCHITECTURE GRID PATTERNS --- */
-.grid-overlay {
-    background-size: 50px 50px;
-    background-image: 
-        linear-gradient(to right, rgba(242, 234, 225, 0.015) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(242, 234, 225, 0.015) 1px, transparent 1px);
-    mask-image: linear-gradient(to bottom, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent);
-}
-
-.bg-brand-beige .grid-overlay {
-    background-image: 
-        linear-gradient(to right, rgba(27, 51, 34, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(27, 51, 34, 0.02) 1px, transparent 1px);
-}
-
 /* --- SLICK EDITORIAL GRID IMAGE TRANSITIONS --- */
 .editorial-img {
     filter: grayscale(100%) contrast(1.1) brightness(0.9);
+    transition: all 0.7s ease-out;
 }
 .editorial-img:hover {
     filter: grayscale(0%) contrast(1) brightness(1);
