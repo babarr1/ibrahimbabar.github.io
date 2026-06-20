@@ -33,6 +33,51 @@
           }
         }
     </script>
+    <style>
+        /* --- DIRECT MARQUEE INJECTION ENGINE --- */
+        .marquee-container {
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+        }
+
+        .marquee-track {
+            display: flex !important;
+            width: max-content !important;
+            gap: 4rem !important; /* Forces 16px Tailwind gap spacing natively */
+        }
+
+        /* Continuous Translation Left */
+        .animate-marquee-left {
+            animation: scroll-left 25s linear infinite !important;
+        }
+        @keyframes scroll-left {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
+
+        /* Continuous Translation Right */
+        .animate-marquee-right {
+            animation: scroll-right 25s linear infinite !important;
+        }
+        @keyframes scroll-right {
+            0% { transform: translate3d(-50%, 0, 0); }
+            100% { transform: translate3d(0, 0, 0); }
+        }
+
+        /* Halt scroll on mouse interaction pointer overlays */
+        .marquee-container:hover .marquee-track {
+            animation-play-state: paused !important;
+        }
+
+        .tech-logo {
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+        .tech-logo:hover {
+            transform: scale(1.15);
+        }
+    </style>
 </head>
 <body class="bg-brand-darkGreen text-brand-cream font-body antialiased selection:bg-brand-cream selection:text-brand-darkGreen hidden-cursor">
 
