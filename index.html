@@ -117,6 +117,51 @@
 
     </section>
 
+    <!-- INSTAGRAM CREATOR SECTION -->
+    <section class="relative w-full min-h-screen py-32 px-6 md:px-12 flex flex-col items-center justify-center overflow-hidden border-t border-brand-cream/5">
+        
+        <!-- Section Header -->
+        <div class="max-w-xl text-center mb-20 select-none">
+            <p class="text-xs tracking-[0.3em] uppercase opacity-50 mb-3">Digital Storytelling</p>
+            <h2 class="font-display text-3xl md:text-5xl font-medium tracking-tight">From My Grid</h2>
+        </div>
+
+        <!-- 3D Polaroid Flex Container -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-5xl w-full px-4">
+            
+            <!-- Polaroid 1 -->
+            <div class="polaroid-wrapper flex justify-center">
+                <div class="polaroid-card bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl border border-brand-darkGreen/5 w-72 h-96 flex flex-col justify-between cursor-pointer md:-rotate-3 transition-shadow duration-300 hover:shadow-2xl">
+                    <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5 relative">
+                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600" alt="Instagram Capture" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">stray companion.</div>
+                </div>
+            </div>
+
+            <!-- Polaroid 2 (Slightly raised / offset for magazine aesthetic) -->
+            <div class="polaroid-wrapper flex justify-center md:-translate-y-8">
+                <div class="polaroid-card bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl border border-brand-darkGreen/5 w-72 h-96 flex flex-col justify-between cursor-pointer md:rotate-2 transition-shadow duration-300 hover:shadow-2xl">
+                    <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5 relative">
+                        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" alt="Instagram Capture" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">captured moments.</div>
+                </div>
+            </div>
+
+            <!-- Polaroid 3 -->
+            <div class="polaroid-wrapper flex justify-center">
+                <div class="polaroid-card bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl border border-brand-darkGreen/5 w-72 h-96 flex flex-col justify-between cursor-pointer md:-rotate-1 transition-shadow duration-300 hover:shadow-2xl">
+                    <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5 relative">
+                        <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&q=80&w=600" alt="Instagram Capture" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">feline framework.</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- GSAP Animations & Core Script Setup -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
@@ -252,6 +297,35 @@
         // --- INITIALIZATION ---
         generateMultiSpirals();
         window.addEventListener('resize', generateMultiSpirals);
+
+        // --- 3D TACTILE PERSPECTIVE CARD ENGINE ---
+        document.querySelectorAll('.polaroid-card').forEach(card => {
+            // Perspective parent setup
+            card.parentElement.style.perspective = "1000px";
+            card.style.transformStyle = "preserve-3d";
+            card.style.transition = "transform 0.15s ease-out, box-shadow 0.3s ease";
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; // Mouse positions relative to element boundaries
+                const y = e.clientY - rect.top;
+                
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                
+                // Tilt thresholds calculation matrix
+                const tiltX = (yc - y) / 10;
+                const tiltY = (x - xc) / 10;
+
+                // Apply multi-axis scale and rotation shifts live
+                card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.04, 1.04, 1.04) translateZ(10px)`;
+            });
+
+            // Smoothly snap back to base state when mouse leaves boundary
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateZ(0px)";
+            });
+        });
 
         window.addEventListener('DOMContentLoaded', () => {
             const tl = gsap.timeline();
