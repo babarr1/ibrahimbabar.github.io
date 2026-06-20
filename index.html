@@ -91,7 +91,8 @@
 
 
     <!-- TECHNICAL VAULT SECTION -->
-    <section id="tech-section" class="relative w-full min-h-screen py-32 px-6 md:px-12 flex flex-col justify-center z-10 border-t border-brand-cream/10">
+    <!-- TECHNICAL VAULT SECTION -->
+    <section id="tech-section" class="relative w-full py-24 px-6 md:px-12 flex flex-col justify-center z-10 border-t border-brand-cream/10">
         <div class="max-w-6xl w-full mx-auto space-y-16">
             
             <!-- SECTION HEADER & PROFILE MANIFESTO -->
@@ -100,7 +101,6 @@
                     <p class="text-xs tracking-[0.3em] uppercase opacity-50 mb-3">Academic Foundation</p>
                     <h2 class="font-display text-4xl font-semibold tracking-tight">The Profile</h2>
                 </div>
-                
                 <div class="lg:col-span-8 space-y-6">
                     <h3 class="font-display text-2xl md:text-3xl text-brand-cream/90 leading-snug">
                         Currently in my <span class="italic font-normal">3rd year</span> of BS Computer Science at <span class="underline decoration-brand-cream/30 underline-offset-8 font-medium">FAST NUCES</span>.
@@ -111,101 +111,109 @@
                 </div>
             </div>
 
-            <!-- Bento Grid System -->
-            <!-- Skill Box: Interactive Tool Showcase Loops (Full Width Box) -->
-                <div class="md:col-span-12 rounded border border-brand-cream/15 py-12 bg-brand-cream/[0.02] backdrop-blur-sm space-y-10 overflow-hidden">
-                    
-                    <!-- Row 1: Languages & Frameworks -->
-                    <div class="space-y-4">
-                        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase opacity-40 px-8">Active Toolkits</h3>
-                        
-                        <!-- Infinite Marquee Track Left -->
-                        <div class="marquee-container relative w-full overflow-hidden flex select-none">
-                            <div class="marquee-track flex gap-12 whitespace-nowrap animate-marquee-left">
-                                <!-- Group 1 -->
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Python</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> JavaScript</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg" class="w-5 h-5 tech-logo grayscale invert" /> Tailwind CSS</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><span class="font-display italic font-semibold text-lg">St.</span> Streamlit</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> HTML5 / CSS3</div>
-                                
-                                <!-- Duplicate Group for Seamless Infinite Loop -->
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Python</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> JavaScript</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg" class="w-5 h-5 tech-logo grayscale invert" /> Tailwind CSS</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><span class="font-display italic font-semibold text-lg">St.</span> Streamlit</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> HTML5 / CSS3</div>
-                            </div>
+            <!-- Interactive Pure Logo Banners -->
+            <div class="rounded border border-brand-cream/15 py-12 bg-brand-cream/[0.02] backdrop-blur-sm space-y-12 overflow-hidden w-full">
+                
+                <!-- Row 1: Active Toolkits (Moving RIGHT) -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-semibold tracking-[0.2em] uppercase opacity-40 px-8">Active Toolkits</h3>
+                    <div class="marquee-container relative w-full overflow-hidden flex">
+                        <div class="marquee-track flex gap-16 whitespace-nowrap animate-marquee-right">
+                            <!-- Native Full Color Logos -->
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-10 h-10 tech-logo" alt="Python" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-10 h-10 tech-logo" alt="JavaScript" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="w-10 h-10 tech-logo" alt="Tailwind" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-10 h-10 tech-logo" alt="HTML5" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" class="w-10 h-10 tech-logo" alt="CSS3" />
+                            
+                            <!-- Exact Duplicate Clone Block to create seamless continuous connection -->
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-10 h-10 tech-logo" alt="Python" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-10 h-10 tech-logo" alt="JavaScript" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="w-10 h-10 tech-logo" alt="Tailwind" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-10 h-10 tech-logo" alt="HTML5" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" class="w-10 h-10 tech-logo" alt="CSS3" />
                         </div>
-                    </div>
-
-                    <!-- Row 2: Developer Tools -->
-                    <div class="space-y-4">
-                        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase opacity-40 px-8">Environment & Developer Tools</h3>
-                        
-                        <!-- Infinite Marquee Track Right (Moves Opposite Direction) -->
-                        <div class="marquee-container relative w-full overflow-hidden flex select-none">
-                            <div class="marquee-track flex gap-12 whitespace-nowrap animate-marquee-right">
-                                <!-- Group 1 -->
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> VS Code</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/androidstudio/androidstudio-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Android Studio</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Git / GitHub</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><span class="font-mono text-xs border border-brand-cream/30 px-1 rounded">CPT</span> Cisco Packet Tracer</div>
-                                
-                                <!-- Duplicate Group for Seamless Infinite Loop -->
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> VS Code</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/androidstudio/androidstudio-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Android Studio</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Git / GitHub</div>
-                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><span class="font-mono text-xs border border-brand-cream/30 px-1 rounded">CPT</span> Cisco Packet Tracer</div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Skill Box: Management Focus (Small) -->
-                <div class="md:col-span-5 rounded border border-brand-cream/15 p-8 bg-brand-cream/[0.02] backdrop-blur-sm space-y-4">
-                    <h3 class="text-xs font-semibold tracking-[0.2em] uppercase opacity-40">Core Interest</h3>
-                    <p class="font-display italic text-lg text-brand-cream/90 leading-relaxed">
-                        "Evaluating product quality, optimizing team workflows, and shaping project execution over pure, traditional code development."
-                    </p>
-                </div>
-
-                <!-- Project Case 1: Multi-Model Quiz System -->
-                <div class="md:col-span-6 rounded border border-brand-cream/15 p-8 bg-brand-cream/[0.02] backdrop-blur-sm flex flex-col justify-between group hover:border-brand-cream/40 transition-colors duration-500 min-h-[320px]">
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-start">
-                            <h4 class="font-display text-2xl font-medium tracking-tight">Comprehension Intelligence Engine</h4>
-                            <span class="text-[10px] tracking-widest opacity-40 font-mono font-semibold">2026</span>
-                        </div>
-                        <p class="text-brand-cream/70 text-sm leading-relaxed font-body">
-                            An experimental system engineered to parse text fragments and generate automated distractors within a clear Streamlit dashboard tool, exploring multi-model logic flows.
-                        </p>
-                    </div>
-                    <div class="flex gap-2 pt-6">
-                        <span class="text-[10px] font-mono opacity-50 px-2.5 py-1 rounded bg-brand-cream/5 border border-brand-cream/10">NLP Processing</span>
-                        <span class="text-[10px] font-mono opacity-50 px-2.5 py-1 rounded bg-brand-cream/5 border border-brand-cream/10">Multi-Model Pipelines</span>
                     </div>
                 </div>
 
-                <!-- Project Case 2: Sync-Up Pro -->
-                <div class="md:col-span-6 rounded border border-brand-cream/15 p-8 bg-brand-cream/[0.02] backdrop-blur-sm flex flex-col justify-between group hover:border-brand-cream/40 transition-colors duration-500 min-h-[320px]">
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-start">
-                            <h4 class="font-display text-2xl font-medium tracking-tight">Sync-Up Pro</h4>
-                            <span class="text-[10px] tracking-widest opacity-40 font-mono font-semibold">2026</span>
+                <!-- Row 2: Environment & Dev Tools (Moving LEFT) -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-semibold tracking-[0.2em] uppercase opacity-40 px-8">Environment & Developer Tools</h3>
+                    <div class="marquee-container relative w-full overflow-hidden flex">
+                        <div class="marquee-track flex gap-16 whitespace-nowrap animate-marquee-left">
+                            <!-- Native Full Color Logos -->
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" class="w-10 h-10 tech-logo" alt="VS Code" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/androidstudio/androidstudio-original.svg" class="w-10 h-10 tech-logo" alt="Android Studio" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" class="w-10 h-10 tech-logo" alt="Git" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" class="w-10 h-10 tech-logo invert dark:invert-0" alt="GitHub" />
+                            
+                            <!-- Exact Duplicate Clone Block to create seamless continuous connection -->
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" class="w-10 h-10 tech-logo" alt="VS Code" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/androidstudio/androidstudio-original.svg" class="w-10 h-10 tech-logo" alt="Android Studio" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" class="w-10 h-10 tech-logo" alt="Git" />
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" class="w-10 h-10 tech-logo invert dark:invert-0" alt="GitHub" />
                         </div>
-                        <p class="text-brand-cream/70 text-sm leading-relaxed font-body">
-                            A deployed peer-selection prototype utilizing vector mathematics to analyze and systematically match university student teams for optimized project collaboration.
-                        </p>
-                    </div>
-                    <div class="flex gap-2 pt-6">
-                        <span class="text-[10px] font-mono opacity-50 px-2.5 py-1 rounded bg-brand-cream/5 border border-brand-cream/10">Vector Math</span>
-                        <span class="text-[10px] font-mono opacity-50 px-2.5 py-1 rounded bg-brand-cream/5 border border-brand-cream/10">Streamlit UI</span>
                     </div>
                 </div>
 
             </div>
+        </div>
+    </section>
+
+    <!-- DEDICATED PROJECTS ARCHITECTURE SECTION -->
+    <section id="projects-section" class="relative w-full py-32 px-6 md:px-12 flex flex-col justify-center z-10 border-t border-brand-cream/10">
+        <div class="max-w-6xl w-full mx-auto space-y-24">
+            
+            <!-- Section Title -->
+            <div class="max-w-xl select-none">
+                <p class="text-xs tracking-[0.3em] uppercase opacity-50 mb-3">Selected Layouts</p>
+                <h2 class="font-display text-4xl md:text-5xl font-medium tracking-tight">Academic Engineering</h2>
+            </div>
+
+            <!-- Project Row 1: Quiz Engine -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-12 border-b border-brand-cream/5">
+                <div class="lg:col-span-6 aspect-[16/10] rounded overflow-hidden bg-brand-cream/5 border border-brand-cream/10 group">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000" alt="Quiz Project Layout" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-102 transition-all duration-700 ease-out">
+                </div>
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="flex justify-between items-baseline">
+                        <h3 class="font-display text-3xl font-medium tracking-tight">Comprehension Intelligence Engine</h3>
+                        <span class="text-xs font-mono opacity-40">2026</span>
+                    </div>
+                    <p class="text-brand-cream/70 text-sm md:text-base leading-relaxed font-body">
+                        An automated educational layout system designed to parse textual input fragments, map reading layers, and generate highly targeted comprehension questions and intelligent contextual distractors within a responsive application dashboard dashboard framework.
+                    </p>
+                    <div class="pt-2">
+                        <a href="https://github.com" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-brand-cream/20 bg-brand-cream/5 text-xs font-semibold tracking-wider uppercase hover:bg-brand-cream hover:text-brand-darkGreen transition-all duration-300">
+                            Source Code
+                            <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Row 2: Sync-Up Pro -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-4">
+                <div class="lg:col-span-6 lg:order-2 aspect-[16/10] rounded overflow-hidden bg-brand-cream/5 border border-brand-cream/10 group">
+                    <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&q=80&w=1000" alt="Sync-Up Pro Project Layout" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-102 transition-all duration-700 ease-out">
+                </div>
+                <div class="lg:col-span-6 lg:order-1 space-y-6">
+                    <div class="flex justify-between items-baseline">
+                        <h3 class="font-display text-3xl font-medium tracking-tight">Sync-Up Pro</h3>
+                        <span class="text-xs font-mono opacity-40">2026</span>
+                    </div>
+                    <p class="text-brand-cream/70 text-sm md:text-base leading-relaxed font-body">
+                        A peer-matching strategy platform developed to help university cohorts self-organize group assignments efficiently. The tool processes collaborative profile variables using vector mathematics to link compatible members seamlessly.
+                    </p>
+                    <div class="pt-2">
+                        <a href="https://github.com" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded border border-brand-cream/20 bg-brand-cream/5 text-xs font-semibold tracking-wider uppercase hover:bg-brand-cream hover:text-brand-darkGreen transition-all duration-300">
+                            Source Code
+                            <svg class="w-3.5 h-3.5 fill-none stroke-current" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 

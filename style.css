@@ -54,52 +54,45 @@ body {
     filter: grayscale(0%) contrast(1) brightness(1);
 }
 
-/* --- INFINITE MARQUEE ENGINE --- */
+/* Append or verify these updated Marquee parameters in styles.css */
+
 .marquee-container {
     mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
 
 .marquee-track {
+    display: flex;
     width: max-content;
+    animation-play-state: running;
 }
 
-/* Row Left Animation Loop */
-.animate-marquee-left {
-    animation: scroll-left 25s linear infinite;
-}
-@keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* Halfway translates perfectly to the duplicate group */
-}
-
-/* Row Right Animation Loop */
+/* Row 1: Moves smoothly towards the RIGHT vector */
 .animate-marquee-right {
-    animation: scroll-right 25s linear infinite;
+    animation: scroll-right 20s linear infinite;
 }
 @keyframes scroll-right {
     0% { transform: translateX(-50%); }
     100% { transform: translateX(0); }
 }
 
-/* Pause track motion dynamically on mouse hover */
+/* Row 2: Moves smoothly towards the LEFT vector */
+.animate-marquee-left {
+    animation: scroll-left 20s linear infinite;
+}
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Pause scroll mechanics immediately on focus mouseenter */
 .marquee-container:hover .marquee-track {
     animation-play-state: paused;
 }
 
-/* Clean monochrome to color layout logo modifiers */
 .tech-logo {
-    transition: filter 0.4s ease, transform 0.4s ease;
+    transition: transform 0.3s ease;
 }
-.marquee-track div:hover .tech-logo {
-    filter: grayscale(0%) invert(0%);
-    transform: scale(1.1);
-}
-
-/* Adjust light mode visibility colors for logo assets */
-.bg-brand-beige .tech-logo {
-    filter: grayscale(100%) invert(0%); /* Drops white inversion on light background */
-}
-.bg-brand-beige .marquee-track div:hover .tech-logo {
-    filter: grayscale(0%);
+.tech-logo:hover {
+    transform: scale(1.12);
 }
