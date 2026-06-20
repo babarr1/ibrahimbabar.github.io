@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ibrahim Babar — Portfolio</title>
     
-    <!-- Premium Font Pairing (Fraunces & Inter Vibes) -->
+    <!-- Premium Font Pairing (Fraunces & Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
@@ -19,8 +19,8 @@
             extend: {
               colors: {
                 brand: {
-                  darkGreen: '#1b3322',  // Deep organic forest green matching your image
-                  cream: '#f2eae1',      // Vintage soft cream text
+                  darkGreen: '#1b3322',  // Deep matte forest green from image_a182f4.png
+                  cream: '#f2eae1',      // Soft vintage cream
                 }
               },
               fontFamily: {
@@ -47,15 +47,16 @@
     <!-- HERO SECTION -->
     <section class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6">
         
-        <!-- Canvas for the Minimalist Hokusai-Style Wave Lines -->
-        <canvas id="waveCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-25"></canvas>
+        <!-- SVG Canvas for Multiple Concentric/Parallel Spiral Lines -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+            <g id="spiral-group"></g>
+        </svg>
 
         <!-- Centered Core Elements -->
         <div class="relative z-10 flex flex-col items-center max-w-4xl text-center">
             
             <!-- Portrait Container -->
             <div id="portrait-wrapper" class="portrait-glow relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border border-brand-cream/10 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out">
-                <!-- Placeholder portrait (Replace with your own file path later) -->
                 <img id="portrait" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Ibrahim Babar" class="w-full h-full object-cover grayscale contrast-115 brightness-95">
                 <div class="absolute inset-0 bg-brand-darkGreen/10 mix-blend-multiply"></div>
             </div>
@@ -76,100 +77,91 @@
 
     </section>
 
-    <!-- Mathematical Wave Engine Script -->
+    <!-- GSAP for Quick, Responsive Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
     <script>
-        const canvas = document.getElementById('waveCanvas');
-        const ctx = canvas.getContext('2d');
+        const spiralGroup = document.getElementById('spiral-group');
 
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
+        function generateMultiSpirals() {
+            // Clear existing paths if window is resized
+            spiralGroup.innerHTML = '';
 
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const cx = w / 2;
+            const cy = h / 2 - 40; // Pin center closer to portrait focus
 
-        // Wave Layer definition to mimic traditional woodblock overlay line art
-        class WaveLayer {
-            constructor(baseY, amplitude, frequency, speed, color, lineSpacing, totalLines) {
-                this.baseY = baseY;
-                this.amplitude = amplitude;
-                this.frequency = frequency;
-                this.speed = speed;
-                this.color = color;
-                this.lineSpacing = lineSpacing; // Gap between thin contour vector strokes
-                this.totalLines = totalLines;   // Number of nested parallel lines per ridge
-                this.time = 0;
-            }
+            // Number of nested parallel paths we want to add for geometric weight
+            const lineCount = 6; 
+            const offsetSpacing = 12; // Pixel distance between parallel lines
 
-            draw() {
-                this.time += this.speed;
+            for (let i = 0; i < lineCount; i++) {
+                const step = i * offsetSpacing;
 
-                for (let j = 0; j < this.totalLines; j++) {
-                    ctx.beginPath();
-                    ctx.lineWidth = 1;
-                    ctx.strokeStyle = this.color;
-                    // Outer waves are finer and more transparent
-                    ctx.globalAlpha = (1 - (j / this.totalLines)) * 0.4; 
+                // Left parallel paths
+                const pathLeft = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const dLeft = `M -50,${h * 0.2 + step} Q ${w * 0.22},${h * 0.05 + step} ${w * 0.33},${cy - step * 0.5} T ${cx - 50 + step * 0.3},${cy + 30 - step * 0.2} Q ${cx},${cy + 50 - step} ${cx},${cy}`;
+                
+                pathLeft.setAttribute('d', dLeft);
+                pathLeft.setAttribute('fill', 'none');
+                pathLeft.setAttribute('stroke', '#f2eae1');
+                pathLeft.setAttribute('stroke-width', i === 0 ? '1.5' : '0.75'); // Give structural hierarchy
+                pathLeft.setAttribute('opacity', (0.4 - (i * 0.05)).toString()); // Subtly fade out outer tracks
+                pathLeft.setAttribute('class', 'spiral-line');
+                spiralGroup.appendChild(pathLeft);
 
-                    const offset = j * this.lineSpacing;
-
-                    for (let x = 0; x <= width; x += 4) {
-                        // Creating a localized Hokusai crest peak near the screen center alignment
-                        const centerInfluence = Math.exp(-Math.pow((x - width / 2) / (width * 0.3), 2));
-                        
-                        // Combining multiple sine inputs to create stylized Japanese wave geometry
-                        const primaryWave = Math.sin(x * this.frequency + this.time) * this.amplitude;
-                        const crestPeak = Math.sin(x * (this.frequency * 2.5) - this.time * 1.5) * (this.amplitude * 0.4) * centerInfluence;
-                        
-                        const y = this.baseY + primaryWave + crestPeak - offset - (centerInfluence * 30);
-
-                        if (x === 0) {
-                            ctx.moveTo(x, y);
-                        } else {
-                            ctx.lineTo(x, y);
-                        }
-                    }
-                    ctx.stroke();
-                }
+                // Right parallel paths
+                const pathRight = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                const dRight = `M ${w + 50},${h * 0.8 - step} Q ${w * 0.78},${h * 0.95 - step} ${w * 0.67},${cy + step * 0.5} T ${cx + 50 - step * 0.3},${cy - 30 + step * 0.2} Q ${cx},${cy - 50 + step} ${cx},${cy}`;
+                
+                pathRight.setAttribute('d', dRight);
+                pathRight.setAttribute('fill', 'none');
+                pathRight.setAttribute('stroke', '#f2eae1');
+                pathRight.setAttribute('stroke-width', i === 0 ? '1.5' : '0.75');
+                pathRight.setAttribute('opacity', (0.4 - (i * 0.05)).toString());
+                pathRight.setAttribute('class', 'spiral-line');
+                spiralGroup.appendChild(pathRight);
             }
         }
 
-        // Generating three overlapping stylized wave systems (Background, Midground, Foreground peaks)
-        const waves = [
-            new WaveLayer(height * 0.55, 35, 0.003, 0.025, '#f2eae1', 8, 5),
-            new WaveLayer(height * 0.50, 45, 0.004, -0.018, '#f2eae1', 6, 6),
-            new WaveLayer(height * 0.45, 25, 0.006, 0.035, '#f2eae1', 10, 4)
-        ];
+        // Render line arrays
+        generateMultiSpirals();
+        window.addEventListener('resize', generateMultiSpirals);
 
-        function animateWaves() {
-            ctx.clearRect(0, 0, width, height);
-            waves.forEach(wave => wave.draw());
-            requestAnimationFrame(animateWaves);
-        }
-
-        animateWaves();
-
-        // --- TYPOGRAPHY AND PORTRAIT REVEAL SEQUENCING ---
+        // --- TIME-CALIBRATED ANIMATION SEQUENCE ---
         window.addEventListener('DOMContentLoaded', () => {
-            const portrait = document.getElementById('portrait-wrapper');
-            const name = document.getElementById('hero-name');
-            const tagline = document.getElementById('hero-tagline');
+            const tl = gsap.timeline();
 
-            setTimeout(() => {
-                portrait.style.opacity = "1";
-                portrait.style.transform = "scale(1)";
-            }, 300);
+            // 1. Instantly pop portrait with soft scaling easing
+            tl.to("#portrait-wrapper", {
+                opacity: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power4.out"
+            });
 
-            setTimeout(() => {
-                name.style.opacity = "1";
-                name.style.transform = "translateY(0)";
-            }, 900);
+            // 2. Original snappy drawing speed across all generated paths
+            tl.fromTo(".spiral-line", 
+                { strokeDasharray: "1500", strokeDashoffset: "1500" },
+                { strokeDashoffset: "0", duration: 2.0, ease: "power2.inOut", stagger: 0.06 },
+                "-=0.9"
+            );
 
-            setTimeout(() => {
-                tagline.style.opacity = "1";
-                tagline.style.transform = "translateY(0)";
-            }, 1300);
+            // 3. Staggered reveal for typography
+            tl.to("#hero-name", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=1.1");
+
+            tl.to("#hero-tagline", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=0.8");
         });
     </script>
 </body>
