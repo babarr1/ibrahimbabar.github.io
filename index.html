@@ -19,8 +19,8 @@
             extend: {
               colors: {
                 brand: {
-                  darkGreen: '#1b3322',  // Deep matte forest green from image_a182f4.png
-                  cream: '#f2eae1',      // Soft vintage cream
+                  darkGreen: '#1b3322',  // Matte forest green background from image_a182f4.png
+                  cream: '#f2eae1',      // Vintage soft cream text
                 }
               },
               fontFamily: {
@@ -37,8 +37,12 @@
             background-color: #1b3322;
             overflow-x: hidden;
         }
+        /* Soft masking vignette over the background lines to make typography incredibly crisp */
+        .hero-vignette {
+            background: radial-gradient(circle at center, rgba(27,51,34,0.2) 0%, rgba(27,51,34,0.85) 80%);
+        }
         .portrait-glow {
-            box-shadow: 0 0 60px 10px rgba(242, 234, 225, 0.03);
+            box-shadow: 0 0 50px 15px rgba(27,51,34,0.9);
         }
     </style>
 </head>
@@ -47,17 +51,17 @@
     <!-- HERO SECTION -->
     <section class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6">
         
-        <!-- SVG Canvas for Multiple Concentric/Parallel Spiral Lines -->
-        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
-            <g id="spiral-group"></g>
-        </svg>
+        <!-- Canvas for the Topographical Woodblock Flow Lines (watermarked_img_635412397513879388.png style) -->
+        <canvas id="flowCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+        <div class="absolute inset-0 hero-vignette pointer-events-none z-5"></div>
 
         <!-- Centered Core Elements -->
         <div class="relative z-10 flex flex-col items-center max-w-4xl text-center">
             
             <!-- Portrait Container -->
-            <div id="portrait-wrapper" class="portrait-glow relative w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden border border-brand-cream/10 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out">
-                <img id="portrait" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Ibrahim Babar" class="w-full h-full object-cover grayscale contrast-115 brightness-95">
+            <div id="portrait-wrapper" class="portrait-glow relative w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-2 border-brand-cream/20 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out">
+                <!-- Replace src with your image path later -->
+                <img id="portrait" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Ibrahim Babar" class="w-full h-full object-cover grayscale contrast-125 brightness-90">
                 <div class="absolute inset-0 bg-brand-darkGreen/10 mix-blend-multiply"></div>
             </div>
 
@@ -69,7 +73,7 @@
             </div>
             
             <div class="overflow-hidden">
-                <p id="hero-tagline" class="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-brand-cream/60 opacity-0 translate-y-6 transition-all duration-1000 ease-out delay-300">
+                <p id="hero-tagline" class="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-brand-cream/60 opacity-0 translate-y-6 transition-all duration-1000 ease-out">
                     Creative Multidisciplinary
                 </p>
             </div>
@@ -77,91 +81,180 @@
 
     </section>
 
-    <!-- GSAP for Quick, Responsive Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
+    <!-- Simplex/Perlin Vector Noise Logic for Woodblock Textures -->
     <script>
-        const spiralGroup = document.getElementById('spiral-group');
+        // Simple 2D Noise Implementation for zero external dependencies and extreme performance
+        const Noise = (function() {
+            const F2 = 0.5 * (Math.sqrt(3.0) - 1.0);
+            const G2 = (3.0 - Math.sqrt(3.0)) / 6.0;
+            const p = new Uint8Array(256);
+            for (let i=0; i<256; i++) p[i] = Math.floor(Math.random()*256);
+            const perm = new Uint8Array(512);
+            const permMod12 = new Uint8Array(512);
+            for (let i=0; i<512; i++) {
+                perm[i] = p[i & 255];
+                permMod12[i] = (perm[i] % 12);
+            }
+            return {
+                noise2D: function(xin, yin) {
+                    let n0, n1, n2;
+                    let s = (xin + yin) * F2;
+                    let i = Math.floor(xin + s);
+                    let j = Math.floor(yin + s);
+                    let t = (i + j) * G2;
+                    let X0 = i - t;
+                    let Y0 = j - t;
+                    let x0 = xin - X0;
+                    let y0 = yin - Y0;
+                    let i1, j1;
+                    if (x0 > y0) { i1 = 1; j1 = 0; } else { i1 = 0; j1 = 1; }
+                    let x1 = x0 - i1 + G2;
+                    let y1 = y0 - j1 + G2;
+                    let x2 = x0 - 1.0 + 2.0 * G2;
+                    let y2 = y0 - 1.0 + 2.0 * G2;
+                    let ii = i & 255;
+                    let jj = j & 255;
+                    let gi0 = permMod12[ii + perm[jj]];
+                    let gi1 = permMod12[ii + i1 + perm[jj + j1]];
+                    let gi2 = permMod12[ii + 1 + perm[jj + 1]];
+                    let t0 = 0.5 - x0 * x0 - y0 * y0;
+                    if (t0 < 0) n0 = 0.0;
+                    else { t0 *= t0; n0 = t0 * t0 * (gi0 % 2 === 0 ? 1 : -1) * x0 + (gi0 % 4 === 0 ? 1 : -1) * y0; } // Simplified gradients
+                    let t1 = 0.5 - x1 * x1 - y1 * y1;
+                    if (t1 < 0) n1 = 0.0;
+                    else { t1 *= t1; n1 = t1 * t1 * (gi1 % 2 === 0 ? 1 : -1) * x1 + (gi1 % 4 === 0 ? 1 : -1) * y1; }
+                    let t2 = 0.5 - x2 * x2 - y2 * y2;
+                    if (t2 < 0) n2 = 0.0;
+                    else { t2 *= t2; n2 = t2 * t2 * (gi2 % 2 === 0 ? 1 : -1) * x2 + (gi2 % 4 === 0 ? 1 : -1) * y2; }
+                    return 70.0 * (n0 + n1 + n2);
+                }
+            };
+        })();
 
-        function generateMultiSpirals() {
-            // Clear existing paths if window is resized
-            spiralGroup.innerHTML = '';
+        const canvas = document.getElementById('flowCanvas');
+        const ctx = canvas.getContext('2d');
 
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            const cx = w / 2;
-            const cy = h / 2 - 40; // Pin center closer to portrait focus
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
 
-            // Number of nested parallel paths we want to add for geometric weight
-            const lineCount = 6; 
-            const offsetSpacing = 12; // Pixel distance between parallel lines
+        class Streamline {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.points = [{x: x, y: y}];
+                this.maxLength = 180; // Total length of each individual contour curve
+                this.speed = 2.5;     // Clean medium drawing speed
+                this.life = 0;
+            }
 
-            for (let i = 0; i < lineCount; i++) {
-                const step = i * offsetSpacing;
+            update(px, py) {
+                if (this.points.length >= this.maxLength) return false;
 
-                // Left parallel paths
-                const pathLeft = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                const dLeft = `M -50,${h * 0.2 + step} Q ${w * 0.22},${h * 0.05 + step} ${w * 0.33},${cy - step * 0.5} T ${cx - 50 + step * 0.3},${cy + 30 - step * 0.2} Q ${cx},${cy + 50 - step} ${cx},${cy}`;
+                const lastPoint = this.points[this.points.length - 1];
                 
-                pathLeft.setAttribute('d', dLeft);
-                pathLeft.setAttribute('fill', 'none');
-                pathLeft.setAttribute('stroke', '#f2eae1');
-                pathLeft.setAttribute('stroke-width', i === 0 ? '1.5' : '0.75'); // Give structural hierarchy
-                pathLeft.setAttribute('opacity', (0.4 - (i * 0.05)).toString()); // Subtly fade out outer tracks
-                pathLeft.setAttribute('class', 'spiral-line');
-                spiralGroup.appendChild(pathLeft);
+                // Fetch noise grid calculation based on coordinate points
+                // Scale factor (0.0035) controls the frequency/tightness of the waves
+                let angle = Noise.noise2D(lastPoint.x * 0.0035, lastPoint.y * 0.0035) * Math.PI * 2;
 
-                // Right parallel paths
-                const pathRight = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                const dRight = `M ${w + 50},${h * 0.8 - step} Q ${w * 0.78},${h * 0.95 - step} ${w * 0.67},${cy + step * 0.5} T ${cx + 50 - step * 0.3},${cy - 30 + step * 0.2} Q ${cx},${cy - 50 + step} ${cx},${cy}`;
-                
-                pathRight.setAttribute('d', dRight);
-                pathRight.setAttribute('fill', 'none');
-                pathRight.setAttribute('stroke', '#f2eae1');
-                pathRight.setAttribute('stroke-width', i === 0 ? '1.5' : '0.75');
-                pathRight.setAttribute('opacity', (0.4 - (i * 0.05)).toString());
-                pathRight.setAttribute('class', 'spiral-line');
-                spiralGroup.appendChild(pathRight);
+                // Mathematical magnetic field deflection right around your portrait center
+                const dx = lastPoint.x - px;
+                const dy = lastPoint.y - py;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 180) {
+                    const force = (180 - dist) / 180;
+                    angle += Math.atan2(dy, dx) * force * 0.6; // Fluid contour pushing wrapper
+                }
+
+                // Append next step values using basic trig projections
+                const nextX = lastPoint.x + Math.cos(angle) * this.speed;
+                const nextY = lastPoint.y + Math.sin(angle) * this.speed;
+
+                // Stop line drawing if bounds are reached
+                if (nextX < 0 || nextX > width || nextY < 0 || nextY > height) return false;
+
+                this.points.push({x: nextX, y: nextY});
+                return true;
+            }
+
+            draw() {
+                if (this.points.length < 2) return;
+                ctx.beginPath();
+                ctx.moveTo(this.points[0].x, this.points[0].y);
+                for (let i = 1; i < this.points.length; i++) {
+                    ctx.lineTo(this.points[i].x, this.points[i].y);
+                }
+                ctx.strokeStyle = '#f2eae1';
+                ctx.lineWidth = 2.5;     // Thicker strokes to emulate the rich ink fill of the photo
+                ctx.globalAlpha = 0.12;  // Subtle overlap opacity mixing
+                ctx.stroke();
             }
         }
 
-        // Render line arrays
-        generateMultiSpirals();
-        window.addEventListener('resize', generateMultiSpirals);
+        let streamlines = [];
+        const isMobile = width < 768;
+        const totalStreams = isMobile ? 350 : 750; // Performance scaling per screen resolution profile
 
-        // --- TIME-CALIBRATED ANIMATION SEQUENCE ---
-        window.addEventListener('DOMContentLoaded', () => {
-            const tl = gsap.timeline();
+        function initFlowField() {
+            streamlines = [];
+            ctx.clearRect(0, 0, width, height);
 
-            // 1. Instantly pop portrait with soft scaling easing
-            tl.to("#portrait-wrapper", {
-                opacity: 1,
-                scale: 1,
-                duration: 1.2,
-                ease: "power4.out"
+            // Evenly scatter vector injection seeds across the viewport boundaries
+            for (let i = 0; i < totalStreams; i++) {
+                streamlines.push(new Streamline(
+                    Math.random() * width,
+                    Math.random() * height
+                ));
+            }
+        }
+
+        function runEngine() {
+            ctx.clearRect(0, 0, width, height);
+            
+            const px = width / 2;
+            const py = height / 2 - 40;
+
+            let linesStillGrowing = false;
+            streamlines.forEach(stream => {
+                if(stream.update(px, py)) {
+                    linesStillGrowing = true;
+                }
+                stream.draw();
             });
 
-            // 2. Original snappy drawing speed across all generated paths
-            tl.fromTo(".spiral-line", 
-                { strokeDasharray: "1500", strokeDashoffset: "1500" },
-                { strokeDashoffset: "0", duration: 2.0, ease: "power2.inOut", stagger: 0.06 },
-                "-=0.9"
-            );
+            // Clean looping redraw flag to freeze calculations once paths mature
+            requestAnimationFrame(runEngine);
+        }
 
-            // 3. Staggered reveal for typography
-            tl.to("#hero-name", {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            }, "-=1.1");
+        initFlowField();
+        runEngine();
 
-            tl.to("#hero-tagline", {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            }, "-=0.8");
+        // Responsive re-calculations
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initFlowField();
+        });
+
+        // --- TYPOGRAPHY AND PORTRAIT REVEAL SEQUENCING ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const portrait = document.getElementById('portrait-wrapper');
+            const name = document.getElementById('hero-name');
+            const tagline = document.getElementById('hero-tagline');
+
+            setTimeout(() => {
+                portrait.style.opacity = "1";
+                portrait.style.transform = "scale(1)";
+            }, 400);
+
+            setTimeout(() => {
+                name.style.opacity = "1";
+                name.style.transform = "translateY(0)";
+            }, 1200);
+
+            setTimeout(() => {
+                tagline.style.opacity = "1";
+                tagline.style.transform = "translateY(0)";
+            }, 1600);
         });
     </script>
 </body>
