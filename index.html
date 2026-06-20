@@ -77,6 +77,14 @@
         .tech-logo:hover {
             transform: scale(1.15);
         }
+        /* Complete scrollbar layout suppression for custom development frames */
+        #terminal-body {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        #terminal-body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
     </style>
 </head>
 <body class="bg-brand-darkGreen text-brand-cream font-body antialiased selection:bg-brand-cream selection:text-brand-darkGreen hidden-cursor">
@@ -135,67 +143,72 @@
     </section>
 
 
-<!-- TECHNICAL VAULT SECTION (NAVY BLUE PROFILE MODULE) -->
-    <section id="tech-section" class="relative w-full py-24 px-6 md:px-12 flex flex-col justify-center z-10 bg-[#0f172a] border-t border-b border-brand-cream/10">
-        <div class="max-w-4xl w-full mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<!-- TECHNICAL VAULT SECTION (PREMIUM SYSTEM WORKSPACE) -->
+    <section id="tech-section" class="relative w-full py-32 px-6 md:px-12 flex flex-col justify-center z-10 bg-[#0f172a] border-t border-b border-brand-cream/10">
+        <div class="max-w-5xl w-full mx-auto space-y-12">
             
-            <!-- LEFT COLUMN: Minimal Credentials (Stacks cleanly on Mobile) -->
-            <div class="md:col-span-5 space-y-6 flex flex-col justify-center items-start">
-                <div>
-                    <p class="text-[10px] tracking-[0.3em] uppercase text-brand-cream/40 mb-2 font-mono font-bold">System Initialization</p>
-                    <h2 class="font-display text-4xl font-semibold tracking-tight text-brand-cream">The Profile</h2>
-                </div>
-                
-                <!-- Fixed University Badge Combo -->
-                <div class="flex items-center gap-4 w-full bg-white/[0.02] border border-white/5 p-4 rounded backdrop-blur-sm">
-                    <!-- Crisp Graduation Hat Icon -->
-                    <div class="w-12 h-12 rounded-sm bg-brand-cream/5 border border-brand-cream/20 flex shrink-0 items-center justify-center text-brand-cream">
-                        <svg class="w-6 h-6 fill-none stroke-current" stroke-width="1.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147L12 14.142l7.74-3.995A1 1 0 0019 9.253L12 5.632 5 9.253a1 1 0 00-.74.894z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13.144V15c0 1.954 3.134 3 7 3s7-1.046 7-3v-1.856M12 14.143v4" />
-                        </svg>
-                    </div>
-                    <div class="space-y-0.5">
-                        <h3 class="font-display text-2xl font-medium tracking-tight text-brand-cream leading-none">FAST NUCES</h3>
-                        <p class="text-xs tracking-wider text-brand-cream/60 font-body font-medium">BS Computer Science &bull; 3rd Year</p>
-                    </div>
-                </div>
+            <!-- Section Header Title -->
+            <div class="max-w-xl select-none">
+                <p class="text-xs tracking-[0.3em] uppercase text-brand-cream/40 mb-3 font-mono font-bold">System Workspace</p>
+                <h2 class="font-display text-4xl font-semibold tracking-tight text-brand-cream">The Profile</h2>
             </div>
 
-            <!-- RIGHT COLUMN: Premium Terminal Simulator Box -->
-            <div class="md:col-span-7 w-full">
-                <div class="w-full bg-[#090d16] border border-white/10 rounded overflow-hidden shadow-2xl font-mono text-xs text-brand-cream/90 flex flex-col h-[260px]">
+            <!-- Unified Split-Pane Window Component Wrapper -->
+            <div class="w-full bg-[#080d16] border border-white/10 rounded shadow-2xl overflow-hidden flex flex-col">
+                
+                <!-- Mac-Style Top Bar Window Header -->
+                <div class="w-full bg-white/[0.02] border-b border-white/5 px-5 py-3.5 flex items-center justify-between shrink-0 select-none">
+                    <div class="flex gap-2">
+                        <span class="w-3 h-3 rounded-full bg-[#ef4444]/40"></span>
+                        <span class="w-3 h-3 rounded-full bg-[#eab308]/40"></span>
+                        <span class="w-3 h-3 rounded-full bg-[#22c55e]/40"></span>
+                    </div>
+                    <span class="text-[10px] font-mono text-white/40 tracking-[0.2em] uppercase font-bold">developer_profile.env</span>
+                    <div class="w-12"></div> <!-- Spatial balancing placeholder -->
+                </div>
+
+                <!-- Split Pane Main Grid Content Window -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/5">
                     
-                    <!-- Mac-Style Window Top Bar Control Header -->
-                    <div class="w-full bg-white/[0.03] border-b border-white/5 px-4 py-3 flex items-center justify-between shrink-0 select-none">
-                        <div class="flex gap-1.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#ef4444]/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#eab308]/60"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#22c55e]/60"></span>
+                    <!-- Left Side Pane: Academic Timeline Profile Box -->
+                    <div class="lg:col-span-4 p-8 flex flex-col justify-between space-y-8 select-none bg-white/[0.01]">
+                        <div class="space-y-4">
+                            <div class="w-10 h-10 rounded bg-brand-cream/5 border border-brand-cream/15 flex items-center justify-center text-brand-cream">
+                                <svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147L12 14.142l7.74-3.995A1 1 0 0019 9.253L12 5.632 5 9.253a1 1 0 00-.74.894z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13.144V15c0 1.954 3.134 3 7 3s7-1.046 7-3v-1.856M12 14.143v4" />
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="font-display text-2xl font-medium tracking-tight text-brand-cream">FAST NUCES</h3>
+                                <p class="font-mono text-[11px] uppercase tracking-wider text-brand-cream/50">BS Computer Science</p>
+                            </div>
                         </div>
-                        <span class="text-[10px] text-white/30 tracking-widest uppercase font-bold">identity_manifesto.sh</span>
-                        <span class="w-10"></span> <!-- Spatial Balancing Element -->
+                        <div class="font-mono text-[11px] text-white/30 space-y-1 uppercase tracking-wide">
+                            <div>[ Status: 3rd Year student ]</div>
+                            <div>[ Focus: Strategy & Execution ]</div>
+                        </div>
                     </div>
 
-                    <!-- Terminal Working Window Panel Body -->
-                    <div id="terminal-body" class="p-5 flex-1 overflow-y-auto space-y-4 cursor-pointer relative group">
+                    <!-- Right Side Pane: Smooth Terminal Environment Emulator Console -->
+                    <div id="terminal-body" class="lg:col-span-8 p-8 relative min-h-[240px] flex flex-col justify-start cursor-pointer group overflow-hidden">
                         
-                        <!-- Shell Prompt Line Trigger -->
-                        <div class="flex items-center gap-2 text-[#22c55e]">
+                        <!-- Shell Prompt Code Line -->
+                        <div class="flex items-center gap-3 font-mono text-xs text-[#22c55e] select-none">
                             <span>ibrahim@nuces:~$</span>
-                            <span id="terminal-trigger-text" class="text-white bg-white/10 px-2 py-0.5 rounded text-[10px] font-bold animate-pulse tracking-wide uppercase group-hover:bg-[#22c55e] group-hover:text-[#090d16] transition-colors duration-300">Run Profile Initialization</span>
+                            <span id="terminal-trigger-text" class="text-white bg-white/10 px-2.5 py-1 rounded text-[10px] font-bold tracking-wider uppercase group-hover:bg-[#22c55e] group-hover:text-[#080d16] transition-all duration-300 animate-pulse">Run Profile Initialization</span>
                         </div>
 
-                        <!-- Echo Shell Stream Output Container -->
-                        <div id="terminal-stream-output" class="space-y-3 hidden leading-relaxed text-brand-cream/80 font-mono text-xs">
-                            <p class="text-white/40 italic text-[11px]">&gt; Query initialized successfully. Decoding blocks...</p>
+                        <!-- Typing Data Stream Output Box -->
+                        <div id="terminal-stream-output" class="space-y-4 hidden mt-6 text-brand-cream/90 font-mono text-xs leading-relaxed max-w-2xl">
+                            <p class="text-white/30 italic text-[10px] select-none tracking-wider">&gt; Environment compiled. Fetching system manifest blocks...</p>
                             <p id="stream-line-1" class="opacity-0 transition-opacity duration-500"></p>
-                            <p id="stream-line-2" class="opacity-0 transition-opacity duration-500 text-brand-cream/60 italic"></p>
+                            <p id="stream-line-2" class="opacity-0 transition-opacity duration-500 text-brand-cream/60 italic border-l border-brand-cream/20 pl-4"></p>
                         </div>
                         
-                        <!-- Click / Hover Micro-Incentive Overlay Banner -->
-                        <div id="terminal-hint" class="absolute bottom-3 right-4 text-[9px] text-white/20 uppercase tracking-widest select-none pointer-events-none group-hover:text-white/40 transition-colors">
-                            [ Hover or Click Window to Boot ]
+                        <!-- Interactive Micro Hint Flag -->
+                        <div id="terminal-hint" class="absolute bottom-4 right-5 font-mono text-[9px] text-white/20 uppercase tracking-widest select-none pointer-events-none group-hover:text-white/40 transition-colors">
+                            [ Hover or Click Console Pane to Open ]
                         </div>
                     </div>
 
