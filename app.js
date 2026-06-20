@@ -235,30 +235,51 @@ window.addEventListener('DOMContentLoaded', () => {
     tl.to("#hero-tagline", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.9");
 });
 
-// --- INTERACTIVE PROFILE MANIFESTO DRAWER ENGINE ---
+// --- INTERACTIVE TERMINAL SIMULATOR LOGIC ---
 document.addEventListener('DOMContentLoaded', () => {
-    const toggleBtn = document.getElementById('manifesto-toggle-btn');
-    const drawer = document.getElementById('manifesto-drawer');
-    const btnText = document.getElementById('toggle-btn-text');
-    const btnArrow = document.getElementById('toggle-btn-arrow');
+    const termBody = document.getElementById('terminal-body');
+    const streamOutput = document.getElementById('terminal-stream-output');
+    const triggerText = document.getElementById('terminal-trigger-text');
+    const hintText = document.getElementById('terminal-hint');
+    
+    // Core strings split up cleanly to loop line by line
+    const textLine1 = "I don't claim to be a veteran developer or a specialized AI engineer. Right now, I am driven by pure curiosity. I build, test, and break architectures to see how systems integrate.";
+    const textLine2 = "My focus leans directly toward technical strategy, project execution, and the creative management of technology—ensuring that what gets engineered actually serves a story and a purpose.";
 
-    if (toggleBtn && drawer) {
-        toggleBtn.addEventListener('click', () => {
-            const isClosed = drawer.style.maxHeight === '0px' || !drawer.style.maxHeight;
+    let executionTriggered = false;
 
-            if (isClosed) {
-                // Dynamically sets height based exactly on inner element text bounding box size
-                drawer.style.maxHeight = drawer.scrollHeight + 'px';
-                drawer.style.opacity = '1';
-                btnText.textContent = 'Minimize details';
-                btnArrow.classList.add('rotate-180');
-            } else {
-                // Instantly snaps closed safely
-                drawer.style.maxHeight = '0px';
-                drawer.style.opacity = '0';
-                btnText.textContent = 'Click to explore identity';
-                btnArrow.classList.remove('rotate-180');
-            }
-        });
+    if (termBody && streamOutput) {
+        function triggerTerminalBoot() {
+            if (executionTriggered) return; // Prevent double execution looping
+            executionTriggered = true;
+            
+            // UI updates to show shell processing feedback
+            triggerText.textContent = "./execute_identity.sh";
+            triggerText.classList.remove('animate-pulse');
+            triggerText.style.background = "rgba(34, 197, 94, 0.2)";
+            triggerText.style.color = "#22c55e";
+            hintText.style.display = "none";
+            streamOutput.classList.remove('hidden');
+
+            // Line 1 typing effect simulation delay block
+            const el1 = document.getElementById('stream-line-1');
+            setTimeout(() => {
+                el1.textContent = textLine1;
+                el1.classList.remove('opacity-0');
+                el1.classList.add('opacity-100');
+            }, 600);
+
+            // Line 2 strategy offset delay block
+            const el2 = document.getElementById('stream-line-2');
+            setTimeout(() => {
+                el2.textContent = textLine2;
+                el2.classList.remove('opacity-0');
+                el2.classList.add('opacity-100');
+            }, 1800);
+        }
+
+        // Attach listeners to trigger on hover or touch/click on mobile viewports seamlessly
+        termBody.addEventListener('mouseenter', triggerTerminalBoot);
+        termBody.addEventListener('click', triggerTerminalBoot);
     }
 });
