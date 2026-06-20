@@ -1,596 +1,882 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ibrahim Babar - Portfolio</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ibrahim Babar - Cat Lover Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
-  color: #e0e0e0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  min-height: 100vh;
-  scroll-behavior: smooth;
-}
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+        }
 
-.container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        /* ==================== STAGE TRANSITIONS ==================== */
+        .stage {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #333;
-  padding-bottom: 2rem;
-}
+        .stage.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+            position: relative;
+        }
 
-h1 {
-  font-size: 2rem;
-  color: #00D9FF;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
+        /* ==================== STAGE 1: CAT HERO ==================== */
+        .cat-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            flex-direction: column;
+            gap: 2rem;
+        }
 
-.subtitle {
-  color: #888;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
+        .cat-illustration {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
 
-.header-links { text-align: right; }
+        .cat-body {
+            width: 120px;
+            height: 140px;
+            background: linear-gradient(135deg, #d4a5a5 0%, #c89898 100%);
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
 
-.header-links a {
-  color: #00D9FF;
-  text-decoration: none;
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  transition: all 0.3s;
-}
+        .cat-head {
+            position: absolute;
+            width: 90px;
+            height: 100px;
+            background: linear-gradient(135deg, #d4a5a5 0%, #c89898 100%);
+            border-radius: 50% 50% 45% 45%;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-.header-links a:hover { text-shadow: 0 0 10px rgba(0,217,255,0.5); }
+        .cat-ear {
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            background: linear-gradient(135deg, #d4a5a5 0%, #c89898 100%);
+            border-radius: 50% 50% 20% 20%;
+            top: -20px;
+        }
 
-.nav {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid #333;
-  padding-bottom: 1rem;
-  flex-wrap: wrap;
-}
+        .cat-ear:nth-child(1) {
+            left: 15px;
+        }
 
-.nav-btn {
-  background: none;
-  border: none;
-  color: #888;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s;
-  border-bottom: 2px solid transparent;
-}
+        .cat-ear:nth-child(2) {
+            right: 15px;
+        }
 
-.nav-btn.active {
-  color: #00D9FF;
-  border-bottom-color: #00D9FF;
-}
+        .ear-inner {
+            position: absolute;
+            width: 12px;
+            height: 25px;
+            background: #ff9999;
+            border-radius: 50% 50% 10% 10%;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-.nav-btn:hover { color: #00D9FF; }
+        .cat-eye {
+            position: absolute;
+            width: 12px;
+            height: 16px;
+            background: #000;
+            border-radius: 50%;
+            top: 35px;
+        }
 
-.content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+        .cat-eye:nth-child(1) {
+            left: 25px;
+        }
 
-.section-panel {
-  background: rgba(0, 217, 255, 0.05);
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 1.5rem;
-  scroll-margin-top: 1.25rem;
-}
+        .cat-eye:nth-child(2) {
+            right: 25px;
+        }
 
-.section-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
+        .cat-nose {
+            position: absolute;
+            width: 10px;
+            height: 8px;
+            background: #ff9999;
+            border-radius: 50%;
+            top: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-.section-kicker {
-  color: #888;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.3rem;
-}
+        .cat-mouth {
+            position: absolute;
+            width: 20px;
+            height: 8px;
+            top: 62px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-.section-title {
-  color: #00D9FF;
-  font-size: 1.1rem;
-  margin: 0;
-}
+        .cat-mouth::before,
+        .cat-mouth::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 6px;
+            border: 2px solid #000;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
 
-.section-action {
-  background: none;
-  border: 1px solid #00D9FF;
-  color: #00D9FF;
-  border-radius: 999px;
-  padding: 0.45rem 0.85rem;
-  cursor: pointer;
-  white-space: nowrap;
-}
+        .cat-mouth::before {
+            left: -6px;
+        }
 
-.section-action:hover {
-  background: rgba(0, 217, 255, 0.12);
-}
+        .cat-mouth::after {
+            right: -6px;
+        }
 
-.project-card {
-  background: rgba(0, 217, 255, 0.05);
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
+        .cat-tail {
+            position: absolute;
+            width: 50px;
+            height: 150px;
+            background: linear-gradient(135deg, #d4a5a5 0%, #c89898 100%);
+            border-radius: 50% 50% 30% 30%;
+            bottom: -40px;
+            right: -30px;
+            transform-origin: top center;
+            animation: wag 2s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.project-card:hover {
-  border-color: #00D9FF;
-  background: rgba(0, 217, 255, 0.08);
-  transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
-}
+        .cat-tail:hover {
+            filter: brightness(1.1);
+            transform: rotate(-15deg);
+        }
 
-.project-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-}
+        @keyframes wag {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(15deg); }
+        }
 
-.project-title {
-  font-size: 1.2rem;
-  color: #00D9FF;
-  margin: 0 0 0.5rem 0;
-}
+        .speech-bubble {
+            background: #00D9FF;
+            color: #0a0e27;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            max-width: 300px;
+            text-align: center;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
 
-.project-tech {
-  color: #666;
-  font-size: 0.85rem;
-  margin: 0 0 0.5rem 0;
-}
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #00D9FF;
+        }
 
-.project-desc {
-  color: #ccc;
-  margin: 0;
-  font-size: 0.95rem;
-}
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
 
-.project-toggle {
-  color: #00D9FF;
-  font-size: 1.2rem;
-  flex-shrink: 0;
-}
+        .click-hint {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.85rem;
+            color: #888;
+            animation: pulse 2s ease-in-out infinite;
+        }
 
-.project-details {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #333;
-  display: none;
-  animation: slideDown 0.3s ease;
-}
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
 
-.project-details.show { display: block; }
+        /* ==================== STAGE 2: 3D STACK & JOURNEY ==================== */
+        .stage-2-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 3rem;
+            height: 100vh;
+            overflow-y: auto;
+            align-items: center;
+        }
 
-.project-details p {
-  color: #aaa;
-  font-size: 0.9rem;
-  margin: 0.5rem 0;
-}
+        .stack-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
 
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 0;
-}
+        .stack-3d {
+            perspective: 1200px;
+            width: 280px;
+            height: 380px;
+            position: relative;
+            cursor: pointer;
+        }
 
-.stat-card {
-  background: rgba(0, 217, 255, 0.1);
-  border: 1px solid rgba(0, 217, 255, 0.3);
-  border-radius: 8px;
-  padding: 1.5rem;
-  text-align: center;
-}
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #00D9FF 0%, #0099cc 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #0a0e27;
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
 
-.stat-value {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #00D9FF;
-  margin-bottom: 0.5rem;
-}
+        .card:nth-child(1) {
+            transform: translateY(0) rotateX(0deg) scale(1);
+            z-index: 3;
+        }
 
-.stat-label {
-  color: #888;
-  font-size: 0.85rem;
-}
+        .card:nth-child(2) {
+            transform: translateY(15px) rotateX(8deg) scale(0.95);
+            z-index: 2;
+        }
 
-.skill-group {
-  margin-bottom: 2rem;
-}
+        .card:nth-child(3) {
+            transform: translateY(30px) rotateX(16deg) scale(0.9);
+            z-index: 1;
+        }
 
-.skill-group h3 {
-  color: #00D9FF;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-}
+        .stack-3d:hover .card:nth-child(1) {
+            transform: translateY(-20px) rotateX(-10deg) scale(1);
+        }
 
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
+        .stack-3d:hover .card:nth-child(2) {
+            transform: translateY(5px) rotateX(-2deg) scale(0.95);
+        }
 
-.skill-tag {
-  background: rgba(0, 217, 255, 0.15);
-  border: 1px solid #00D9FF;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  color: #00D9FF;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s;
-}
+        .stack-3d:hover .card:nth-child(3) {
+            transform: translateY(20px) rotateX(6deg) scale(0.9);
+        }
 
-.skill-tag:hover {
-  background: #00D9FF;
-  color: #0a0e27;
-  box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
-}
+        .journey-box {
+            background: rgba(0, 217, 255, 0.1);
+            border: 2px solid #00D9FF;
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 350px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform: rotate(-2deg);
+        }
 
-.contact-card {
-  background: rgba(0, 217, 255, 0.05);
-  border: 1px solid #00D9FF;
-  border-radius: 8px;
-  padding: 2rem;
-  max-width: 500px;
-}
+        .journey-box:hover {
+            transform: rotate(-2deg) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        }
 
-.contact-card h3 {
-  color: #00D9FF;
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
+        .journey-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #00D9FF;
+            margin-bottom: 0.5rem;
+        }
 
-.contact-item {
-  margin-bottom: 1.5rem;
-}
+        .journey-desc {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
 
-.contact-label {
-  color: #888;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  margin-bottom: 0.3rem;
-}
+        .paw-button {
+            background: #00D9FF;
+            color: #0a0e27;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3);
+            margin-top: 2rem;
+        }
 
-.contact-value {
-  color: #00D9FF;
-  text-decoration: none;
-  font-size: 1rem;
-}
+        .paw-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 217, 255, 0.5);
+        }
 
-.contact-value:hover { text-decoration: underline; }
+        /* ==================== JOURNEY MODAL ==================== */
+        .journey-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.6s ease;
+            overflow-y: auto;
+        }
 
-.intro-box {
-  background: rgba(0, 217, 255, 0.05);
-  border: 1px solid #00D9FF;
-  border-radius: 8px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  line-height: 1.8;
-}
+        .journey-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-.intro-box p { margin: 0.5rem 0; }
+        .journey-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem;
+            animation: slideUp 0.6s ease;
+        }
 
-.highlight { color: #00D9FF; }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #00D9FF;
+        }
 
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  pointer-events: none;
-}
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00D9FF;
+        }
 
-svg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-</style>
+        .minimize-btn {
+            background: none;
+            border: 2px solid #00D9FF;
+            color: #00D9FF;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .minimize-btn:hover {
+            background: #00D9FF;
+            color: #0a0e27;
+        }
+
+        .modal-body {
+            color: #ccc;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .modal-body h3 {
+            color: #00D9FF;
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-body p {
+            margin-bottom: 1rem;
+        }
+
+        /* ==================== STAGE 3: ABOUT & SKILLS ==================== */
+        .stage-3-container {
+            padding: 3rem;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .about-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .profile-frame {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            perspective: 1000px;
+        }
+
+        /* Cat ear silhouette frame */
+        .cat-ear-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(0, 217, 255, 0.05) 100%);
+            border: 2px solid #00D9FF;
+            border-radius: 50% 50% 45% 45%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.2);
+            animation: tilt 4s ease-in-out infinite;
+        }
+
+        @keyframes tilt {
+            0%, 100% { transform: perspective(1000px) rotateY(0deg) rotateX(2deg); }
+            50% { transform: perspective(1000px) rotateY(-3deg) rotateX(-2deg); }
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50% 50% 45% 45%;
+            filter: brightness(0.95);
+        }
+
+        .about-content h2 {
+            font-size: 1.8rem;
+            color: #00D9FF;
+            margin-bottom: 1rem;
+        }
+
+        .about-content p {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .icon-nav {
+            display: flex;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .icon-btn {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid #00D9FF;
+            background: rgba(0, 217, 255, 0.1);
+            color: #00D9FF;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: #00D9FF;
+            color: #0a0e27;
+            transform: scale(1.1);
+        }
+
+        .icon-btn.active {
+            background: #00D9FF;
+            color: #0a0e27;
+        }
+
+        .content-card {
+            background: rgba(0, 217, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(10px);
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .content-card.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .content-card h3 {
+            color: #00D9FF;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-card p {
+            color: #aaa;
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 217, 255, 0.2);
+            border: 1px solid #00D9FF;
+            color: #00D9FF;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: #00D9FF;
+            color: #0a0e27;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .stage-2-container {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+                gap: 2rem;
+            }
+
+            .about-section {
+                grid-template-columns: 1fr;
+            }
+
+            .journey-content {
+                padding: 2rem;
+            }
+
+            .stage-3-container {
+                padding: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<svg id="trailSvg"></svg>
-
-<div class="container">
-  <header>
-    <div>
-      <h1>IBRAHIM BABAR</h1>
-      <p class="subtitle">CS @ FAST | AI/ML Specialist | Full-Stack Developer</p>
+    <!-- ==================== STAGE 1 ==================== -->
+    <div id="stage1" class="stage active">
+        <div class="cat-container">
+            <div class="cat-illustration" id="catIllustration">
+                <div class="cat-body">
+                    <div class="cat-head">
+                        <div class="cat-ear">
+                            <div class="ear-inner"></div>
+                        </div>
+                        <div class="cat-ear">
+                            <div class="ear-inner"></div>
+                        </div>
+                        <div class="cat-eye"></div>
+                        <div class="cat-eye"></div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth"></div>
+                    </div>
+                    <div class="cat-tail" id="catTail"></div>
+                </div>
+            </div>
+            <div class="speech-bubble">Hi there! Go ahead, click my tail... I don't bite! 🐱</div>
+            <div class="click-hint">↓ Click the tail ↓</div>
+        </div>
     </div>
-    <div class="header-links">
-      <a href="https://instagram.com/babarpov" target="_blank">Instagram @babarpov</a>
-      <a href="https://github.com" target="_blank">GitHub</a>
+
+    <!-- ==================== STAGE 2 ==================== -->
+    <div id="stage2" class="stage">
+        <div class="stage-2-container">
+            <!-- LEFT: 3D STACK -->
+            <div class="stack-section">
+                <h2 style="color: #00D9FF; font-size: 1.5rem; margin-bottom: 1rem;">My Content World</h2>
+                <div class="stack-3d" id="instaStack">
+                    <div class="card">Post 1</div>
+                    <div class="card">Post 2</div>
+                    <div class="card">Post 3</div>
+                </div>
+                <p style="color: #888; text-align: center; font-size: 0.9rem;">Hover & Click to visit Instagram</p>
+            </div>
+
+            <!-- RIGHT: JOURNEY MAP -->
+            <div class="stack-section">
+                <h2 style="color: #00D9FF; font-size: 1.5rem; margin-bottom: 1rem;">My Journey</h2>
+                <div class="journey-box" id="journeyTrigger">
+                    <div class="journey-title">📜 My Content Journey</div>
+                    <div class="journey-desc">
+                        Click to explore my creative evolution, milestones, and the path that shaped my work...
+                    </div>
+                </div>
+                <button class="paw-button" onclick="goToStage3()">🐾 Get to know the human behind the cat</button>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <div class="nav">
-    <button class="nav-btn active" data-target="home" onclick="scrollToSection('home')">→ home</button>
-    <button class="nav-btn" data-target="projects" onclick="scrollToSection('projects')">→ projects</button>
-    <button class="nav-btn" data-target="skills" onclick="scrollToSection('skills')">→ skills</button>
-    <button class="nav-btn" data-target="contact" onclick="scrollToSection('contact')">→ contact</button>
-  </div>
+    <!-- ==================== JOURNEY MODAL ==================== -->
+    <div id="journeyModal" class="journey-modal">
+        <div class="journey-content">
+            <div class="modal-header">
+                <h1 class="modal-title">📜 My Content Journey</h1>
+                <button class="minimize-btn" onclick="closeJourneyModal()">−</button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    My journey as a creator started with a simple observation: the intersection of technology and creativity is where magic happens. While most people see a portfolio, I see a playground for innovation.
+                </p>
 
-  <div class="content">
-    <section id="home" class="section-panel">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">01</div>
-          <h2 class="section-title">Home</h2>
+                <h3>🚀 The Early Days</h3>
+                <p>
+                    I began as a CS student fascinated by AI and NLP. My AI Quiz Generator wasn't just a project—it was my first "aha!" moment. Realizing I could create tools that think? That changed everything. I started documenting this journey on Instagram, sharing not just code, but the thought process behind it.
+                </p>
+
+                <h3>📱 The Full-Stack Evolution</h3>
+                <p>
+                    Then came the Android app. Real-time social media, WebRTC, Firebase—I wasn't just building anymore; I was architecting. I discovered that product thinking matters as much as coding. This led me to roles as a Scrum master and Product Owner, reshaping how I approach problems.
+                </p>
+
+                <h3>🎮 Playing with Games</h3>
+                <p>
+                    C++ and SFML brought me joy. Creating Centipede and Xonic weren't about nostalgia—they were about understanding physics, collision detection, and the craft of interactive experiences. Games taught me that every pixel matters.
+                </p>
+
+                <h3>🧠 AI & The Future</h3>
+                <p>
+                    Today, I'm obsessed with intelligent systems. NLP, machine learning, creative problem-solving—these aren't buzzwords. They're the lens through which I see the world. I believe technology should feel alive, useful, and yes, a little strange.
+                </p>
+
+                <p style="margin-top: 2rem; color: #00D9FF; font-weight: 600;">
+                    And that's why this portfolio has a cat. Because sometimes, the best way to be memorable is to be authentically you. 🐱
+                </p>
+            </div>
         </div>
-        <button class="section-action" onclick="scrollToSection('projects')">Next section</button>
-      </div>
+    </div>
 
-      <div class="intro-box">
-        <p>Hey! I'm a 3rd-year CS student passionate about building <span class="highlight">intelligent systems</span> that solve real problems.</p>
-        <p>I specialize in <strong>AI/ML (especially NLP)</strong>, but I'm equally comfortable with mobile apps, game dev, and full-stack architecture. The distractor generation logic in my quiz generator is the kind of creative problem-solving I love.</p>
-        <p style="color: #888;">Use the sections below one by one, and the page will move downward as you go.</p>
-      </div>
+    <!-- ==================== STAGE 3 ==================== -->
+    <div id="stage3" class="stage">
+        <div class="stage-3-container">
+            <div class="about-section">
+                <!-- PROFILE PICTURE -->
+                <div>
+                    <div class="profile-frame">
+                        <div class="cat-ear-frame">
+                            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Crect fill='%2300D9FF' width='250' height='250'/%3E%3Ctext x='50%25' y='50%25' font-size='60' fill='%230a0e27' text-anchor='middle' dominant-baseline='central' font-weight='bold'%3EIB%3C/text%3E%3C/svg%3E" alt="Ibrahim" class="profile-pic">
+                        </div>
+                    </div>
+                </div>
 
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="stat-value">4+</div>
-          <div class="stat-label">Projects Built</div>
+                <!-- ABOUT CONTENT -->
+                <div class="about-content">
+                    <h2>Ibrahim Babar 🐾</h2>
+                    <p>
+                        Hey! I'm a 3rd-year CS student from Islamabad who lives at the intersection of AI, full-stack development, and creative problem-solving. I love building things that feel alive—whether it's an intelligent quiz generator with clever distractor logic, a real-time social media platform, or even arcade games that feel buttery smooth.
+                    </p>
+                    <p>
+                        I'm a cat lover (clearly), a Scrum enthusiast, and someone who believes that technology should be useful, beautiful, and just a little bit strange. When I'm not coding, I'm probably overthinking game mechanics or exploring NLP rabbit holes.
+                    </p>
+
+                    <!-- NAVIGATION ICONS -->
+                    <div class="icon-nav">
+                        <button class="icon-btn active" onclick="switchContent('academics')" title="Academics">🎓</button>
+                        <button class="icon-btn" onclick="switchContent('skills')" title="Skills">🛠️</button>
+                        <button class="icon-btn" onclick="switchContent('contact')" title="Contact">💬</button>
+                    </div>
+
+                    <!-- ACADEMICS -->
+                    <div id="academics" class="content-card active">
+                        <h3>📚 Academic Journey</h3>
+                        <p>
+                            <strong>National University of Computer & Emerging Sciences (FAST)</strong><br>
+                            Bachelor of Science in Computer Science (Expected June 2027)
+                        </p>
+                        <p>
+                            <strong>Relevant Coursework:</strong><br>
+                            Object-Oriented Programming, Data Structures & Algorithms, Probability & Statistics, Software for Mobile Development, Introduction to Artificial Intelligence, Software Design & Analysis, Introduction to Software Engineering
+                        </p>
+                        <p style="color: #00D9FF; margin-top: 1rem;">
+                            💡 I'm particularly passionate about AI/ML courses and their practical applications.
+                        </p>
+                    </div>
+
+                    <!-- SKILLS -->
+                    <div id="skills" class="content-card">
+                        <h3>🔧 Technical Skills & Tools</h3>
+                        
+                        <p><strong>Languages & Frameworks</strong></p>
+                        <div class="skill-tags">
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Kotlin</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                        </div>
+
+                        <p style="margin-top: 1.5rem;"><strong>Machine Learning & Data</strong></p>
+                        <div class="skill-tags">
+                            <span class="skill-tag">NumPy</span>
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">Scikit-learn</span>
+                            <span class="skill-tag">NLTK</span>
+                            <span class="skill-tag">Matplotlib</span>
+                        </div>
+
+                        <p style="margin-top: 1.5rem;"><strong>Developer Tools & Platforms</strong></p>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Firebase</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">Android Studio</span>
+                            <span class="skill-tag">Visual Studio</span>
+                            <span class="skill-tag">Jira</span>
+                            <span class="skill-tag">Trello</span>
+                        </div>
+                    </div>
+
+                    <!-- CONTACT -->
+                    <div id="contact" class="content-card">
+                        <h3>📞 Get in Touch</h3>
+                        <p>
+                            I'm always excited to chat about AI, full-stack development, game design, or cat memes. Feel free to reach out!
+                        </p>
+                        <p style="margin-top: 1.5rem;">
+                            <strong>Email:</strong> <a href="mailto:ibrahimbabar0.10e@gmail.com" style="color: #00D9FF; text-decoration: none;">ibrahimbabar0.10e@gmail.com</a><br>
+                            <strong>Phone:</strong> <a href="tel:+923328407750" style="color: #00D9FF; text-decoration: none;">+92 332 8407750</a><br>
+                            <strong>Location:</strong> Islamabad, Pakistan<br>
+                            <strong>Instagram:</strong> <a href="https://instagram.com/babarpov" target="_blank" style="color: #00D9FF; text-decoration: none;">@babarpov</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-value">8+</div>
-          <div class="stat-label">Tech Stack</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value">10K+</div>
-          <div class="stat-label">Lines of Code</div>
-        </div>
-      </div>
-    </section>
+    </div>
 
-    <section id="projects" class="section-panel">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">02</div>
-          <h2 class="section-title">Projects</h2>
-        </div>
-        <button class="section-action" onclick="scrollToSection('skills')">Next section</button>
-      </div>
+    <script>
+        // ==================== STAGE MANAGEMENT ====================
+        function goToStage(stageNum) {
+            document.querySelectorAll('.stage').forEach(stage => {
+                stage.classList.remove('active');
+            });
+            document.getElementById(`stage${stageNum}`).classList.add('active');
+        }
 
-      <div class="project-card" onclick="toggleProject(this)">
-        <div class="project-header">
-          <div>
-            <h3 class="project-title">AI Quiz Generator</h3>
-            <p class="project-tech">Python, Streamlit, NLP</p>
-            <p class="project-desc">Automated multi-choice quiz generation from any text using NLTK for sentence processing, WordNet for distractor generation, and SVM classification.</p>
-          </div>
-          <div class="project-toggle">▶</div>
-        </div>
-        <div class="project-details">
-          <p>• NLTK-based sentence parsing and fact extraction</p>
-          <p>• WordNet synonym generation for challenging distractors</p>
-          <p>• SVM classifier for answer quality validation</p>
-          <p>• Interactive Streamlit dashboard with PDF upload</p>
-        </div>
-      </div>
+        function goToStage3() {
+            goToStage(3);
+        }
 
-      <div class="project-card" onclick="toggleProject(this)">
-        <div class="project-header">
-          <div>
-            <h3 class="project-title">Real-Time Social Media App</h3>
-            <p class="project-tech">Kotlin, Firebase, WebRTC</p>
-            <p class="project-desc">Full-stack social media platform with instant messaging, video calling, and real-time synchronization using MVVM architecture.</p>
-          </div>
-          <div class="project-toggle">▶</div>
-        </div>
-        <div class="project-details">
-          <p>• MVVM architecture with LiveData state management</p>
-          <p>• Firebase real-time database for instant sync</p>
-          <p>• WebRTC for low-latency video calling</p>
-          <p>• Firebase Authentication and optimized image loading</p>
-        </div>
-      </div>
+        // ==================== STAGE 1: CAT TAIL CLICK ====================
+        document.getElementById('catTail').addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Meow animation
+            this.style.animation = 'none';
+            setTimeout(() => {
+                this.style.animation = '';
+            }, 10);
+            // Quick spin
+            this.style.transform = 'rotate(720deg)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 400);
+            // Go to stage 2
+            setTimeout(() => {
+                goToStage(2);
+            }, 600);
+        });
 
-      <div class="project-card" onclick="toggleProject(this)">
-        <div class="project-header">
-          <div>
-            <h3 class="project-title">Task Management Platform</h3>
-            <p class="project-tech">Desktop App, Scrum</p>
-            <p class="project-desc">Enterprise task distribution system designed using Scrum methodology as Product Owner. Integrated automated allocation and sprint tracking.</p>
-          </div>
-          <div class="project-toggle">▶</div>
-        </div>
-        <div class="project-details">
-          <p>• Architected system design and product roadmap</p>
-          <p>• Scrum sprint planning and backlog management</p>
-          <p>• Automated task allocation algorithms</p>
-          <p>• Trello integration for team workflows</p>
-        </div>
-      </div>
+        // ==================== STAGE 2: INSTAGRAM STACK ====================
+        document.getElementById('instaStack').addEventListener('click', function() {
+            window.open('https://instagram.com/babarpov', '_blank');
+        });
 
-      <div class="project-card" onclick="toggleProject(this)">
-        <div class="project-header">
-          <div>
-            <h3 class="project-title">Arcade Game Suite</h3>
-            <p class="project-tech">C++, SFML, OOP</p>
-            <p class="project-desc">High-performance recreations of classic arcade games with custom collision detection and real-time input handling.</p>
-          </div>
-          <div class="project-toggle">▶</div>
-        </div>
-        <div class="project-details">
-          <p>• Centipede and Xonic full implementations</p>
-          <p>• Custom collision detection algorithms</p>
-          <p>• Real-time input handling and game state</p>
-          <p>• Object-oriented design patterns</p>
-        </div>
-      </div>
-    </section>
+        // ==================== JOURNEY MODAL ====================
+        document.getElementById('journeyTrigger').addEventListener('click', function() {
+            document.getElementById('journeyModal').classList.add('active');
+        });
 
-    <section id="skills" class="section-panel">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">03</div>
-          <h2 class="section-title">Skills</h2>
-        </div>
-        <button class="section-action" onclick="scrollToSection('contact')">Next section</button>
-      </div>
+        function closeJourneyModal() {
+            document.getElementById('journeyModal').classList.remove('active');
+        }
 
-      <div class="skill-group">
-        <h3>Languages</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">C++</span>
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">Kotlin</span>
-          <span class="skill-tag">HTML/CSS</span>
-        </div>
-      </div>
+        document.getElementById('journeyModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeJourneyModal();
+            }
+        });
 
-      <div class="skill-group">
-        <h3>ML/Data</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">NumPy</span>
-          <span class="skill-tag">Pandas</span>
-          <span class="skill-tag">Scikit-learn</span>
-          <span class="skill-tag">NLTK</span>
-        </div>
-      </div>
+        // ==================== STAGE 3: CONTENT SWITCHING ====================
+        function switchContent(type) {
+            // Hide all cards
+            document.querySelectorAll('.content-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            // Hide all buttons active state
+            document.querySelectorAll('.icon-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Show selected
+            document.getElementById(type).classList.add('active');
+            document.querySelector(`[onclick="switchContent('${type}')"]`).classList.add('active');
+        }
 
-      <div class="skill-group">
-        <h3>Tools</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Firebase</span>
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">Android Studio</span>
-          <span class="skill-tag">Jira</span>
-          <span class="skill-tag">Trello</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="section-panel">
-      <div class="section-head">
-        <div>
-          <div class="section-kicker">04</div>
-          <h2 class="section-title">Contact</h2>
-        </div>
-        <button class="section-action" onclick="scrollToSection('home')">Back to top</button>
-      </div>
-
-      <div class="contact-card">
-        <h3>Let's build something cool</h3>
-        <div class="contact-item">
-          <div class="contact-label">Email</div>
-          <a href="mailto:ibrahimbabar0.10e@gmail.com" class="contact-value">ibrahimbabar0.10e@gmail.com</a>
-        </div>
-        <div class="contact-item">
-          <div class="contact-label">Phone</div>
-          <a href="tel:+923328407750" class="contact-value">+92 332 8407750</a>
-        </div>
-        <div class="contact-item">
-          <div class="contact-label">Location</div>
-          <div class="contact-value">Islamabad, Pakistan</div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-label">Social</div>
-          <a href="https://instagram.com/babarpov" target="_blank" class="contact-value">Instagram: @babarpov →</a>
-        </div>
-      </div>
-    </section>
-  </div>
-</div>
-
-<script>
-function scrollToSection(sectionId) {
-  const section = document.getElementById(sectionId);
-  if (section) {
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-function toggleProject(card) {
-  const details = card.querySelector('.project-details');
-  const toggle = card.querySelector('.project-toggle');
-
-  details.classList.toggle('show');
-  toggle.textContent = details.classList.contains('show') ? '▼' : '▶';
-}
-
-const navButtons = document.querySelectorAll('.nav-btn');
-const sections = document.querySelectorAll('.section-panel');
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-
-    navButtons.forEach(btn => btn.classList.remove('active'));
-    const activeButton = document.querySelector(`.nav-btn[data-target="${entry.target.id}"]`);
-    if (activeButton) activeButton.classList.add('active');
-  });
-}, { threshold: 0.4 });
-
-sections.forEach(section => observer.observe(section));
-
-const svg = document.getElementById('trailSvg');
-let particles = [];
-
-document.addEventListener('mousemove', (e) => {
-  particles.push({
-    x: e.clientX,
-    y: e.clientY,
-    life: 100
-  });
-
-  if (particles.length > 20) particles.shift();
-
-  svg.innerHTML = '';
-  particles.forEach((p) => {
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('cx', p.x);
-    circle.setAttribute('cy', p.y);
-    circle.setAttribute('r', 2);
-    circle.setAttribute('fill', '#00D9FF');
-    circle.setAttribute('opacity', p.life / 100);
-    svg.appendChild(circle);
-  });
-
-  particles.forEach(p => p.life -= 5);
-  particles = particles.filter(p => p.life > 0);
-});
-</script>
-
+        // ==================== SMOOTH SCROLL ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
