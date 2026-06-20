@@ -241,8 +241,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const streamOutput = document.getElementById('terminal-stream-output');
     const triggerText = document.getElementById('terminal-trigger-text');
     
-    const textLine1 = "I don't claim to be a veteran developer or a specialized AI engineer. Right now, I am driven by pure curiosity. I build, test, and break architectures to see how systems integrate.";
-    const textLine2 = "My focus leans directly toward technical strategy, project execution, and the creative management of technology—ensuring that what gets engineered actually serves a story and a purpose.";
+// --- STREAMLINED TECHNICAL POSITIONING STRINGS ---
+const textLine1 = "Look, I'm not going to pretend I have my entire career perfectly figured out. I build and break architectures because I'm curious about how systems integrate, but standard, code-only development blocks don't excite me if there isn't a strategy or a real story behind them.";
+
+const textLine2 = "I'm just actively navigating my path—filtering out what bores me and finding where execution meets real purpose.";
 
     if (termBody && streamOutput) {
         termBody.addEventListener('click', () => {
