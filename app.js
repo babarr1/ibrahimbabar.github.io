@@ -81,39 +81,51 @@ function generateMultiSpirals() {
 }
 
 
-// --- 3. BACKGROUND CONTINUOUS PATTERN CANVAS GENERATOR ---
-const bgCanvas = document.getElementById('bgPatternCanvas');
-const bgCtx = bgCanvas.getContext('2d');
-let bgW = bgCanvas.width = window.innerWidth;
-let bgH = bgCanvas.height = window.innerHeight;
+// --- 3. ISOLATED SECTION PATTERN CANVAS ENGINE ---
+const sectionContainer = document.getElementById('creator-section');
+const localCanvas = document.getElementById('gridPatternCanvas');
 
-let bgLines = [];
-for(let i=0; i<4; i++) {
-    bgLines.push({
-        y: bgH * (0.2 + i * 0.2),
-        speed: 0.2 + (i * 0.1),
-        angle: Math.random() * Math.PI
-    });
-}
+let localW, localH;
+let waveLines = [];
 
-function drawBackgroundPattern() {
-    bgCtx.clearRect(0, 0, bgW, bgH);
-    bgCtx.strokeStyle = currentTheme === 'dark' ? '#f2eae1' : '#1b3322';
-    bgCtx.lineWidth = 0.5;
-    
-    bgLines.forEach(line => {
-        line.angle += 0.002;
-        bgCtx.beginPath();
-        for(let x=0; x<=bgW; x+=20) {
-            let yOffset = Math.sin(x * 0.002 + line.angle) * 40;
-            if(x === 0) bgCtx.moveTo(x, line.y + yOffset);
-            else bgCtx.lineTo(x, line.y + yOffset);
+if (localCanvas && sectionContainer) {
+    const localCtx = localCanvas.getContext('2d');
+
+    function resizeLocalCanvas() {
+        localW = localCanvas.width = sectionContainer.clientWidth;
+        localH = localCanvas.height = sectionContainer.clientHeight;
+        
+        waveLines = [];
+        for(let i = 0; i < 3; i++) {
+            waveLines.push({
+                x: localW * (0.25 + i * 0.25),
+                speed: 0.004 + (i * 0.002),
+                offset: Math.random() * 100
+            });
         }
-        bgCtx.stroke();
-    });
-    requestAnimationFrame(drawBackgroundPattern);
+    }
+
+    function drawSectionPattern() {
+        localCtx.clearRect(0, 0, localW, localH);
+        localCtx.strokeStyle = currentTheme === 'dark' ? '#f2eae1' : '#1b3322';
+        localCtx.lineWidth = 0.5;
+        
+        waveLines.forEach(line => {
+            line.offset += line.speed;
+            localCtx.beginPath();
+            for(let y = 0; y <= localH; y += 10) {
+                let xOffset = Math.sin(y * 0.004 + line.offset) * 30;
+                if(y === 0) localCtx.moveTo(line.x + xOffset, y);
+                else localCtx.lineTo(line.x + xOffset, y);
+            }
+            localCtx.stroke();
+        });
+        requestAnimationFrame(drawSectionPattern);
+    }
+
+    resizeLocalCanvas();
+    drawSectionPattern();
 }
-drawBackgroundPattern();
 
 
 // --- 4. TACTILE POLAROID STACK CARD LOOPING ENGINE ---
