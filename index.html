@@ -40,6 +40,21 @@
             z-index: 20;
         }
 
+        .hero-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 999px;
+            background: rgba(0, 217, 255, 0.18);
+            border: 1px solid rgba(0, 217, 255, 0.4);
+            color: #e0e0e0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            z-index: 20;
+        }
+
         .back-btn {
             border: 1px solid rgba(0, 217, 255, 0.6);
             background: rgba(0, 217, 255, 0.12);
@@ -302,13 +317,28 @@
         }
 
         .reel-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            display: flex;
             gap: 1rem;
             width: 100%;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 0.5rem;
+            padding-top: 0.5rem;
+        }
+
+        .reel-grid::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .reel-grid::-webkit-scrollbar-thumb {
+            background: rgba(0, 217, 255, 0.35);
+            border-radius: 999px;
         }
 
         .reel-card {
+            min-width: 280px;
+            flex: 0 0 280px;
+            scroll-snap-align: start;
             position: relative;
             aspect-ratio: 4 / 5;
             background: linear-gradient(180deg, rgba(0,217,255,0.16) 0%, rgba(10,14,39,0.82) 100%);
@@ -324,6 +354,33 @@
             transform: translateY(-6px);
             border-color: #00D9FF;
             box-shadow: 0 20px 60px rgba(0, 217, 255, 0.24);
+        }
+
+        .reel-card video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 0.75rem 0 1rem;
+        }
+
+        .slider-controls .back-btn {
+            min-width: 140px;
+        }
+
+        .reel-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(0, 217, 255, 0.18), transparent 38%);
+            pointer-events: none;
         }
 
         .reel-card::before {
@@ -753,6 +810,7 @@
     <canvas id="cursorCanvas"></canvas>
     <!-- ==================== STAGE 1 ==================== -->
     <div id="stage1" class="stage active">
+        <div class="hero-badge">Tech portfolio</div>
         <div class="cat-container">
             <div class="cat-illustration" id="catIllustration">
                 <div class="cat-body">
@@ -771,7 +829,7 @@
                     <div class="cat-tail" id="catTail"></div>
                 </div>
             </div>
-            <div class="speech-bubble">Hi there! Go ahead, click my tail... I don't bite! 🐱</div>
+            <div class="speech-bubble">Start with the engineer, then explore the side hobby. Tap the tail to continue.</div>
             <div class="click-hint">↓ Click the tail ↓</div>
         </div>
     </div>
@@ -784,35 +842,39 @@
         </div>
         <div class="stage-2-container">
             <div class="stack-section reel-section">
-                <span class="reel-highlight">Reel trailer</span>
-                <h2 style="color: #00D9FF; font-size: 1.6rem; margin-bottom: 0.5rem;">Video drops, always on</h2>
-                <p class="trailer-note">Mini video previews that feel like an Instagram trailer. Tap any reel to open my feed and keep the motion alive.</p>
+                    <span class="reel-highlight">Side hobby</span>
+                <h2 style="color: #00D9FF; font-size: 1.6rem; margin-bottom: 0.5rem;">Visual snapshots, not the whole story</h2>
+                <p class="trailer-note">A compact preview of creative motion, with the portfolio's true focus on AI, software, and product systems.</p>
+                <div class="slider-controls">
+                    <button class="back-btn" onclick="slideReels(-1)">← Prev</button>
+                    <button class="back-btn" onclick="slideReels(1)">Next →</button>
+                </div>
                 <div class="reel-grid">
                     <div class="reel-card" onclick="openInsta()">
-                        <div class="reel-thumb"></div>
-                        <span>Reel 01</span>
+                        <video muted loop autoplay playsinline preload="metadata" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
+                        <span>Hobby clip 1</span>
                     </div>
                     <div class="reel-card" onclick="openInsta()">
-                        <div class="reel-thumb"></div>
-                        <span>Reel 02</span>
+                        <video muted loop autoplay playsinline preload="metadata" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/forest.mp4"></video>
+                        <span>Hobby clip 2</span>
                     </div>
                     <div class="reel-card" onclick="openInsta()">
-                        <div class="reel-thumb"></div>
-                        <span>Reel 03</span>
+                        <video muted loop autoplay playsinline preload="metadata" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/bee.mp4"></video>
+                        <span>Hobby clip 3</span>
                     </div>
                 </div>
-                <p style="color: #888; text-align: center; font-size: 0.9rem;">Trailer mode is always visible, unlike a static portfolio section.</p>
+                <p style="color: #888; text-align: center; font-size: 0.9rem;">Embedded previews keep things active while the main story remains tech-first.</p>
             </div>
 
             <div class="stack-section">
-                <h2 style="color: #00D9FF; font-size: 1.5rem; margin-bottom: 1rem;">My Journey</h2>
+                <h2 style="color: #00D9FF; font-size: 1.5rem; margin-bottom: 1rem;">Career snapshot</h2>
                 <div class="journey-box" id="journeyTrigger">
-                    <div class="journey-title">📜 My Content Journey</div>
+                    <div class="journey-title">📜 My Tech Journey</div>
                     <div class="journey-desc">
-                        Click to explore a short, sharp version of how I build, iterate, and launch.
+                        A short, sharp story of how I build systems, ship products, and keep learning.
                     </div>
                 </div>
-                <button class="paw-button" onclick="goToStage3()">🐾 Learn more about the human</button>
+                <button class="paw-button" onclick="goToStage3()">🐾 Explore the tech roadmap</button>
             </div>
         </div>
     </div>
@@ -821,36 +883,36 @@
     <div id="journeyModal" class="journey-modal">
         <div class="journey-content">
             <div class="modal-header">
-                <h1 class="modal-title">📜 My Content Journey</h1>
+                <h1 class="modal-title">📜 My Tech Journey</h1>
                 <button class="minimize-btn" onclick="closeJourneyModal()">−</button>
             </div>
             <div class="modal-body">
                 <p>
-                    My journey as a creator started with a simple observation: the intersection of technology and creativity is where magic happens. While most people see a portfolio, I see a playground for innovation.
+                    My path is built around software, systems, and product thinking. Content is a creative side hobby; the main story is technical growth and real engineering work.
                 </p>
 
-                <h3>🚀 The Early Days</h3>
+                <h3>🚀 From Classrooms to Code</h3>
                 <p>
-                    I began as a CS student fascinated by AI and NLP. My AI Quiz Generator wasn't just a project—it was my first "aha!" moment. Realizing I could create tools that think? That changed everything. I started documenting this journey on Instagram, sharing not just code, but the thought process behind it.
+                    As a CS student, I moved quickly from theory to actual products. Projects like an AI-powered quiz generator and mobile apps taught me how to ship useful features, not just complete assignments.
                 </p>
 
-                <h3>📱 The Full-Stack Evolution</h3>
+                <h3>📱 Building Products</h3>
                 <p>
-                    Then came the Android app. Real-time social media, WebRTC, Firebase—I wasn't just building anymore; I was architecting. I discovered that product thinking matters as much as coding. This led me to roles as a Scrum master and Product Owner, reshaping how I approach problems.
+                    Working with WebRTC, Firebase, and full-stack app architecture helped me think in systems. I learned that product clarity, reliability, and iteration are as important as clean code.
                 </p>
 
-                <h3>🎮 Playing with Games</h3>
+                <h3>🎮 Systems & Interaction</h3>
                 <p>
-                    C++ and SFML brought me joy. Creating Centipede and Xonic weren't about nostalgia—they were about understanding physics, collision detection, and the craft of interactive experiences. Games taught me that every pixel matters.
+                    Game development with C++ and SFML sharpened my sense of performance, user feedback, and interaction design. It makes every UI feel more considered.
                 </p>
 
-                <h3>🧠 AI & The Future</h3>
+                <h3>🧠 AI as a tool</h3>
                 <p>
-                    Today, I'm obsessed with intelligent systems. NLP, machine learning, creative problem-solving—these aren't buzzwords. They're the lens through which I see the world. I believe technology should feel alive, useful, and yes, a little strange.
+                    I explore NLP and machine learning because they solve problems more intelligently, not because they're flashy. The goal is always to make tech more helpful and less noisy.
                 </p>
 
                 <p style="margin-top: 2rem; color: #00D9FF; font-weight: 600;">
-                    And that's why this portfolio has a cat. Because sometimes, the best way to be memorable is to be authentically you. 🐱
+                    The cat is a fun touch, but the real focus here is the engineer behind it—serious about software, curious about systems, and ready for tech challenges.
                 </p>
             </div>
         </div>
@@ -874,10 +936,10 @@
                 <div class="about-content">
                     <h2>Ibrahim Babar 🐾</h2>
                     <p>
-                        I build playful products at the edge of AI, apps, and interactive design. Think smart tools, fast mobile flows, and experiences that surprise.
+                        I build software systems, product flows, and AI-driven experiences with a sharp engineering focus.
                     </p>
                     <p>
-                        Cat fan, Scrum thinker, and someone who loves solving problems with a little tension and a lot of polish.
+                        Cat fan and Scrum thinker, yes—but the main story here is serious engineering, not content creation.
                     </p>
 
                     <!-- NAVIGATION ICONS -->
@@ -1016,6 +1078,13 @@
 
         function openInsta() {
             window.open('https://instagram.com/babarpov', '_blank');
+        }
+
+        function slideReels(direction) {
+            const reelGrid = document.querySelector('.reel-grid');
+            if (!reelGrid) return;
+            const cardWidth = reelGrid.querySelector('.reel-card')?.offsetWidth || 300;
+            reelGrid.scrollBy({ left: direction * (cardWidth + 16), behavior: 'smooth' });
         }
 
         // ==================== CUSTOM CURSOR PATTERN ====================
