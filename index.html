@@ -37,9 +37,9 @@
             background-color: #1b3322;
             overflow-x: hidden;
         }
-        /* Heavy backdrop shadow to punch the portrait cleanly above the busy line field */
+        /* Crisp masking shadow to drop your picture seamlessly into the pattern */
         .portrait-glow {
-            box-shadow: 0 0 40px 20px #1b3322;
+            box-shadow: 0 0 50px 25px #1b3322;
         }
     </style>
 </head>
@@ -48,28 +48,27 @@
     <!-- HERO SECTION -->
     <section class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6">
         
-        <!-- Canvas for the Razor-Sharp Topographical Woodblock Flow Lines -->
-        <canvas id="flowCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+        <!-- Canvas for the Sharp, Organic Zebra Ribbon Pattern -->
+        <canvas id="zebraCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
 
         <!-- Centered Core Elements -->
         <div class="relative z-10 flex flex-col items-center max-w-4xl text-center select-none">
             
             <!-- Portrait Container -->
-            <div id="portrait-wrapper" class="portrait-glow relative w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-2 border-brand-cream/30 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out">
-                <!-- Replace src with your image path later -->
+            <div id="portrait-wrapper" class="portrait-glow relative w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-2 border-brand-cream/20 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out">
                 <img id="portrait" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Ibrahim Babar" class="w-full h-full object-cover grayscale contrast-125 brightness-90">
                 <div class="absolute inset-0 bg-brand-darkGreen/10 mix-blend-multiply"></div>
             </div>
 
             <!-- Typography Reveal Area -->
             <div class="overflow-hidden mb-3">
-                <h1 id="hero-name" class="font-display text-5xl md:text-7xl font-semibold tracking-tight opacity-0 translate-y-12 transition-all duration-1000 ease-out drop-shadow-[0_4px_12px_rgba(27,51,34,0.8)]">
+                <h1 id="hero-name" class="font-display text-5xl md:text-7xl font-semibold tracking-tight opacity-0 translate-y-12 transition-all duration-1000 ease-out">
                     Ibrahim Babar
                 </h1>
             </div>
             
             <div class="overflow-hidden">
-                <p id="hero-tagline" class="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-brand-cream/70 opacity-0 translate-y-6 transition-all duration-1000 ease-out drop-shadow-[0_2px_6px_rgba(27,51,34,0.8)]">
+                <p id="hero-tagline" class="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-brand-cream/70 opacity-0 translate-y-6 transition-all duration-1000 ease-out">
                     Creative Multidisciplinary
                 </p>
             </div>
@@ -77,149 +76,140 @@
 
     </section>
 
-    <!-- Simplex Vector Noise Logic for Continuous Woodblock Textures -->
+    <!-- Mathematics Engine for Static Zebra-Print Formations -->
     <script>
-        const Noise = (function() {
-            const F2 = 0.5 * (Math.sqrt(3.0) - 1.0);
-            const G2 = (3.0 - Math.sqrt(3.0)) / 6.0;
+        // Static noise generation logic (no time parameters = zero glitching)
+        const ZebraNoise = (function() {
             const p = new Uint8Array(256);
             for (let i=0; i<256; i++) p[i] = Math.floor(Math.random()*256);
             const perm = new Uint8Array(512);
-            const permMod12 = new Uint8Array(512);
-            for (let i=0; i<512; i++) {
-                perm[i] = p[i & 255];
-                permMod12[i] = (perm[i] % 12);
-            }
+            for (let i=0; i<512; i++) perm[i] = p[i & 255];
+            
             return {
-                noise3D: function(xin, yin, zin) {
-                    // Quick pseudo-3D noise calculation to allow smooth time-based movement
-                    let n0, n1, n2;
-                    let s = (xin + yin) * F2;
-                    let i = Math.floor(xin + s);
-                    let j = Math.floor(yin + s);
-                    let t = (i + j) * G2;
-                    let X0 = i - t;
-                    let Y0 = j - t;
-                    let x0 = xin - X0;
-                    let y0 = yin - Y0;
-                    let i1, j1;
-                    if (x0 > y0) { i1 = 1; j1 = 0; } else { i1 = 0; j1 = 1; }
-                    let x1 = x0 - i1 + G2;
-                    let y1 = y0 - j1 + G2;
-                    let x2 = x0 - 1.0 + 2.0 * G2;
-                    let y2 = y0 - 1.0 + 2.0 * G2;
-                    let ii = i & 255;
-                    let jj = j & 255;
-                    let gi0 = permMod12[ii + perm[jj]];
-                    let gi1 = permMod12[ii + i1 + perm[jj + j1]];
-                    let gi2 = permMod12[ii + 1 + perm[jj + 1]];
-                    let t0 = 0.5 - x0 * x0 - y0 * y0;
-                    if (t0 < 0) n0 = 0.0;
-                    else { t0 *= t0; n0 = t0 * t0 * (gi0 % 2 === 0 ? 1 : -1) * x0 + (gi0 % 4 === 0 ? 1 : -1) * y0; }
-                    let t1 = 0.5 - x1 * x1 - y1 * y1;
-                    if (t1 < 0) n1 = 0.0;
-                    else { t1 *= t1; n1 = t1 * t1 * (gi1 % 2 === 0 ? 1 : -1) * x1 + (gi1 % 4 === 0 ? 1 : -1) * y1; }
-                    let t2 = 0.5 - x2 * x2 - y2 * y2;
-                    if (t2 < 0) n2 = 0.0;
-                    else { t2 *= t2; n2 = t2 * t2 * (gi2 % 2 === 0 ? 1 : -1) * x2 + (gi2 % 4 === 0 ? 1 : -1) * y2; }
-                    return 70.0 * (n0 + n1 + n2) + Math.sin(zin) * 0.2;
+                noise: function(x, y) {
+                    let X = Math.floor(x) & 255, Y = Math.floor(y) & 255;
+                    x -= Math.floor(x); y -= Math.floor(y);
+                    let u = x * x * x * (x * (x * 6 - 15) + 10), v = y * y * y * (y * (y * 6 - 15) + 10);
+                    let A = perm[X] + Y, B = perm[X + 1] + Y;
+                    return lerp(v, lerp(u, grad(perm[A], x, y), grad(perm[B], x - 1, y)),
+                               lerp(u, grad(perm[A + 1], x, y - 1), grad(perm[B + 1], x - 1, y - 1)));
                 }
             };
+            function lerp(t, a, b) { return a + t * (b - a); }
+            function grad(hash, x, y) { return ((hash & 1) ? x : -x) + ((hash & 2) ? y : -y); }
         })();
 
-        const canvas = document.getElementById('flowCanvas');
+        const canvas = document.getElementById('zebraCanvas');
         const ctx = canvas.getContext('2d');
 
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
-        let timeOffset = 0;
 
-        class Streamline {
-            constructor(x, y) {
-                this.seedX = x;
-                this.seedY = y;
-                this.maxLength = 140; // Intentionally contained lengths to preserve fine woodblock ridge details
-                this.speed = 3.0;     
+        class ZebraRibbon {
+            constructor(startX, startY, originEdge) {
+                this.points = [{x: startX, y: startY}];
+                this.edge = originEdge; // 'top', 'bottom', 'left', 'right'
+                this.currentLength = 0;
+                this.maxLength = Math.max(width, height) * 0.65; 
+                this.speed = 4.5; // Medium, clean speed injection
+                this.thick = 6 + Math.random() * 12; // Thick/thin variance matching natural zebra pattern stripes
             }
 
-            draw(px, py, t) {
-                ctx.beginPath();
-                ctx.moveTo(this.seedX, this.seedY);
+            grow(px, py) {
+                if (this.currentLength >= this.maxLength) return false;
 
-                let curX = this.seedX;
-                let curY = this.seedY;
+                const last = this.points[this.points.length - 1];
+                
+                // Get directional flow logic
+                let baseAngle;
+                if (this.edge === 'left') baseAngle = 0;
+                else if (this.edge === 'right') baseAngle = Math.PI;
+                else if (this.edge === 'top') baseAngle = Math.PI / 2;
+                else baseAngle = -Math.PI / 2;
 
-                for (let i = 0; i < this.maxLength; i++) {
-                    // Scaled calculation for ultra-sharp ridge frequencies
-                    let angle = Noise.noise3D(curX * 0.0028, curY * 0.0028, t) * Math.PI * 2.5;
+                // Layer organic waving offsets over the base directions
+                let noiseVal = ZebraNoise.noise(last.x * 0.004, last.y * 0.004);
+                let angle = baseAngle + noiseVal * 1.5;
 
-                    // Deflection barrier around your portrait center point
-                    const dx = curX - px;
-                    const dy = curY - py;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 160) {
-                        const force = (160 - dist) / 160;
-                        angle += Math.atan2(dy, dx) * force * 1.2; 
-                    }
-
-                    curX += Math.cos(angle) * this.speed;
-                    curY += Math.sin(angle) * this.speed;
-
-                    // Stop plotting lines if they exit borders
-                    if (curX < 0 || curX > width || curY < 0 || curY > height) break;
-                    
-                    ctx.lineTo(curX, curY);
+                // Push away gracefully from your center portrait coordinate
+                const dx = last.x - px;
+                const dy = last.y - py;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 180) {
+                    const force = (180 - dist) / 180;
+                    angle += Math.atan2(dy, dx) * force * 1.3;
                 }
 
+                const nextX = last.x + Math.cos(angle) * this.speed;
+                const nextY = last.y + Math.sin(angle) * this.speed;
+
+                this.points.push({x: nextX, y: nextY});
+                this.currentLength += this.speed;
+                return true;
+            }
+
+            draw() {
+                if (this.points.length < 2) return;
+                ctx.beginPath();
+                ctx.moveTo(this.points[0].x, this.points[0].y);
+                for (let i = 1; i < this.points.length; i++) {
+                    ctx.lineTo(this.points[i].x, this.points[i].y);
+                }
                 ctx.strokeStyle = '#f2eae1';
-                ctx.lineWidth = 1.75;    // Balanced width for crisp rendering on high-res displays
-                ctx.globalAlpha = 0.28;  // High visibility contrast for crisp lines
+                ctx.lineWidth = this.thick;
+                ctx.lineCap = 'round';
+                ctx.globalAlpha = 0.65; // Highly visible, rich cream ribbon structure
                 ctx.stroke();
             }
         }
 
-        let streamlines = [];
-        const isMobile = width < 768;
-        const totalStreams = isMobile ? 220 : 500; // Optimal density spacing for grid rendering
+        let ribbons = [];
 
-        function initFlowField() {
-            streamlines = [];
-            // Space seeds on a loose structured grid matrix instead of raw randomness
-            const spacing = isMobile ? 35 : 45;
-            for (let x = 0; x < width; x += spacing) {
-                for (let y = 0; y < height; y += spacing) {
-                    // Inject minor jitter so it looks perfectly organic
-                    streamlines.push(new Streamline(
-                        x + (Math.random() - 0.5) * 15,
-                        y + (Math.random() - 0.5) * 15
-                    ));
-                }
+        function initPattern() {
+            ribbons = [];
+            ctx.clearRect(0, 0, width, height);
+
+            // Left & Right Injectors
+            for (let y = 0; y < height; y += 40) {
+                if(Math.random() > 0.25) ribbons.push(new ZebraRibbon(0, y, 'left'));
+                if(Math.random() > 0.25) ribbons.push(new ZebraRibbon(width, y, 'right'));
+            }
+            // Top & Bottom Injectors
+            for (let x = 0; x < width; x += 40) {
+                if(Math.random() > 0.25) ribbons.push(new ZebraRibbon(x, 0, 'top'));
+                if(Math.random() > 0.25) ribbons.push(new ZebraRibbon(x, height, 'bottom'));
             }
         }
 
-        function runEngine() {
+        function buildTapestry() {
             ctx.clearRect(0, 0, width, height);
             
             const px = width / 2;
             const py = height / 2 - 40;
 
-            // Slow time vector incremental changes that cause lines to twist and roll smoothly
-            timeOffset += 0.0018; 
-
-            streamlines.forEach(stream => {
-                stream.draw(px, py, timeOffset);
+            let growing = false;
+            ribbons.forEach(ribbon => {
+                if (ribbon.grow(px, py)) {
+                    growing = true;
+                }
+                ribbon.draw();
             });
 
-            requestAnimationFrame(runEngine);
+            // Re-run framing loop only while segments are processing. 
+            // Once they reach max lengths, computation drops to 0% CPU footprint.
+            if (growing) {
+                requestAnimationFrame(buildTapestry);
+            }
         }
 
-        initFlowField();
-        runEngine();
+        initPattern();
+        buildTapestry();
 
         window.addEventListener('resize', () => {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            initFlowField();
+            initPattern();
+            buildTapestry();
         });
 
         // --- TYPOGRAPHY AND PORTRAIT REVEAL SEQUENCING ---
@@ -231,17 +221,17 @@
             setTimeout(() => {
                 portrait.style.opacity = "1";
                 portrait.style.transform = "scale(1)";
-            }, 400);
+            }, 500);
 
             setTimeout(() => {
                 name.style.opacity = "1";
                 name.style.transform = "translateY(0)";
-            }, 1200);
+            }, 1300);
 
             setTimeout(() => {
                 tagline.style.opacity = "1";
                 tagline.style.transform = "translateY(0)";
-            }, 1600);
+            }, 1700);
         });
     </script>
 </body>
