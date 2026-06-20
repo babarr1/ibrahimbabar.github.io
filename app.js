@@ -234,3 +234,31 @@ window.addEventListener('DOMContentLoaded', () => {
     tl.to("#hero-name", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=1.2");
     tl.to("#hero-tagline", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.9");
 });
+
+// --- INTERACTIVE PROFILE MANIFESTO DRAWER ENGINE ---
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('manifesto-toggle-btn');
+    const drawer = document.getElementById('manifesto-drawer');
+    const btnText = document.getElementById('toggle-btn-text');
+    const btnArrow = document.getElementById('toggle-btn-arrow');
+
+    if (toggleBtn && drawer) {
+        toggleBtn.addEventListener('click', () => {
+            const isClosed = drawer.style.maxHeight === '0px' || !drawer.style.maxHeight;
+
+            if (isClosed) {
+                // Dynamically sets height based exactly on inner element text bounding box size
+                drawer.style.maxHeight = drawer.scrollHeight + 'px';
+                drawer.style.opacity = '1';
+                btnText.textContent = 'Minimize details';
+                btnArrow.classList.add('rotate-180');
+            } else {
+                // Instantly snaps closed safely
+                drawer.style.maxHeight = '0px';
+                drawer.style.opacity = '0';
+                btnText.textContent = 'Click to explore identity';
+                btnArrow.classList.remove('rotate-180');
+            }
+        });
+    }
+});
