@@ -18,6 +18,42 @@
             font-family: 'Segoe UI', system-ui, sans-serif;
             min-height: 100vh;
             overflow: hidden;
+            cursor: none;
+        }
+
+        #cursorCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .stage-nav {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            display: flex;
+            gap: 0.75rem;
+            z-index: 20;
+        }
+
+        .back-btn {
+            border: 1px solid rgba(0, 217, 255, 0.6);
+            background: rgba(0, 217, 255, 0.12);
+            color: #e0e0e0;
+            padding: 0.75rem 1rem;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.25s ease, background 0.25s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-1px) scale(1.02);
+            background: rgba(0, 217, 255, 0.2);
         }
 
         /* ==================== STAGE TRANSITIONS ==================== */
@@ -246,6 +282,93 @@
             align-items: center;
             justify-content: center;
             gap: 2rem;
+        }
+
+        .reel-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+
+        .reel-highlight {
+            display: inline-block;
+            color: #00D9FF;
+            font-size: 0.9rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .reel-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .reel-card {
+            position: relative;
+            aspect-ratio: 4 / 5;
+            background: linear-gradient(180deg, rgba(0,217,255,0.16) 0%, rgba(10,14,39,0.82) 100%);
+            border: 1px solid rgba(0,217,255,0.15);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 45px rgba(0, 217, 255, 0.14);
+            cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .reel-card:hover {
+            transform: translateY(-6px);
+            border-color: #00D9FF;
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.24);
+        }
+
+        .reel-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(0, 217, 255, 0.18), transparent 38%);
+            pointer-events: none;
+        }
+
+        .reel-thumb {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #0a0e27 0%, #11204a 100%);
+            display: grid;
+            place-items: center;
+            color: #ddd;
+            letter-spacing: 0.03em;
+            overflow: hidden;
+        }
+
+        .reel-thumb::after {
+            content: '▶';
+            font-size: 3rem;
+            opacity: 0.28;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .reel-card span {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            z-index: 2;
+        }
+
+        .trailer-note {
+            color: #aaa;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 28rem;
         }
 
         .stack-3d {
@@ -589,11 +712,27 @@
         }
 
         /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .reel-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
             .stage-2-container {
                 grid-template-columns: 1fr;
                 padding: 2rem;
                 gap: 2rem;
+            }
+
+            .stage-nav {
+                left: 0.75rem;
+                top: 0.75rem;
+                flex-wrap: wrap;
+            }
+
+            .reel-grid {
+                grid-template-columns: 1fr;
             }
 
             .about-section {
@@ -611,6 +750,7 @@
     </style>
 </head>
 <body>
+    <canvas id="cursorCanvas"></canvas>
     <!-- ==================== STAGE 1 ==================== -->
     <div id="stage1" class="stage active">
         <div class="cat-container">
@@ -638,28 +778,41 @@
 
     <!-- ==================== STAGE 2 ==================== -->
     <div id="stage2" class="stage">
+        <div class="stage-nav">
+            <button class="back-btn" onclick="goToStage(1)">← Back</button>
+            <button class="back-btn" onclick="openInsta()">See all reels</button>
+        </div>
         <div class="stage-2-container">
-            <!-- LEFT: 3D STACK -->
-            <div class="stack-section">
-                <h2 style="color: #00D9FF; font-size: 1.5rem; margin-bottom: 1rem;">My Content World</h2>
-                <div class="stack-3d" id="instaStack">
-                    <div class="card">Post 1</div>
-                    <div class="card">Post 2</div>
-                    <div class="card">Post 3</div>
+            <div class="stack-section reel-section">
+                <span class="reel-highlight">Reel trailer</span>
+                <h2 style="color: #00D9FF; font-size: 1.6rem; margin-bottom: 0.5rem;">Video drops, always on</h2>
+                <p class="trailer-note">Mini video previews that feel like an Instagram trailer. Tap any reel to open my feed and keep the motion alive.</p>
+                <div class="reel-grid">
+                    <div class="reel-card" onclick="openInsta()">
+                        <div class="reel-thumb"></div>
+                        <span>Reel 01</span>
+                    </div>
+                    <div class="reel-card" onclick="openInsta()">
+                        <div class="reel-thumb"></div>
+                        <span>Reel 02</span>
+                    </div>
+                    <div class="reel-card" onclick="openInsta()">
+                        <div class="reel-thumb"></div>
+                        <span>Reel 03</span>
+                    </div>
                 </div>
-                <p style="color: #888; text-align: center; font-size: 0.9rem;">Hover & Click to visit Instagram</p>
+                <p style="color: #888; text-align: center; font-size: 0.9rem;">Trailer mode is always visible, unlike a static portfolio section.</p>
             </div>
 
-            <!-- RIGHT: JOURNEY MAP -->
             <div class="stack-section">
                 <h2 style="color: #00D9FF; font-size: 1.5rem; margin-bottom: 1rem;">My Journey</h2>
                 <div class="journey-box" id="journeyTrigger">
                     <div class="journey-title">📜 My Content Journey</div>
                     <div class="journey-desc">
-                        Click to explore my creative evolution, milestones, and the path that shaped my work...
+                        Click to explore a short, sharp version of how I build, iterate, and launch.
                     </div>
                 </div>
-                <button class="paw-button" onclick="goToStage3()">🐾 Get to know the human behind the cat</button>
+                <button class="paw-button" onclick="goToStage3()">🐾 Learn more about the human</button>
             </div>
         </div>
     </div>
@@ -704,8 +857,9 @@
     </div>
 
     <!-- ==================== STAGE 3 ==================== -->
-    <div id="stage3" class="stage">
-        <div class="stage-3-container">
+    <div id="stage3" class="stage">        <div class="stage-nav">
+            <button class="back-btn" onclick="goToStage(2)">← Back to reels</button>
+        </div>        <div class="stage-3-container">
             <div class="about-section">
                 <!-- PROFILE PICTURE -->
                 <div>
@@ -720,10 +874,10 @@
                 <div class="about-content">
                     <h2>Ibrahim Babar 🐾</h2>
                     <p>
-                        Hey! I'm a 3rd-year CS student from Islamabad who lives at the intersection of AI, full-stack development, and creative problem-solving. I love building things that feel alive—whether it's an intelligent quiz generator with clever distractor logic, a real-time social media platform, or even arcade games that feel buttery smooth.
+                        I build playful products at the edge of AI, apps, and interactive design. Think smart tools, fast mobile flows, and experiences that surprise.
                     </p>
                     <p>
-                        I'm a cat lover (clearly), a Scrum enthusiast, and someone who believes that technology should be useful, beautiful, and just a little bit strange. When I'm not coding, I'm probably overthinking game mechanics or exploring NLP rabbit holes.
+                        Cat fan, Scrum thinker, and someone who loves solving problems with a little tension and a lot of polish.
                     </p>
 
                     <!-- NAVIGATION ICONS -->
@@ -734,18 +888,13 @@
                     </div>
 
                     <!-- ACADEMICS -->
-                    <div id="academics" class="content-card active">
+                        <div id="academics" class="content-card active">
                         <h3>📚 Academic Journey</h3>
                         <p>
-                            <strong>National University of Computer & Emerging Sciences (FAST)</strong><br>
-                            Bachelor of Science in Computer Science (Expected June 2027)
-                        </p>
-                        <p>
-                            <strong>Relevant Coursework:</strong><br>
-                            Object-Oriented Programming, Data Structures & Algorithms, Probability & Statistics, Software for Mobile Development, Introduction to Artificial Intelligence, Software Design & Analysis, Introduction to Software Engineering
+                            FAST CS student, expected 2027. I turn coursework into real product experiments, especially in AI and mobile.
                         </p>
                         <p style="color: #00D9FF; margin-top: 1rem;">
-                            💡 I'm particularly passionate about AI/ML courses and their practical applications.
+                            💡 I prefer short, useful projects over long walls of theory.
                         </p>
                     </div>
 
@@ -832,10 +981,8 @@
             }, 600);
         });
 
-        // ==================== STAGE 2: INSTAGRAM STACK ====================
-        document.getElementById('instaStack').addEventListener('click', function() {
-            window.open('https://instagram.com/babarpov', '_blank');
-        });
+        // ==================== STAGE 2: INSTAGRAM REELS ====================
+        // stage 2 uses direct reel card click handlers instead of instaStack
 
         // ==================== JOURNEY MODAL ====================
         document.getElementById('journeyTrigger').addEventListener('click', function() {
@@ -866,6 +1013,65 @@
             document.getElementById(type).classList.add('active');
             document.querySelector(`[onclick="switchContent('${type}')"]`).classList.add('active');
         }
+
+        function openInsta() {
+            window.open('https://instagram.com/babarpov', '_blank');
+        }
+
+        // ==================== CUSTOM CURSOR PATTERN ====================
+        const canvas = document.getElementById('cursorCanvas');
+        const ctx = canvas.getContext('2d');
+        const particles = [];
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        function createParticle(x, y) {
+            particles.push({
+                x,
+                y,
+                radius: Math.random() * 10 + 5,
+                alpha: 1,
+                vx: (Math.random() - 0.5) * 1.4,
+                vy: (Math.random() - 0.5) * 1.4,
+                hue: 190 + Math.random() * 40
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach((p, index) => {
+                ctx.beginPath();
+                ctx.fillStyle = `hsla(${p.hue}, 100%, 65%, ${p.alpha})`;
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= 0.015;
+                p.radius *= 0.97;
+                if (p.alpha <= 0.05 || p.radius <= 0.5) particles.splice(index, 1);
+            });
+            requestAnimationFrame(drawParticles);
+        }
+
+        document.addEventListener('mousemove', (event) => {
+            const { clientX, clientY } = event;
+            for (let i = 0; i < 4; i += 1) {
+                createParticle(clientX + (Math.random() - 0.5) * 20, clientY + (Math.random() - 0.5) * 20);
+            }
+        });
+
+        requestAnimationFrame(drawParticles);
 
         // ==================== SMOOTH SCROLL ====================
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
