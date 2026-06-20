@@ -142,73 +142,67 @@
         </div>
     </section>
 
+<!-- TECHNICAL VAULT SECTION (NAVY BLUE CONTRAST PLATFORM) -->
+    <section id="tech-section" class="relative w-full py-24 px-6 md:px-12 flex flex-col justify-center z-10 bg-[#0f172a] border-t border-b border-brand-cream/10">
+        <div class="max-w-5xl w-full mx-auto">
 
-<!-- TECHNICAL VAULT SECTION (PREMIUM SYSTEM WORKSPACE) -->
-    <section id="tech-section" class="relative w-full py-32 px-6 md:px-12 flex flex-col justify-center z-10 bg-[#0f172a] border-t border-b border-brand-cream/10">
-        <div class="max-w-5xl w-full mx-auto space-y-12">
-            
-            <!-- Section Header Title -->
-            <div class="max-w-xl select-none">
-                <p class="text-xs tracking-[0.3em] uppercase text-brand-cream/40 mb-3 font-mono font-bold">System Workspace</p>
-                <h2 class="font-display text-4xl font-semibold tracking-tight text-brand-cream">The Profile</h2>
-            </div>
-
-            <!-- Unified Split-Pane Window Component Wrapper -->
+            <!-- Unified Split-Pane Workspace Box (No external explicit header text) -->
             <div class="w-full bg-[#080d16] border border-white/10 rounded shadow-2xl overflow-hidden flex flex-col">
                 
-                <!-- Mac-Style Top Bar Window Header -->
+                <!-- Mac-Style Top Window Navigation bar -->
                 <div class="w-full bg-white/[0.02] border-b border-white/5 px-5 py-3.5 flex items-center justify-between shrink-0 select-none">
                     <div class="flex gap-2">
                         <span class="w-3 h-3 rounded-full bg-[#ef4444]/40"></span>
                         <span class="w-3 h-3 rounded-full bg-[#eab308]/40"></span>
                         <span class="w-3 h-3 rounded-full bg-[#22c55e]/40"></span>
                     </div>
-                    <span class="text-[10px] font-mono text-white/40 tracking-[0.2em] uppercase font-bold">developer_profile.env</span>
-                    <div class="w-12"></div> <!-- Spatial balancing placeholder -->
+                    <span class="text-[10px] font-mono text-white/40 tracking-[0.2em] uppercase font-bold">academic_root.env</span>
+                    <div class="w-12"></div>
                 </div>
 
-                <!-- Split Pane Main Grid Content Window -->
+                <!-- Window Content Grid Split -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-white/5">
                     
-                    <!-- Left Side Pane: Academic Timeline Profile Box -->
-                    <div class="lg:col-span-4 p-8 flex flex-col justify-between space-y-8 select-none bg-white/[0.01]">
-                        <div class="space-y-4">
-                            <div class="w-10 h-10 rounded bg-brand-cream/5 border border-brand-cream/15 flex items-center justify-center text-brand-cream">
-                                <svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.5" viewBox="0 0 24 24">
+                    <!-- Left Pane Content: Minimalist Free-Floating Credentials -->
+                    <div class="lg:col-span-4 p-8 flex flex-col justify-between space-y-8 select-none bg-white/[0.005]">
+                        <div class="space-y-3">
+                            <!-- Free floating clean SVG asset (Box removed) -->
+                            <div class="text-brand-cream w-8 h-8 flex items-center justify-start">
+                                <svg class="w-6 h-6 fill-none stroke-current" stroke-width="1.5" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147L12 14.142l7.74-3.995A1 1 0 0019 9.253L12 5.632 5 9.253a1 1 0 00-.74.894z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13.144V15c0 1.954 3.134 3 7 3s7-1.046 7-3v-1.856M12 14.143v4" />
                                 </svg>
                             </div>
-                            <div class="space-y-1">
+                            <div class="space-y-0.5">
                                 <h3 class="font-display text-2xl font-medium tracking-tight text-brand-cream">FAST NUCES</h3>
-                                <p class="font-mono text-[11px] uppercase tracking-wider text-brand-cream/50">BS Computer Science</p>
+                                <p class="font-mono text-[10px] uppercase tracking-wider text-brand-cream/50">BS Computer Science</p>
                             </div>
                         </div>
-                        <div class="font-mono text-[11px] text-white/30 space-y-1 uppercase tracking-wide">
+                        <div class="font-mono text-[10px] text-white/30 space-y-1 uppercase tracking-wider">
                             <div>[ Status: 3rd Year student ]</div>
-                            <div>[ Focus: Strategy & Execution ]</div>
+                            <div>[ Class: 6th Semester ]</div>
                         </div>
                     </div>
 
-                    <!-- Right Side Pane: Smooth Terminal Environment Emulator Console -->
-                    <div id="terminal-body" class="lg:col-span-8 p-8 relative min-h-[240px] flex flex-col justify-start cursor-pointer group overflow-hidden">
+                    <!-- Right Pane Content: True Minimize-Capable Terminal Window -->
+                    <div id="terminal-body" class="lg:col-span-8 p-8 relative flex flex-col justify-start cursor-pointer group transition-all duration-500 ease-in-out">
                         
-                        <!-- Shell Prompt Code Line -->
+                        <!-- Command Prompt Line -->
                         <div class="flex items-center gap-3 font-mono text-xs text-[#22c55e] select-none">
                             <span>ibrahim@nuces:~$</span>
-                            <span id="terminal-trigger-text" class="text-white bg-white/10 px-2.5 py-1 rounded text-[10px] font-bold tracking-wider uppercase group-hover:bg-[#22c55e] group-hover:text-[#080d16] transition-all duration-300 animate-pulse">Run Profile Initialization</span>
+                            <span id="terminal-trigger-text" class="text-white bg-white/10 px-2.5 py-1 rounded text-[10px] font-bold tracking-wider uppercase group-hover:bg-[#22c55e] group-hover:text-[#080d16] transition-all duration-300 animate-pulse">Run Identity Check</span>
                         </div>
 
-                        <!-- Typing Data Stream Output Box -->
-                        <div id="terminal-stream-output" class="space-y-4 hidden mt-6 text-brand-cream/90 font-mono text-xs leading-relaxed max-w-2xl">
-                            <p class="text-white/30 italic text-[10px] select-none tracking-wider">&gt; Environment compiled. Fetching system manifest blocks...</p>
-                            <p id="stream-line-1" class="opacity-0 transition-opacity duration-500"></p>
-                            <p id="stream-line-2" class="opacity-0 transition-opacity duration-500 text-brand-cream/60 italic border-l border-brand-cream/20 pl-4"></p>
+                        <!-- Expandable Output Area Container -->
+                        <div id="terminal-stream-output" class="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out font-mono text-xs text-brand-cream/90 space-y-4">
+                            <p class="text-white/30 italic text-[10px] select-none tracking-wider pt-5">&gt; Manifest successfully decrypted. Outputting pipeline parameters...</p>
+                            <p id="stream-line-1" class="leading-relaxed"></p>
+                            <p id="stream-line-2" class="text-brand-cream/60 italic border-l border-brand-cream/20 pl-4 pb-2 leading-relaxed"></p>
                         </div>
                         
-                        <!-- Interactive Micro Hint Flag -->
-                        <div id="terminal-hint" class="absolute bottom-4 right-5 font-mono text-[9px] text-white/20 uppercase tracking-widest select-none pointer-events-none group-hover:text-white/40 transition-colors">
-                            [ Hover or Click Console Pane to Open ]
+                        <!-- Toggle Hint Tracker -->
+                        <div id="terminal-hint" class="mt-4 font-mono text-[9px] text-white/20 uppercase tracking-widest select-none pointer-events-none group-hover:text-white/40 transition-colors">
+                            [ Click to Toggle Console Stream ]
                         </div>
                     </div>
 

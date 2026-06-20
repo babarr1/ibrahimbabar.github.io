@@ -235,51 +235,44 @@ window.addEventListener('DOMContentLoaded', () => {
     tl.to("#hero-tagline", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.9");
 });
 
-// --- INTERACTIVE TERMINAL SIMULATOR LOGIC ---
+// --- INTERACTIVE TERMINAL TOGGLE ENGINE ---
 document.addEventListener('DOMContentLoaded', () => {
     const termBody = document.getElementById('terminal-body');
     const streamOutput = document.getElementById('terminal-stream-output');
     const triggerText = document.getElementById('terminal-trigger-text');
-    const hintText = document.getElementById('terminal-hint');
     
-    // Core strings split up cleanly to loop line by line
     const textLine1 = "I don't claim to be a veteran developer or a specialized AI engineer. Right now, I am driven by pure curiosity. I build, test, and break architectures to see how systems integrate.";
     const textLine2 = "My focus leans directly toward technical strategy, project execution, and the creative management of technology—ensuring that what gets engineered actually serves a story and a purpose.";
 
-    let executionTriggered = false;
-
     if (termBody && streamOutput) {
-        function triggerTerminalBoot() {
-            if (executionTriggered) return; // Prevent double execution looping
-            executionTriggered = true;
-            
-            // UI updates to show shell processing feedback
-            triggerText.textContent = "./execute_identity.sh";
-            triggerText.classList.remove('animate-pulse');
-            triggerText.style.background = "rgba(34, 197, 94, 0.2)";
-            triggerText.style.color = "#22c55e";
-            hintText.style.display = "none";
-            streamOutput.classList.remove('hidden');
+        termBody.addEventListener('click', () => {
+            const isCurrentlyOpen = streamOutput.style.maxHeight && streamOutput.style.maxHeight !== '0px';
 
-            // Line 1 typing effect simulation delay block
-            const el1 = document.getElementById('stream-line-1');
-            setTimeout(() => {
-                el1.textContent = textLine1;
-                el1.classList.remove('opacity-0');
-                el1.classList.add('opacity-100');
-            }, 600);
-
-            // Line 2 strategy offset delay block
-            const el2 = document.getElementById('stream-line-2');
-            setTimeout(() => {
-                el2.textContent = textLine2;
-                el2.classList.remove('opacity-0');
-                el2.classList.add('opacity-100');
-            }, 1800);
-        }
-
-        // Attach listeners to trigger on hover or touch/click on mobile viewports seamlessly
-        termBody.addEventListener('mouseenter', triggerTerminalBoot);
-        termBody.addEventListener('click', triggerTerminalBoot);
+            if (!isCurrentlyOpen) {
+                // --- OPEN MODE ---
+                triggerText.textContent = "./close_manifest.sh";
+                triggerText.classList.remove('animate-pulse');
+                triggerText.style.background = "rgba(239, 68, 68, 0.2)"; // Soft red warning alert state color
+                triggerText.style.color = "#ef4444";
+                
+                // Animate container expanding naturally based on scroll parameters
+                streamOutput.style.maxHeight = "500px";
+                streamOutput.style.opacity = "1";
+                
+                // Stream text strings values securely
+                document.getElementById('stream-line-1').textContent = textLine1;
+                document.getElementById('stream-line-2').textContent = textLine2;
+            } else {
+                // --- MINIMIZE CLOSE MODE ---
+                triggerText.textContent = "Run Identity Check";
+                triggerText.classList.add('animate-pulse');
+                triggerText.style.background = "rgba(251, 248, 244, 0.1)"; // Reverts to base neutral cream glow tint
+                triggerText.style.color = "#ffffff";
+                
+                // Snap container closed smoothly using transitional CSS limits
+                streamOutput.style.maxHeight = "0px";
+                streamOutput.style.opacity = "0";
+            }
+        });
     }
 });
