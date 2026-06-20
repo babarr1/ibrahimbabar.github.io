@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ibrahim Babar — Portfolio</title>
     
-    <!-- Premium Font Pairing (Fraunces & Inter) -->
+    <!-- Premium Font Pairing -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN & Structural Style Sheet Link -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
 
     <script>
         tailwind.config = {
@@ -19,9 +20,9 @@
             extend: {
               colors: {
                 brand: {
-                  darkGreen: '#1b3322',  // Matte forest green background from image_a182f4.png
-                  cream: '#f2eae1',      // Vintage cream text
-                  beige: '#e6ded4',      // Premium muted architectural beige for light mode
+                  darkGreen: '#1b3322',  
+                  cream: '#f2eae1',      
+                  beige: '#e6ded4',      
                 }
               },
               fontFamily: {
@@ -32,52 +33,34 @@
           }
         }
     </script>
-
-    <style>
-        /* Smooth transitions for theme swapping */
-        body {
-            transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1), color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .portrait-glow {
-            transition: box-shadow 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .lang-fade {
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        /* Custom dropdown slide-fade utility */
-        #lang-dropdown {
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-    </style>
 </head>
-<body class="bg-brand-darkGreen text-brand-cream font-body antialiased selection:bg-brand-cream selection:text-brand-darkGreen">
+<body class="bg-brand-darkGreen text-brand-cream font-body antialiased selection:bg-brand-cream selection:text-brand-darkGreen hidden-cursor">
+
+    <!-- CUSTOM FUN INTERACTIVE CURSOR -->
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-dot"></div>
+
+    <!-- BACKGROUND ENGINE SYSTEMS -->
+    <div class="fixed inset-0 grid-overlay pointer-events-none z-0"></div>
+    <canvas id="bgPatternCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-0 opacity-20"></canvas>
 
     <!-- FIXED TOP NAV CONTROLS -->
     <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-6 md:px-12 pointer-events-none">
-        <div class="text-xs tracking-[0.3em] uppercase pointer-events-auto opacity-70 hover:opacity-100 transition-opacity font-medium">IB</div>
-
-        <!-- Minimalist Controls Bundle -->
+        <div class="text-xs tracking-[0.3em] uppercase pointer-events-auto opacity-70 font-medium">IB</div>
         <div class="flex items-center gap-8 pointer-events-auto">
-            
-            <!-- Elegant Multi-Language Dropdown Selection -->
             <div class="relative inline-block text-left">
-                <button id="lang-menu-btn" class="text-xs font-medium tracking-widest uppercase opacity-60 hover:opacity-100 transition-opacity flex items-center gap-1.5 focus:outline-none">
+                <button id="lang-menu-btn" class="text-xs font-medium tracking-widest uppercase opacity-60 hover:opacity-100 flex items-center gap-1.5 focus:outline-none">
                     <span id="lang-active">EN</span>
                     <svg class="w-2.5 h-2.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                
-                <!-- Droplist Panel -->
-                <div id="lang-dropdown" class="absolute right-0 mt-3 w-20 rounded-md shadow-xl bg-brand-cream text-brand-darkGreen border border-brand-darkGreen/10 py-1 opacity-0 pointer-events-none translate-y-[-10px] z-50">
-                    <button onclick="changeLanguage('EN')" class="w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10 transition-colors">EN</button>
-                    <button onclick="changeLanguage('UR')" class="w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10 transition-colors">UR</button>
-                    <button onclick="changeLanguage('TR')" class="w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10 transition-colors">TR</button>
-                    <button onclick="changeLanguage('ES')" class="w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10 transition-colors">ES</button>
+                <div id="lang-dropdown" class="absolute right-0 mt-3 w-20 rounded-md shadow-xl bg-brand-cream text-brand-darkGreen border border-brand-darkGreen/10 py-1 opacity-0 pointer-events-none translate-y-[-10px] transition-all duration-200">
+                    <button class="lang-opt w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10" data-lang="EN">EN</button>
+                    <button class="lang-opt w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10" data-lang="UR">UR</button>
+                    <button class="lang-opt w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10" data-lang="TR">TR</button>
                 </div>
             </div>
-
-            <!-- Light / Dark Mode Icon Toggle -->
-            <button id="theme-toggle" class="w-5 h-5 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity focus:outline-none" aria-label="Toggle Theme">
-                <svg id="theme-icon" class="w-full h-full stroke-current fill-none" stroke-width="1.5" viewBox="0 0 24 24">
+            <button id="theme-toggle" class="w-5 h-5 flex items-center justify-center opacity-60 hover:opacity-100 focus:outline-none">
+                <svg class="w-full h-full stroke-current fill-none" stroke-width="1.5" viewBox="0 0 24 24">
                     <path id="icon-path" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
             </button>
@@ -85,255 +68,73 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6">
-        
-        <!-- SVG Canvas for Responsive Line Spiral -->
+    <section class="relative w-full h-screen flex flex-col items-center justify-center px-6 z-10">
         <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
             <g id="spiral-group"></g>
         </svg>
 
-        <!-- Centered Core Elements -->
-        <div class="relative z-10 flex flex-col items-center max-w-4xl text-center">
-            
-            <!-- Portrait Container -->
-            <div id="portrait-wrapper" class="portrait-glow relative w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border border-brand-cream/10 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out" style="box-shadow: 0 0 60px 10px rgba(242, 234, 225, 0.03);">
-                <img id="portrait" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Ibrahim Babar" class="w-full h-full object-cover grayscale contrast-115 brightness-95">
-                <div class="absolute inset-0 bg-brand-darkGreen/10 mix-blend-multiply"></div>
+        <div class="relative flex flex-col items-center max-w-4xl text-center">
+            <div id="portrait-wrapper" class="relative w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border border-brand-cream/10 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out">
+                <img id="portrait" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Ibrahim Babar" class="w-full h-full object-cover grayscale contrast-115">
             </div>
-
-            <!-- Typography Reveal Area -->
             <div class="overflow-hidden mb-3">
-                <h1 id="hero-name" class="font-display text-5xl md:text-7xl font-semibold tracking-tight opacity-0 translate-y-12 transition-all duration-1000 ease-out lang-fade">
+                <h1 id="hero-name" class="font-display text-5xl md:text-7xl font-semibold tracking-tight opacity-0 translate-y-12 transition-all duration-1000 ease-out">
                     Ibrahim Babar
                 </h1>
             </div>
-            
             <div class="overflow-hidden">
-                <p id="hero-tagline" class="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-brand-cream/60 opacity-0 translate-y-6 transition-all duration-1000 ease-out delay-300 lang-fade">
+                <p id="hero-tagline" class="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-brand-cream/60 opacity-0 translate-y-6 transition-all duration-1000 ease-out">
                     Creative Multidisciplinary
                 </p>
             </div>
         </div>
-
     </section>
 
-    <!-- INSTAGRAM CREATOR SECTION -->
-    <section class="relative w-full min-h-screen py-32 px-6 md:px-12 flex flex-col items-center justify-center overflow-hidden border-t border-brand-cream/5">
-        
-        <!-- Section Header -->
-        <div class="max-w-xl text-center mb-20 select-none">
+    <!-- INSTAGRAM TACTILE STACK SECTION -->
+    <section class="relative w-full min-h-screen py-32 px-6 flex flex-col items-center justify-center z-10">
+        <div class="max-w-xl text-center mb-16 select-none">
             <p class="text-xs tracking-[0.3em] uppercase opacity-50 mb-3">Digital Storytelling</p>
             <h2 class="font-display text-3xl md:text-5xl font-medium tracking-tight">From My Grid</h2>
         </div>
 
-        <!-- 3D Polaroid Flex Container -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-5xl w-full px-4">
-            
-            <!-- Polaroid 1 -->
-            <div class="polaroid-wrapper flex justify-center">
-                <div class="polaroid-card bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl border border-brand-darkGreen/5 w-72 h-96 flex flex-col justify-between cursor-pointer md:-rotate-3 transition-shadow duration-300 hover:shadow-2xl">
-                    <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5 relative">
-                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600" alt="Instagram Capture" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                    </div>
-                    <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">stray companion.</div>
+        <!-- Tactile Deck Container -->
+        <div class="relative w-72 h-96 mb-16 perspective-container flex items-center justify-center">
+            <!-- Card 3 (Bottom) -->
+            <div class="polaroid-card stack-card absolute bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl w-72 h-96 flex flex-col justify-between" style="--index: 2;">
+                <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5">
+                    <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale">
                 </div>
+                <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">feline framework.</div>
             </div>
-
-            <!-- Polaroid 2 (Slightly raised / offset for magazine aesthetic) -->
-            <div class="polaroid-wrapper flex justify-center md:-translate-y-8">
-                <div class="polaroid-card bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl border border-brand-darkGreen/5 w-72 h-96 flex flex-col justify-between cursor-pointer md:rotate-2 transition-shadow duration-300 hover:shadow-2xl">
-                    <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5 relative">
-                        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" alt="Instagram Capture" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                    </div>
-                    <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">captured moments.</div>
+            <!-- Card 2 (Middle) -->
+            <div class="polaroid-card stack-card absolute bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl w-72 h-96 flex flex-col justify-between" style="--index: 1;">
+                <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5">
+                    <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale">
                 </div>
+                <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">captured moments.</div>
             </div>
-
-            <!-- Polaroid 3 -->
-            <div class="polaroid-wrapper flex justify-center">
-                <div class="polaroid-card bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl border border-brand-darkGreen/5 w-72 h-96 flex flex-col justify-between cursor-pointer md:-rotate-1 transition-shadow duration-300 hover:shadow-2xl">
-                    <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5 relative">
-                        <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&q=80&w=600" alt="Instagram Capture" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
-                    </div>
-                    <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">feline framework.</div>
+            <!-- Card 1 (Top) -->
+            <div class="polaroid-card stack-card absolute bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl w-72 h-96 flex flex-col justify-between cursor-pointer" style="--index: 0;">
+                <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale">
                 </div>
+                <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">stray companion.</div>
             </div>
-
         </div>
+
+        <!-- Dynamic Instagram Interactive Handle -->
+        <a href="https://instagram.com" target="_blank" class="instagram-link group flex items-center gap-3 px-6 py-3.5 rounded-full border border-brand-cream/20 bg-brand-cream/5 backdrop-blur-md transition-all duration-300 hover:bg-brand-cream hover:text-brand-darkGreen hover:border-brand-cream">
+            <svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.5" viewBox="0 0 24 24">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span class="text-xs font-semibold tracking-[0.2em] uppercase">follow me on instagram</span>
+        </a>
     </section>
 
-    <!-- GSAP Animations & Core Script Setup -->
+    <!-- Animation Dependencies CDN Links -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    
-    <script>
-        const spiralGroup = document.getElementById('spiral-group');
-        let currentTheme = 'dark'; 
-        let currentLang = 'EN';
-
-        // Expanded Translation Matrix Dictionary
-        const translations = {
-            EN: { tagline: "Creative Multidisciplinary" },
-            UR: { tagline: "تخلیقی تکنیکی ماہر" },
-            TR: { tagline: "Yaratıcı Multidisipliner" },
-            ES: { tagline: "Multidisciplinario Creativo" }
-        };
-
-        // Track dynamic line color based on layout environment
-        function getStrokeColor() {
-            return currentTheme === 'dark' ? '#f2eae1' : '#1b3322';
-        }
-
-        function generateMultiSpirals() {
-            spiralGroup.innerHTML = ''; 
-
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            const cx = w / 2;
-            const cy = h / 2 - 40; 
-            const isMobile = w < 768;
-
-            const lineCount = isMobile ? 10 : 6;        
-            const offsetSpacing = isMobile ? 6 : 12;   
-            const strokeColor = getStrokeColor();
-
-            for (let i = 0; i < lineCount; i++) {
-                const step = i * offsetSpacing;
-                let dLeft, dRight;
-
-                if (isMobile) {
-                    dLeft = `M -40,${h * 0.1 + step * 2} C ${w * 0.45},${h * 0.02 + step} ${0 - step},${cy - 60} ${cx - 45 + step * 0.3},${cy - 25} Q ${cx},${cy + 45 - step * 0.4} ${cx},${cy}`;
-                    dRight = `M ${w + 40},${h * 0.9 - step * 2} C ${w * 0.55},${h * 0.98 - step} ${w + step},${cy + 60} ${cx + 45 - step * 0.3},${cy + 25} Q ${cx},${cy - 45 + step * 0.4} ${cx},${cy}`;
-                } else {
-                    dLeft = `M -50,${h * 0.2 + step} Q ${w * 0.22},${h * 0.05 + step} ${w * 0.33},${cy - step * 0.5} T ${cx - 50 + step * 0.3},${cy + 30 - step * 0.2} Q ${cx},${cy + 50 - step} ${cx},${cy}`;
-                    dRight = `M ${w + 50},${h * 0.8 - step} Q ${w * 0.78},${h * 0.95 - step} ${w * 0.67},${cy + step * 0.5} T ${cx + 50 - step * 0.3},${cy - 30 + step * 0.2} Q ${cx},${cy - 50 + step} ${cx},${cy}`;
-                }
-
-                const pathLeft = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                pathLeft.setAttribute('d', dLeft);
-                pathLeft.setAttribute('fill', 'none');
-                pathLeft.setAttribute('stroke', strokeColor);
-                pathLeft.setAttribute('stroke-width', i === 0 ? '1.25' : '0.75');
-                pathLeft.setAttribute('opacity', (isMobile ? 0.38 - (i * 0.035) : 0.4 - (i * 0.05)).toString());
-                pathLeft.setAttribute('class', 'spiral-line');
-                spiralGroup.appendChild(pathLeft);
-
-                const pathRight = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                pathRight.setAttribute('d', dRight);
-                pathRight.setAttribute('fill', 'none');
-                pathRight.setAttribute('stroke', strokeColor);
-                pathRight.setAttribute('stroke-width', i === 0 ? '1.25' : '0.75');
-                pathRight.setAttribute('opacity', (isMobile ? 0.38 - (i * 0.035) : 0.4 - (i * 0.05)).toString());
-                pathRight.setAttribute('class', 'spiral-line');
-                spiralGroup.appendChild(pathRight);
-            }
-        }
-
-        // --- THEME SWITCHER (DARK & WARM BEIGE LIGHT MODE) ---
-        const themeToggle = document.getElementById('theme-toggle');
-        const iconPath = document.getElementById('icon-path');
-
-        themeToggle.addEventListener('click', () => {
-            const body = document.body;
-            
-            if (currentTheme === 'dark') {
-                currentTheme = 'light';
-                body.classList.remove('bg-brand-darkGreen', 'text-brand-cream');
-                body.classList.add('bg-brand-beige', 'text-brand-darkGreen'); // Swaps cleanly to Architectural Beige
-                
-                // Morph to Sun icon
-                iconPath.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z');
-            } else {
-                currentTheme = 'dark';
-                body.classList.remove('bg-brand-beige', 'text-brand-darkGreen');
-                body.classList.add('bg-brand-darkGreen', 'text-brand-cream');
-                
-                // Morph to Moon icon
-                iconPath.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z');
-            }
-            generateMultiSpirals();
-        });
-
-        // --- INTERACTIVE DROPDOWN LANGUAGES CONTROLLER ---
-        const langMenuBtn = document.getElementById('lang-menu-btn');
-        const langDropdown = document.getElementById('lang-dropdown');
-        const langActive = document.getElementById('lang-active');
-        const heroTagline = document.getElementById('hero-tagline');
-
-        // Open/Close Dropdown Panel Panel
-        langMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = !langDropdown.classList.contains('opacity-0');
-            if (isOpen) {
-                closeDropdown();
-            } else {
-                langDropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-                langDropdown.classList.add('opacity-100', 'translate-y-0');
-            }
-        });
-
-        function closeDropdown() {
-            langDropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-            langDropdown.classList.remove('opacity-100', 'translate-y-0');
-        }
-
-        // Global click check to close open lists automatically
-        document.addEventListener('click', closeDropdown);
-
-        function changeLanguage(langCode) {
-            currentLang = langCode;
-            langActive.innerText = langCode;
-
-            // Fluid mask text reveal animation sequence
-            heroTagline.style.opacity = '0';
-            heroTagline.style.transform = 'translateY(10px)';
-
-            setTimeout(() => {
-                heroTagline.innerText = translations[langCode].tagline;
-                heroTagline.style.opacity = '0.7';
-                heroTagline.style.transform = 'translateY(0)';
-            }, 300);
-        }
-
-        // --- INITIALIZATION ---
-        generateMultiSpirals();
-        window.addEventListener('resize', generateMultiSpirals);
-
-        // --- 3D TACTILE PERSPECTIVE CARD ENGINE ---
-        document.querySelectorAll('.polaroid-card').forEach(card => {
-            // Perspective parent setup
-            card.parentElement.style.perspective = "1000px";
-            card.style.transformStyle = "preserve-3d";
-            card.style.transition = "transform 0.15s ease-out, box-shadow 0.3s ease";
-
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; // Mouse positions relative to element boundaries
-                const y = e.clientY - rect.top;
-                
-                const xc = rect.width / 2;
-                const yc = rect.height / 2;
-                
-                // Tilt thresholds calculation matrix
-                const tiltX = (yc - y) / 10;
-                const tiltY = (x - xc) / 10;
-
-                // Apply multi-axis scale and rotation shifts live
-                card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.04, 1.04, 1.04) translateZ(10px)`;
-            });
-
-            // Smoothly snap back to base state when mouse leaves boundary
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = "rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateZ(0px)";
-            });
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const tl = gsap.timeline();
-            tl.to("#portrait-wrapper", { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out" });
-            tl.fromTo(".spiral-line", { strokeDasharray: "2000", strokeDashoffset: "2000" }, { strokeDashoffset: "0", duration: 2.2, ease: "power2.inOut", stagger: 0.07 }, "-=0.9");
-            tl.to("#hero-name", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=1.2");
-            tl.to("#hero-tagline", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.9");
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
