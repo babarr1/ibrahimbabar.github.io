@@ -3,7 +3,7 @@
     .hidden-cursor {
         cursor: none !important;
     }
-    .hidden-cursor a, .hidden-cursor button, .hidden-cursor .polaroid-card {
+    .hidden-cursor a, .hidden-cursor button, .hidden-cursor .polaroid-card, .hidden-cursor .group {
         cursor: none !important;
     }
 }
@@ -47,37 +47,23 @@ body {
 
 /* --- SYSTEM DESIGN ARCHITECTURE GRID PATTERNS --- */
 .grid-overlay {
-    background-size: 40px 40px;
+    background-size: 50px 50px;
     background-image: 
-        linear-gradient(to right, rgba(242, 234, 225, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(242, 234, 225, 0.02) 1px, transparent 1px);
-    mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+        linear-gradient(to right, rgba(242, 234, 225, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(242, 234, 225, 0.015) 1px, transparent 1px);
+    mask-image: linear-gradient(to bottom, transparent, rgba(0,0,0,1) 15%, rgba(0,0,0,1) 85%, transparent);
 }
 
 .bg-brand-beige .grid-overlay {
-    background-size: 40px 40px;
     background-image: 
-        linear-gradient(to right, rgba(27, 51, 34, 0.03) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(27, 51, 34, 0.03) 1px, transparent 1px);
+        linear-gradient(to right, rgba(27, 51, 34, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(27, 51, 34, 0.02) 1px, transparent 1px);
 }
 
-/* --- DECK PERSPECTIVE SYSTEM LAYOUT --- */
-.perspective-container {
-    perspective: 1200px;
+/* --- SLICK EDITORIAL GRID IMAGE TRANSITIONS --- */
+.editorial-img {
+    filter: grayscale(100%) contrast(1.1) brightness(0.9);
 }
-
-.stack-card {
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.6s ease, z-index 0.6s step-end;
-    transform-origin: bottom center;
-    /* Clean tiered offsets mimicking a dynamic physical deck layout */
-    transform: translateY(calc(var(--index) * 12px)) scale(calc(1 - var(--index) * 0.04)) rotate(calc(var(--index) * -2deg));
-    z-index: calc(10 - var(--index));
-}
-
-.stack-card img {
-    transition: grayscale 0.5s ease;
-}
-
-.stack-card:hover img {
-    grayscale: 0;
+.editorial-img:hover {
+    filter: grayscale(0%) contrast(1) brightness(1);
 }
