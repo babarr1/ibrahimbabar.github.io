@@ -92,18 +92,18 @@
         }
 
         /* Customize bounce tracking rhythm for a gentler flow */
-        .animate-bounce {
-            animation: custom-bounce 2s infinite;
+/* Ultra-Smooth, Slow Floating Guide Engine */
+        .animate-fluid-bounce {
+            animation: fluid-float 3.2s infinite ease-in-out;
+            will-change: transform;
         }
 
-        @keyframes custom-bounce {
+        @keyframes fluid-float {
             0%, 100% {
-                transform: translateY(-25%) rotate(90deg);
-                animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+                transform: translateY(-8px);
             }
             50% {
-                transform: translateY(0) rotate(90deg);
-                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+                transform: translateY(4px);
             }
         }
     </style>
@@ -162,15 +162,14 @@
             </div>
         </div>
         <!-- SMART CURSOR GUIDE: HERO -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 z-20 cursor-pointer select-none group" onclick="document.getElementById('tech-section').scrollIntoView({ behavior: 'smooth' })">
-            <!-- Dynamic Message Bubble -->
-            <span class="font-mono text-[10px] tracking-widest text-brand-cream/40 group-hover:text-brand-cream/80 uppercase transition-colors duration-300 bg-brand-darkGreen/80 backdrop-blur-sm px-2.5 py-1 rounded border border-brand-cream/5">
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 z-20 cursor-pointer select-none group" onclick="document.getElementById('tech-section').scrollIntoView({ behavior: 'smooth' })">
+            <span class="font-mono text-[9px] tracking-[0.25em] text-brand-cream/40 group-hover:text-brand-cream/90 uppercase transition-colors duration-300 bg-brand-darkGreen/80 backdrop-blur-sm px-2 py-0.5 rounded border border-brand-cream/5">
                 follow me
             </span>
-            <!-- Bouncing Custom Pointer SVG -->
-            <div class="text-brand-cream animate-bounce duration-1000">
-                <svg class="w-4 h-4 fill-current transform rotate-90" viewBox="0 0 24 24">
-                    <path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/>
+            <div class="text-brand-cream animate-fluid-bounce w-6 h-10 flex justify-center items-center">
+                <svg class="w-5 h-8 fill-none stroke-current" stroke-width="1.2" viewBox="0 0 24 36">
+                    <path fill="currentColor" stroke="none" d="M12 4L4 11.53v.98l6.84 2.65L13.48 22h.98L12 4z"/>
+                    <path d="M12 16c0 4-3 6-3 10s3 5 3 7" stroke-dasharray="2 2" class="opacity-40" />
                 </svg>
             </div>
         </div>
@@ -244,14 +243,14 @@
             </div>
 
         </div>
-        <!-- SMART CURSOR GUIDE: TECH MODULE -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 z-20 cursor-pointer select-none group" onclick="document.getElementById('projects-section').scrollIntoView({ behavior: 'smooth' })">
-            <span class="font-mono text-[10px] tracking-widest text-brand-cream/40 group-hover:text-brand-cream/80 uppercase transition-colors duration-300 bg-[#090d16]/80 backdrop-blur-sm px-2.5 py-1 rounded border border-white/5">
+<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 z-20 cursor-pointer select-none group" onclick="document.getElementById('projects-section').scrollIntoView({ behavior: 'smooth' })">
+            <span class="font-mono text-[9px] tracking-[0.25em] text-brand-cream/40 group-hover:text-brand-cream/90 uppercase transition-colors duration-300 bg-[#090d16]/80 backdrop-blur-sm px-2 py-0.5 rounded border border-white/5">
                 view execution logs
             </span>
-            <div class="text-brand-cream animate-bounce">
-                <svg class="w-4 h-4 fill-current transform rotate-90" viewBox="0 0 24 24">
-                    <path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/>
+            <div class="text-brand-cream animate-fluid-bounce w-6 h-10 flex justify-center items-center">
+                <svg class="w-5 h-8 fill-none stroke-current" stroke-width="1.2" viewBox="0 0 24 36">
+                    <path fill="currentColor" stroke="none" d="M12 4L4 11.53v.98l6.84 2.65L13.48 22h.98L12 4z"/>
+                    <path d="M12 16c0 4-3 6-3 10s3 5 3 7" stroke-dasharray="2 2" class="opacity-40" />
                 </svg>
             </div>
         </div>
