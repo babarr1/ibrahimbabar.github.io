@@ -19,8 +19,8 @@
             extend: {
               colors: {
                 brand: {
-                  darkGreen: '#1b3322',  
-                  cream: '#f2eae1',      
+                  darkGreen: '#1b3322',  // Matte forest green background from image_a182f4.png
+                  cream: '#f2eae1',      // Vintage soft cream
                 }
               },
               fontFamily: {
@@ -37,9 +37,8 @@
             background-color: #1b3322;
             overflow-x: hidden;
         }
-        /* Heavy localized backdrop mask to isolate typography and your image */
         .portrait-glow {
-            box-shadow: 0 0 60px 40px #1b3322;
+            box-shadow: 0 0 60px 10px rgba(242, 234, 225, 0.03);
         }
     </style>
 </head>
@@ -48,15 +47,17 @@
     <!-- HERO SECTION -->
     <section class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6">
         
-        <!-- Canvas for the Continuously Moving Zebra Stripe Field -->
-        <canvas id="zebraCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+        <!-- SVG Canvas for the Mobile-Responsive Multi-Line Spiral -->
+        <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+            <g id="spiral-group"></g>
+        </svg>
 
         <!-- Centered Core Elements -->
-        <div class="relative z-10 flex flex-col items-center max-w-4xl text-center select-none">
+        <div class="relative z-10 flex flex-col items-center max-w-4xl text-center">
             
             <!-- Portrait Container -->
-            <div id="portrait-wrapper" class="portrait-glow relative w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border-2 border-brand-cream/20 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out">
-                <img id="portrait" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Ibrahim Babar" class="w-full h-full object-cover grayscale contrast-125 brightness-90">
+            <div id="portrait-wrapper" class="portrait-glow relative w-44 h-44 md:w-52 md:h-52 rounded-full overflow-hidden border border-brand-cream/10 shadow-2xl mb-8 opacity-0 scale-95 transition-all duration-1000 ease-out">
+                <img id="portrait" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600" alt="Ibrahim Babar" class="w-full h-full object-cover grayscale contrast-115 brightness-95">
                 <div class="absolute inset-0 bg-brand-darkGreen/10 mix-blend-multiply"></div>
             </div>
 
@@ -68,7 +69,7 @@
             </div>
             
             <div class="overflow-hidden">
-                <p id="hero-tagline" class="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-brand-cream/70 opacity-0 translate-y-6 transition-all duration-1000 ease-out">
+                <p id="hero-tagline" class="text-xs md:text-sm font-medium tracking-[0.25em] uppercase text-brand-cream/60 opacity-0 translate-y-6 transition-all duration-1000 ease-out delay-300">
                     Creative Multidisciplinary
                 </p>
             </div>
@@ -76,129 +77,100 @@
 
     </section>
 
-    <!-- Moving Zebra Fields Engine -->
+    <!-- GSAP Animations & Adaptive Mathematics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
     <script>
-        // Simple 3D Perlin Noise implementation to handle the animation time vector smoothly
-        const ZebraNoise = (function() {
-            const p = new Uint8Array(256);
-            for (let i=0; i<256; i++) p[i] = Math.floor(Math.random()*256);
-            const perm = new Uint8Array(512);
-            for (let i=0; i<512; i++) perm[i] = p[i & 255];
-            
-            return {
-                noise3D: function(x, y, z) {
-                    let X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
-                    x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
-                    let u = x*x*x*(x*(x*6-15)+10), v = y*y*y*(y*(y*6-15)+10), w = z*z*z*(z*(z*6-15)+10);
-                    let A = perm[X]+Y, AA = perm[A]+Z, AB = perm[A+1]+Z, B = perm[X+1]+Y, BA = perm[B]+Z, BB = perm[B+1]+Z;
-                    return lerp(w, lerp(v, lerp(u, grad(perm[AA], x, y, z), grad(perm[BA], x-1, y, z)),
-                                           lerp(u, grad(perm[AB], x, y-1, z), grad(perm[BB], x-1, y-1, z))),
-                                   lerp(v, lerp(u, grad(perm[AA+1], x, y, z-1), grad(perm[BA+1], x-1, y, z-1)),
-                                           lerp(u, grad(perm[AB+1], x, y-1, z-1), grad(perm[BB+1], x-1, y-1, z-1))));
-                }
-            };
-             Welsh
-            function lerp(t, a, b) { return a + t * (b - a); }
-            function grad(hash, x, y, z) {
-                let h = hash & 15;
-                let u = h<8 ? x : y, v = h<4 ? y : h==12||h==14 ? x : z;
-                return ((h&1)? -u : u) + ((h&2)? -v : v);
-            }
-        })();
+        const spiralGroup = document.getElementById('spiral-group');
 
-        const canvas = document.getElementById('zebraCanvas');
-        const ctx = canvas.getContext('2d');
+        function generateMultiSpirals() {
+            spiralGroup.innerHTML = ''; // Reset layout on scale change
 
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
-        let animationTime = 0;
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const cx = w / 2;
+            const cy = h / 2 - 40; 
 
-        // Configuration matching image_a0876c.jpg layout properties
-        const stripeSpacing = 70; // Distance between seed rows
-        const maxStripeLength = 320; 
+            const isMobile = w < 768;
 
-        function drawZebraPattern(t) {
-            ctx.clearRect(0, 0, width, height);
-            
-            const px = width / 2;
-            const py = height / 2 - 40;
+            // Tailoring vector tracks explicitly based on device footprint
+            const lineCount = isMobile ? 5 : 6;        
+            const offsetSpacing = isMobile ? 8 : 12;   
 
-            // Generate parallel-running base vectors across the viewport grid
-            for (let y = -50; y < height + 50; y += stripeSpacing) {
-                ctx.beginPath();
-                
-                let isStarted = false;
-                
-                for (let x = -50; x < width + 50; x += 10) {
-                    // Pull smooth, wide horizontal noise coordinates to get broad bands rather than thin wires
-                    let noiseVal = ZebraNoise.noise3D(x * 0.0015, y * 0.002, t);
-                    
-                    // Add smooth vertical displacement math
-                    let targetY = y + noiseVal * 160;
+            for (let i = 0; i < lineCount; i++) {
+                const step = i * offsetSpacing;
+                let dLeft, dRight;
 
-                    // Push smoothly around portrait container zone
-                    const dx = x - px;
-                    const dy = targetY - py;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 180) {
-                        const force = (180 - dist) / 180;
-                        targetY += (dy > 0 ? 1 : -1) * force * 50;
-                    }
+                if (isMobile) {
+                    // 📱 PERFECT PHONE GEOMETRY: Concentric cascading frames looping within phone boundaries
+                    dLeft = `M -20,${h * 0.15 + step} 
+                             C ${w * 0.1},${h * 0.05 + step} ${w * 0.15},${cy - 80} ${cx - 30 + step * 0.2},${cy - 20} 
+                             Q ${cx},${cy + 40 - step * 0.5} ${cx},${cy}`;
 
-                    if (!isStarted) {
-                        ctx.moveTo(x, targetY);
-                        isStarted = true;
-                    } else {
-                        ctx.lineTo(x, targetY);
-                    }
+                    dRight = `M ${w + 20},${h * 0.85 - step} 
+                              C ${w * 0.9},${h * 0.95 - step} ${w * 0.85},${cy + 80} ${cx + 30 - step * 0.2},${cy + 20} 
+                              Q ${cx},${cy - 40 + step * 0.5} ${cx},${cy}`;
+                } else {
+                    // 💻 LAPTOP GEOMETRY: Sweeping, widescreen curves
+                    dLeft = `M -50,${h * 0.2 + step} Q ${w * 0.22},${h * 0.05 + step} ${w * 0.33},${cy - step * 0.5} T ${cx - 50 + step * 0.3},${cy + 30 - step * 0.2} Q ${cx},${cy + 50 - step} ${cx},${cy}`;
+                    dRight = `M ${w + 50},${h * 0.8 - step} Q ${w * 0.78},${h * 0.95 - step} ${w * 0.67},${cy + step * 0.5} T ${cx + 50 - step * 0.3},${cy - 30 + step * 0.2} Q ${cx},${cy - 50 + step} ${cx},${cy}`;
                 }
 
-                // Dynamic strip thickness logic to make the bands look painted/organic
-                ctx.strokeStyle = '#f2eae1';
-                ctx.lineWidth = 32 + Math.sin(y + t) * 12; // Bold, prominent bands matching the image
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-                ctx.globalAlpha = 0.95; 
-                ctx.stroke();
+                // Render Left Paths
+                const pathLeft = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                pathLeft.setAttribute('d', dLeft);
+                pathLeft.setAttribute('fill', 'none');
+                pathLeft.setAttribute('stroke', '#f2eae1');
+                pathLeft.setAttribute('stroke-width', i === 0 ? '1.25' : '0.75');
+                pathLeft.setAttribute('opacity', (isMobile ? 0.35 - (i * 0.05) : 0.4 - (i * 0.05)).toString());
+                pathLeft.setAttribute('class', 'spiral-line');
+                spiralGroup.appendChild(pathLeft);
+
+                // Render Right Paths
+                const pathRight = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                pathRight.setAttribute('d', dRight);
+                pathRight.setAttribute('fill', 'none');
+                pathRight.setAttribute('stroke', '#f2eae1');
+                pathRight.setAttribute('stroke-width', i === 0 ? '1.25' : '0.75');
+                pathRight.setAttribute('opacity', (isMobile ? 0.35 - (i * 0.05) : 0.4 - (i * 0.05)).toString());
+                pathRight.setAttribute('class', 'spiral-line');
+                spiralGroup.appendChild(pathRight);
             }
         }
 
-        function renderLoop() {
-            // Speed factor for the continuous moving effect (medium, steady motion)
-            animationTime += 0.004; 
-            
-            drawZebraPattern(animationTime);
-            requestAnimationFrame(renderLoop);
-        }
+        generateMultiSpirals();
+        window.addEventListener('resize', generateMultiSpirals);
 
-        // Initialize and fire execution loop
-        renderLoop();
-
-        window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        });
-
-        // --- TYPOGRAPHY AND PORTRAIT REVEAL SEQUENCING ---
+        // --- SNAPPY ORIGINAL TIMING TRIGGER ---
         window.addEventListener('DOMContentLoaded', () => {
-            const portrait = document.getElementById('portrait-wrapper');
-            const name = document.getElementById('hero-name');
-            const tagline = document.getElementById('hero-tagline');
+            const tl = gsap.timeline();
 
-            setTimeout(() => {
-                portrait.style.opacity = "1";
-                portrait.style.transform = "scale(1)";
-            }, 500);
+            tl.to("#portrait-wrapper", {
+                opacity: 1,
+                scale: 1,
+                duration: 1.2,
+                ease: "power4.out"
+            });
 
-            setTimeout(() => {
-                name.style.opacity = "1";
-                name.style.transform = "translateY(0)";
-            }, 1300);
+            tl.fromTo(".spiral-line", 
+                { strokeDasharray: "1500", strokeDashoffset: "1500" },
+                { strokeDashoffset: "0", duration: 2.0, ease: "power2.inOut", stagger: 0.06 },
+                "-=0.9"
+            );
 
-            setTimeout(() => {
-                tagline.style.opacity = "1";
-                tagline.style.transform = "translateY(0)";
-            }, 1700);
+            tl.to("#hero-name", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=1.1");
+
+            tl.to("#hero-tagline", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=0.8");
         });
     </script>
 </body>
