@@ -81,97 +81,98 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
     <script>
-        const spiralGroup = document.getElementById('spiral-group');
+const spiralGroup = document.getElementById('spiral-group');
 
-        function generateMultiSpirals() {
-            spiralGroup.innerHTML = ''; // Reset layout on scale change
+function generateMultiSpirals() {
+    spiralGroup.innerHTML = ''; // Reset layout on resize
 
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            const cx = w / 2;
-            const cy = h / 2 - 40; 
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const cx = w / 2;
+    const cy = h / 2 - 40; 
 
-            const isMobile = w < 768;
+    const isMobile = w < 768;
 
-            // Tailoring vector tracks explicitly based on device footprint
-            const lineCount = isMobile ? 5 : 6;        
-            const offsetSpacing = isMobile ? 8 : 12;   
+    // Richer line count and tighter spacing on mobile to prevent the "single line" look
+    const lineCount = isMobile ? 10 : 6;        
+    const offsetSpacing = isMobile ? 6 : 12;   
 
-            for (let i = 0; i < lineCount; i++) {
-                const step = i * offsetSpacing;
-                let dLeft, dRight;
+    for (let i = 0; i < lineCount; i++) {
+        const step = i * offsetSpacing;
+        let dLeft, dRight;
 
-                if (isMobile) {
-                    // 📱 PERFECT PHONE GEOMETRY: Concentric cascading frames looping within phone boundaries
-                    dLeft = `M -20,${h * 0.15 + step} 
-                             C ${w * 0.1},${h * 0.05 + step} ${w * 0.15},${cy - 80} ${cx - 30 + step * 0.2},${cy - 20} 
-                             Q ${cx},${cy + 40 - step * 0.5} ${cx},${cy}`;
+        if (isMobile) {
+            // 📱 MOBLE DESIGN: Winding, deep s-curves that sweep wide to the edges before spiraling in
+            // This prevents them from intersecting too quickly and maximizes visual impact
+            dLeft = `M -40,${h * 0.1 + step * 2} 
+                     C ${w * 0.45},${h * 0.02 + step} ${0 - step},${cy - 60} ${cx - 45 + step * 0.3},${cy - 25} 
+                     Q ${cx},${cy + 45 - step * 0.4} ${cx},${cy}`;
 
-                    dRight = `M ${w + 20},${h * 0.85 - step} 
-                              C ${w * 0.9},${h * 0.95 - step} ${w * 0.85},${cy + 80} ${cx + 30 - step * 0.2},${cy + 20} 
-                              Q ${cx},${cy - 40 + step * 0.5} ${cx},${cy}`;
-                } else {
-                    // 💻 LAPTOP GEOMETRY: Sweeping, widescreen curves
-                    dLeft = `M -50,${h * 0.2 + step} Q ${w * 0.22},${h * 0.05 + step} ${w * 0.33},${cy - step * 0.5} T ${cx - 50 + step * 0.3},${cy + 30 - step * 0.2} Q ${cx},${cy + 50 - step} ${cx},${cy}`;
-                    dRight = `M ${w + 50},${h * 0.8 - step} Q ${w * 0.78},${h * 0.95 - step} ${w * 0.67},${cy + step * 0.5} T ${cx + 50 - step * 0.3},${cy - 30 + step * 0.2} Q ${cx},${cy - 50 + step} ${cx},${cy}`;
-                }
-
-                // Render Left Paths
-                const pathLeft = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                pathLeft.setAttribute('d', dLeft);
-                pathLeft.setAttribute('fill', 'none');
-                pathLeft.setAttribute('stroke', '#f2eae1');
-                pathLeft.setAttribute('stroke-width', i === 0 ? '1.25' : '0.75');
-                pathLeft.setAttribute('opacity', (isMobile ? 0.35 - (i * 0.05) : 0.4 - (i * 0.05)).toString());
-                pathLeft.setAttribute('class', 'spiral-line');
-                spiralGroup.appendChild(pathLeft);
-
-                // Render Right Paths
-                const pathRight = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                pathRight.setAttribute('d', dRight);
-                pathRight.setAttribute('fill', 'none');
-                pathRight.setAttribute('stroke', '#f2eae1');
-                pathRight.setAttribute('stroke-width', i === 0 ? '1.25' : '0.75');
-                pathRight.setAttribute('opacity', (isMobile ? 0.35 - (i * 0.05) : 0.4 - (i * 0.05)).toString());
-                pathRight.setAttribute('class', 'spiral-line');
-                spiralGroup.appendChild(pathRight);
-            }
+            dRight = `M ${w + 40},${h * 0.9 - step * 2} 
+                      C ${w * 0.55},${h * 0.98 - step} ${w + step},${cy + 60} ${cx + 45 - step * 0.3},${cy + 25} 
+                      Q ${cx},${cy - 45 + step * 0.4} ${cx},${cy}`;
+        } else {
+            // 💻 LAPTOP DESIGN: Expansive, wide-set geometric curves
+            dLeft = `M -50,${h * 0.2 + step} Q ${w * 0.22},${h * 0.05 + step} ${w * 0.33},${cy - step * 0.5} T ${cx - 50 + step * 0.3},${cy + 30 - step * 0.2} Q ${cx},${cy + 50 - step} ${cx},${cy}`;
+            dRight = `M ${w + 50},${h * 0.8 - step} Q ${w * 0.78},${h * 0.95 - step} ${w * 0.67},${cy + step * 0.5} T ${cx + 50 - step * 0.3},${cy - 30 + step * 0.2} Q ${cx},${cy - 50 + step} ${cx},${cy}`;
         }
 
-        generateMultiSpirals();
-        window.addEventListener('resize', generateMultiSpirals);
+        // Render Left Paths
+        const pathLeft = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pathLeft.setAttribute('d', dLeft);
+        pathLeft.setAttribute('fill', 'none');
+        pathLeft.setAttribute('stroke', '#f2eae1');
+        pathLeft.setAttribute('stroke-width', i === 0 ? '1.25' : '0.75');
+        pathLeft.setAttribute('opacity', (isMobile ? 0.38 - (i * 0.035) : 0.4 - (i * 0.05)).toString());
+        pathLeft.setAttribute('class', 'spiral-line');
+        spiralGroup.appendChild(pathLeft);
 
-        // --- SNAPPY ORIGINAL TIMING TRIGGER ---
-        window.addEventListener('DOMContentLoaded', () => {
-            const tl = gsap.timeline();
+        // Render Right Paths
+        const pathRight = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pathRight.setAttribute('d', dRight);
+        pathRight.setAttribute('fill', 'none');
+        pathRight.setAttribute('stroke', '#f2eae1');
+        pathRight.setAttribute('stroke-width', i === 0 ? '1.25' : '0.75');
+        pathRight.setAttribute('opacity', (isMobile ? 0.38 - (i * 0.035) : 0.4 - (i * 0.05)).toString());
+        pathRight.setAttribute('class', 'spiral-line');
+        spiralGroup.appendChild(pathRight);
+    }
+}
 
-            tl.to("#portrait-wrapper", {
-                opacity: 1,
-                scale: 1,
-                duration: 1.2,
-                ease: "power4.out"
-            });
+generateMultiSpirals();
+window.addEventListener('resize', generateMultiSpirals);
 
-            tl.fromTo(".spiral-line", 
-                { strokeDasharray: "1500", strokeDashoffset: "1500" },
-                { strokeDashoffset: "0", duration: 2.0, ease: "power2.inOut", stagger: 0.06 },
-                "-=0.9"
-            );
+// --- ANIMATION SCHEDULER ---
+window.addEventListener('DOMContentLoaded', () => {
+    const tl = gsap.timeline();
 
-            tl.to("#hero-name", {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            }, "-=1.1");
+    tl.to("#portrait-wrapper", {
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: "power4.out"
+    });
 
-            tl.to("#hero-tagline", {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            }, "-=0.8");
-        });
+    tl.fromTo(".spiral-line", 
+        { strokeDasharray: "2000", strokeDashoffset: "2000" },
+        { strokeDashoffset: "0", duration: 2.2, ease: "power2.inOut", stagger: 0.07 },
+        "-=0.9"
+    );
+
+    tl.to("#hero-name", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+    }, "-=1.2");
+
+    tl.to("#hero-tagline", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+    }, "-=0.9");
+});
     </script>
 </body>
 </html>
