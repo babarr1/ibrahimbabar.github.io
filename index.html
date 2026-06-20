@@ -91,46 +91,58 @@
     </section>
 
     <!-- INSTAGRAM TACTILE STACK SECTION -->
-    <section class="relative w-full min-h-screen py-32 px-6 flex flex-col items-center justify-center z-10">
-        <div class="max-w-xl text-center mb-16 select-none">
-            <p class="text-xs tracking-[0.3em] uppercase opacity-50 mb-3">Digital Storytelling</p>
-            <h2 class="font-display text-3xl md:text-5xl font-medium tracking-tight">From My Grid</h2>
-        </div>
+    <!-- INSTAGRAM CREATOR GRID SECTION -->
+    <section class="relative w-full min-h-screen py-32 px-6 md:px-12 flex flex-col justify-center z-10 border-t border-brand-cream/10">
+        
+        <!-- Section Grid Layout: Text Content left, Media Grid right -->
+        <div class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- LEFT COLUMN: Creator Manifesto (Personalized Core Identity) -->
+            <div class="lg:col-span-5 space-y-6 select-none">
+                <p class="text-xs tracking-[0.3em] uppercase opacity-50 font-semibold">Digital Storytelling</p>
+                <h2 class="font-display text-4xl md:text-5xl font-medium tracking-tight leading-tight">
+                    Shaping narratives beyond the screen.
+                </h2>
+                <p class="text-brand-cream/70 text-sm md:text-base leading-relaxed max-w-md font-body">
+                    Alongside building technical strategies, I cultivate a community of thousands across digital platforms. I bridge the gap between design, execution, and engaging storytelling, turning simple concepts into cinematic brand experiences.
+                </p>
+                
+                <!-- Dynamic Instagram Interactive Link -->
+                <div class="pt-4">
+                    <a href="https://instagram.com" target="_blank" class="instagram-link group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-brand-cream/20 bg-brand-cream/5 backdrop-blur-md transition-all duration-300 hover:bg-brand-cream hover:text-brand-darkGreen hover:border-brand-cream">
+                        <svg class="w-4 h-4 fill-none stroke-current" stroke-width="1.5" viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                        <span class="text-xs font-semibold tracking-[0.2em] uppercase">Connect @ Instagram</span>
+                    </a>
+                </div>
+            </div>
 
-        <!-- Tactile Deck Container -->
-        <div class="relative w-72 h-96 mb-16 perspective-container flex items-center justify-center">
-            <!-- Card 3 (Bottom) -->
-            <div class="polaroid-card stack-card absolute bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl w-72 h-96 flex flex-col justify-between" style="--index: 2;">
-                <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5">
-                    <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale">
+            <!-- RIGHT COLUMN: Premium Editorial Grid Layout -->
+            <div class="lg:col-span-7 grid grid-cols-12 gap-4 w-full">
+                
+                <!-- Main Feature Box (Tall) -->
+                <div class="col-span-7 aspect-[3/4] overflow-hidden rounded bg-brand-cream/5 relative group border border-brand-cream/10">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=800" alt="Cinematic Content" class="editorial-img w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0">
+                    <div class="absolute bottom-4 left-4 text-[10px] tracking-widest uppercase opacity-40 font-semibold text-brand-cream mix-blend-difference">01 / Aesthetic Focus</div>
                 </div>
-                <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">feline framework.</div>
-            </div>
-            <!-- Card 2 (Middle) -->
-            <div class="polaroid-card stack-card absolute bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl w-72 h-96 flex flex-col justify-between" style="--index: 1;">
-                <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5">
-                    <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale">
+
+                <!-- Secondary Frame Set (Stacked Right side) -->
+                <div class="col-span-5 flex flex-col gap-4">
+                    <!-- Top Small Square -->
+                    <div class="w-full aspect-square overflow-hidden rounded bg-brand-cream/5 relative group border border-brand-cream/10">
+                        <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=600" alt="Creative Capture" class="editorial-img w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0">
+                    </div>
+                    <!-- Bottom Medium Rect -->
+                    <div class="w-full aspect-[4/5] overflow-hidden rounded bg-brand-cream/5 relative group border border-brand-cream/10">
+                        <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&q=80&w=600" alt="Visual Frame" class="editorial-img w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0">
+                    </div>
                 </div>
-                <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">captured moments.</div>
-            </div>
-            <!-- Card 1 (Top) -->
-            <div class="polaroid-card stack-card absolute bg-brand-cream text-brand-darkGreen p-4 pb-8 shadow-xl w-72 h-96 flex flex-col justify-between cursor-pointer" style="--index: 0;">
-                <div class="w-full h-72 overflow-hidden bg-brand-darkGreen/5">
-                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale">
-                </div>
-                <div class="font-display italic text-center text-sm pt-4 tracking-wide opacity-80">stray companion.</div>
+
             </div>
         </div>
-
-        <!-- Dynamic Instagram Interactive Handle -->
-        <a href="https://instagram.com" target="_blank" class="instagram-link group flex items-center gap-3 px-6 py-3.5 rounded-full border border-brand-cream/20 bg-brand-cream/5 backdrop-blur-md transition-all duration-300 hover:bg-brand-cream hover:text-brand-darkGreen hover:border-brand-cream">
-            <svg class="w-5 h-5 fill-none stroke-current" stroke-width="1.5" viewBox="0 0 24 24">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-            <span class="text-xs font-semibold tracking-[0.2em] uppercase">follow me on instagram</span>
-        </a>
     </section>
 
     <!-- Animation Dependencies CDN Links -->
