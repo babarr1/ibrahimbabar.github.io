@@ -19,8 +19,8 @@
             extend: {
               colors: {
                 brand: {
-                  darkGreen: '#1b3322',  // Matte forest green background from image_a182f4.png
-                  cream: '#f2eae1',      // Vintage soft cream text
+                  darkGreen: '#1b3322',  
+                  cream: '#f2eae1',      
                 }
               },
               fontFamily: {
@@ -37,9 +37,9 @@
             background-color: #1b3322;
             overflow-x: hidden;
         }
-        /* Crisp masking shadow to drop your picture seamlessly into the pattern */
+        /* Perfectly matches the background to drop your portrait seamlessly into the canvas layout */
         .portrait-glow {
-            box-shadow: 0 0 50px 25px #1b3322;
+            box-shadow: 0 0 60px 30px #1b3322;
         }
     </style>
 </head>
@@ -48,7 +48,7 @@
     <!-- HERO SECTION -->
     <section class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6">
         
-        <!-- Canvas for the Sharp, Organic Zebra Ribbon Pattern -->
+        <!-- Canvas for the High-Impact, Minimalist Non-Overlapping Zebra Patterns -->
         <canvas id="zebraCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
 
         <!-- Centered Core Elements -->
@@ -76,9 +76,8 @@
 
     </section>
 
-    <!-- Mathematics Engine for Static Zebra-Print Formations -->
+    <!-- Clean, Intelligent Non-Overlapping Vector Engine -->
     <script>
-        // Static noise generation logic (no time parameters = zero glitching)
         const ZebraNoise = (function() {
             const p = new Uint8Array(256);
             for (let i=0; i<256; i++) p[i] = Math.floor(Math.random()*256);
@@ -105,46 +104,96 @@
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
 
-        class ZebraRibbon {
+        // A global grid map tracking populated canvas space to enforce clean separation
+        let collisionGrid = new Uint8Array(Math.ceil(width / 8) * Math.ceil(height / 8));
+        const gridW = Math.ceil(width / 8);
+
+        function checkAndMarkGrid(x, y, radius) {
+            const gx = Math.floor(x / 8);
+            const gy = Math.floor(y / 8);
+            const rCells = Math.ceil(radius / 8);
+            
+            let collision = false;
+
+            // Scan surrounding radius cells for nearby lines
+            for (let dx = -rCells; dx <= rCells; dx++) {
+                for (let dy = -rCells; dy <= rCells; dy++) {
+                    const cx = gx + dx;
+                    const cy = gy + dy;
+                    if (cx >= 0 && cx < gridW && cy >= 0 && cy < Math.ceil(height / 8)) {
+                        if (collisionGrid[cy * gridW + cx] === 1) {
+                            collision = true;
+                        }
+                    }
+                }
+            }
+
+            // If clean, mark the cells as claimed by this line
+            if (!collision) {
+                for (let dx = -rCells; dx <= rCells; dx++) {
+                    for (let dy = -rCells; dy <= rCells; dy++) {
+                        const cx = gx + dx;
+                        const cy = gy + dy;
+                        if (cx >= 0 && cx < gridW && cy >= 0 && cy < Math.ceil(height / 8)) {
+                            collisionGrid[cy * gridW + cx] = 1;
+                        }
+                    }
+                }
+            }
+            return collision;
+        }
+
+        class MinimalRibbon {
             constructor(startX, startY, originEdge) {
                 this.points = [{x: startX, y: startY}];
-                this.edge = originEdge; // 'top', 'bottom', 'left', 'right'
-                this.currentLength = 0;
-                this.maxLength = Math.max(width, height) * 0.65; 
-                this.speed = 4.5; // Medium, clean speed injection
-                this.thick = 6 + Math.random() * 12; // Thick/thin variance matching natural zebra pattern stripes
+                this.edge = originEdge;
+                this.alive = true;
+                this.speed = 4.0;
+                // Thicker, graphic lines matching watermarked_img_635412397513879388.png
+                this.thick = 14 + Math.random() * 12; 
             }
 
             grow(px, py) {
-                if (this.currentLength >= this.maxLength) return false;
+                if (!this.alive) return false;
 
                 const last = this.points[this.points.length - 1];
                 
-                // Get directional flow logic
+                // Establish initial direction vectors
                 let baseAngle;
                 if (this.edge === 'left') baseAngle = 0;
                 else if (this.edge === 'right') baseAngle = Math.PI;
                 else if (this.edge === 'top') baseAngle = Math.PI / 2;
                 else baseAngle = -Math.PI / 2;
 
-                // Layer organic waving offsets over the base directions
-                let noiseVal = ZebraNoise.noise(last.x * 0.004, last.y * 0.004);
-                let angle = baseAngle + noiseVal * 1.5;
+                let noiseVal = ZebraNoise.noise(last.x * 0.003, last.y * 0.003);
+                let angle = baseAngle + noiseVal * 1.4;
 
-                // Push away gracefully from your center portrait coordinate
+                // Push beautifully clear of portrait layout zone
                 const dx = last.x - px;
                 const dy = last.y - py;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 if (dist < 180) {
                     const force = (180 - dist) / 180;
-                    angle += Math.atan2(dy, dx) * force * 1.3;
+                    angle += Math.atan2(dy, dx) * force * 1.5;
                 }
 
                 const nextX = last.x + Math.cos(angle) * this.speed;
                 const nextY = last.y + Math.sin(angle) * this.speed;
 
+                // Border boundaries
+                if (nextX < 0 || nextX > width || nextY < 0 || nextY > height) {
+                    this.alive = false;
+                    return false;
+                }
+
+                // Strict isolation metric check. Stops growth if it approaches an existing stripe.
+                const bufferDistance = this.thick + 14; 
+                if (checkAndMarkGrid(nextX, nextY, bufferDistance)) {
+                    this.alive = false;
+                    return false;
+                }
+
                 this.points.push({x: nextX, y: nextY});
-                this.currentLength += this.speed;
                 return true;
             }
 
@@ -158,7 +207,8 @@
                 ctx.strokeStyle = '#f2eae1';
                 ctx.lineWidth = this.thick;
                 ctx.lineCap = 'round';
-                ctx.globalAlpha = 0.65; // Highly visible, rich cream ribbon structure
+                ctx.lineJoin = 'round';
+                ctx.globalAlpha = 0.85; 
                 ctx.stroke();
             }
         }
@@ -166,18 +216,22 @@
         let ribbons = [];
 
         function initPattern() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            collisionGrid.fill(0);
+            
             ribbons = [];
             ctx.clearRect(0, 0, width, height);
 
-            // Left & Right Injectors
-            for (let y = 0; y < height; y += 40) {
-                if(Math.random() > 0.25) ribbons.push(new ZebraRibbon(0, y, 'left'));
-                if(Math.random() > 0.25) ribbons.push(new ZebraRibbon(width, y, 'right'));
+            // SIGNIFICANTLY REDUCED LINE COUNTS FOR A MINIMALIST TEXTURE
+            // Space injection points far apart (100px increments)
+            for (let y = 60; y < height; y += 100) {
+                if(Math.random() > 0.4) ribbons.push(new MinimalRibbon(0, y, 'left'));
+                if(Math.random() > 0.4) ribbons.push(new MinimalRibbon(width, y, 'right'));
             }
-            // Top & Bottom Injectors
-            for (let x = 0; x < width; x += 40) {
-                if(Math.random() > 0.25) ribbons.push(new ZebraRibbon(x, 0, 'top'));
-                if(Math.random() > 0.25) ribbons.push(new ZebraRibbon(x, height, 'bottom'));
+            for (let x = 60; x < width; x += 100) {
+                if(Math.random() > 0.4) ribbons.push(new MinimalRibbon(x, 0, 'top'));
+                if(Math.random() > 0.4) ribbons.push(new MinimalRibbon(x, height, 'bottom'));
             }
         }
 
@@ -195,8 +249,6 @@
                 ribbon.draw();
             });
 
-            // Re-run framing loop only while segments are processing. 
-            // Once they reach max lengths, computation drops to 0% CPU footprint.
             if (growing) {
                 requestAnimationFrame(buildTapestry);
             }
@@ -206,8 +258,6 @@
         buildTapestry();
 
         window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
             initPattern();
             buildTapestry();
         });
