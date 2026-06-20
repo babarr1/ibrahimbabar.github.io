@@ -53,3 +53,53 @@ body {
 .editorial-img:hover {
     filter: grayscale(0%) contrast(1) brightness(1);
 }
+
+/* --- INFINITE MARQUEE ENGINE --- */
+.marquee-container {
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marquee-track {
+    width: max-content;
+}
+
+/* Row Left Animation Loop */
+.animate-marquee-left {
+    animation: scroll-left 25s linear infinite;
+}
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Halfway translates perfectly to the duplicate group */
+}
+
+/* Row Right Animation Loop */
+.animate-marquee-right {
+    animation: scroll-right 25s linear infinite;
+}
+@keyframes scroll-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+
+/* Pause track motion dynamically on mouse hover */
+.marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+/* Clean monochrome to color layout logo modifiers */
+.tech-logo {
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+.marquee-track div:hover .tech-logo {
+    filter: grayscale(0%) invert(0%);
+    transform: scale(1.1);
+}
+
+/* Adjust light mode visibility colors for logo assets */
+.bg-brand-beige .tech-logo {
+    filter: grayscale(100%) invert(0%); /* Drops white inversion on light background */
+}
+.bg-brand-beige .marquee-track div:hover .tech-logo {
+    filter: grayscale(0%);
+}

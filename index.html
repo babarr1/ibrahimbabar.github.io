@@ -112,18 +112,55 @@
             </div>
 
             <!-- Bento Grid System -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-                
-                <!-- Skill Box: Languages & Frameworks (Wide) -->
-                <div class="md:col-span-7 rounded border border-brand-cream/15 p-8 bg-brand-cream/[0.02] backdrop-blur-sm space-y-6">
-                    <h3 class="text-xs font-semibold tracking-[0.2em] uppercase opacity-40">Active Toolkits & Exploration</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="px-4 py-2 rounded-full border border-brand-cream/10 bg-brand-cream/[0.03] text-xs font-medium tracking-wider">Python</span>
-                        <span class="px-4 py-2 rounded-full border border-brand-cream/10 bg-brand-cream/[0.03] text-xs font-medium tracking-wider">JavaScript (ES6+)</span>
-                        <span class="px-4 py-2 rounded-full border border-brand-cream/10 bg-brand-cream/[0.03] text-xs font-medium tracking-wider">Streamlit Architecture</span>
-                        <span class="px-4 py-2 rounded-full border border-brand-cream/10 bg-brand-cream/[0.03] text-xs font-medium tracking-wider">Tailwind CSS</span>
-                        <span class="px-4 py-2 rounded-full border border-brand-cream/10 bg-brand-cream/[0.03] text-xs font-medium tracking-wider">Git / GitHub Systems</span>
+            <!-- Skill Box: Interactive Tool Showcase Loops (Full Width Box) -->
+                <div class="md:col-span-12 rounded border border-brand-cream/15 py-12 bg-brand-cream/[0.02] backdrop-blur-sm space-y-10 overflow-hidden">
+                    
+                    <!-- Row 1: Languages & Frameworks -->
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase opacity-40 px-8">Active Toolkits</h3>
+                        
+                        <!-- Infinite Marquee Track Left -->
+                        <div class="marquee-container relative w-full overflow-hidden flex select-none">
+                            <div class="marquee-track flex gap-12 whitespace-nowrap animate-marquee-left">
+                                <!-- Group 1 -->
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Python</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> JavaScript</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg" class="w-5 h-5 tech-logo grayscale invert" /> Tailwind CSS</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><span class="font-display italic font-semibold text-lg">St.</span> Streamlit</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> HTML5 / CSS3</div>
+                                
+                                <!-- Duplicate Group for Seamless Infinite Loop -->
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Python</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> JavaScript</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg" class="w-5 h-5 tech-logo grayscale invert" /> Tailwind CSS</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><span class="font-display italic font-semibold text-lg">St.</span> Streamlit</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> HTML5 / CSS3</div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Row 2: Developer Tools -->
+                    <div class="space-y-4">
+                        <h3 class="text-xs font-semibold tracking-[0.2em] uppercase opacity-40 px-8">Environment & Developer Tools</h3>
+                        
+                        <!-- Infinite Marquee Track Right (Moves Opposite Direction) -->
+                        <div class="marquee-container relative w-full overflow-hidden flex select-none">
+                            <div class="marquee-track flex gap-12 whitespace-nowrap animate-marquee-right">
+                                <!-- Group 1 -->
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> VS Code</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/androidstudio/androidstudio-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Android Studio</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Git / GitHub</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><span class="font-mono text-xs border border-brand-cream/30 px-1 rounded">CPT</span> Cisco Packet Tracer</div>
+                                
+                                <!-- Duplicate Group for Seamless Infinite Loop -->
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> VS Code</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/androidstudio/androidstudio-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Android Studio</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" class="w-5 h-5 tech-logo grayscale invert" /> Git / GitHub</div>
+                                <div class="flex items-center gap-3 font-medium tracking-wider text-sm opacity-60 hover:opacity-100 transition-opacity"><span class="font-mono text-xs border border-brand-cream/30 px-1 rounded">CPT</span> Cisco Packet Tracer</div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Skill Box: Management Focus (Small) -->
