@@ -8,20 +8,20 @@
     <!-- Premium Font Pairing (Fraunces & Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
         tailwind.config = {
-          darkMode: 'class', // Enables class-based dark mode toggling
           theme: {
             extend: {
               colors: {
                 brand: {
-                  darkGreen: '#1b3322',  
-                  cream: '#f2eae1',      
+                  darkGreen: '#1b3322',  // Matte forest green background from image_a182f4.png
+                  cream: '#f2eae1',      // Vintage cream text
+                  beige: '#e6ded4',      // Premium muted architectural beige for light mode
                 }
               },
               fontFamily: {
@@ -34,39 +34,50 @@
     </script>
 
     <style>
-        /* Define theme transition behaviors smoothly */
+        /* Smooth transitions for theme swapping */
         body {
             transition: background-color 0.8s cubic-bezier(0.25, 1, 0.5, 1), color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .portrait-glow {
             transition: box-shadow 0.8s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        /* Fade transition class for clean language switching */
         .lang-fade {
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
+        /* Custom dropdown slide-fade utility */
+        #lang-dropdown {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
     </style>
 </head>
-<body class="bg-brand-darkGreen text-brand-cream font-body antialiased selection:bg-brand-cream selection:text-brand-darkGreen dark:bg-brand-darkGreen dark:text-brand-cream">
+<body class="bg-brand-darkGreen text-brand-cream font-body antialiased selection:bg-brand-cream selection:text-brand-darkGreen">
 
     <!-- FIXED TOP NAV CONTROLS -->
     <nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 py-6 md:px-12 pointer-events-none">
-        <!-- Logo / Left side placeholder if needed -->
         <div class="text-xs tracking-[0.3em] uppercase pointer-events-auto opacity-70 hover:opacity-100 transition-opacity font-medium">IB</div>
 
-        <!-- Minimalist Utility Controls Bundle -->
-        <div class="flex items-center gap-6 pointer-events-auto">
+        <!-- Minimalist Controls Bundle -->
+        <div class="flex items-center gap-8 pointer-events-auto">
             
-            <!-- Language Changer (Typography Switcher) -->
-            <button id="lang-toggle" class="text-xs font-medium tracking-widest uppercase opacity-60 hover:opacity-100 transition-opacity">
-                <span id="lang-active">EN</span>
-            </button>
+            <!-- Elegant Multi-Language Dropdown Selection -->
+            <div class="relative inline-block text-left">
+                <button id="lang-menu-btn" class="text-xs font-medium tracking-widest uppercase opacity-60 hover:opacity-100 transition-opacity flex items-center gap-1.5 focus:outline-none">
+                    <span id="lang-active">EN</span>
+                    <svg class="w-2.5 h-2.5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                
+                <!-- Droplist Panel -->
+                <div id="lang-dropdown" class="absolute right-0 mt-3 w-20 rounded-md shadow-xl bg-brand-cream text-brand-darkGreen border border-brand-darkGreen/10 py-1 opacity-0 pointer-events-none translate-y-[-10px] z-50">
+                    <button onclick="changeLanguage('EN')" class="w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10 transition-colors">EN</button>
+                    <button onclick="changeLanguage('UR')" class="w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10 transition-colors">UR</button>
+                    <button onclick="changeLanguage('TR')" class="w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10 transition-colors">TR</button>
+                    <button onclick="changeLanguage('ES')" class="w-full text-left px-4 py-2 text-xs font-medium tracking-wider hover:bg-brand-darkGreen/10 transition-colors">ES</button>
+                </div>
+            </div>
 
             <!-- Light / Dark Mode Icon Toggle -->
             <button id="theme-toggle" class="w-5 h-5 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity focus:outline-none" aria-label="Toggle Theme">
-                <!-- SVG Icon that morphs/renders dynamically based on current mode -->
                 <svg id="theme-icon" class="w-full h-full stroke-current fill-none" stroke-width="1.5" viewBox="0 0 24 24">
-                    <!-- Default: Moon shape -->
                     <path id="icon-path" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
             </button>
@@ -76,7 +87,7 @@
     <!-- HERO SECTION -->
     <section class="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden px-6">
         
-        <!-- SVG Canvas for the Mobile-Responsive Multi-Line Spiral -->
+        <!-- SVG Canvas for Responsive Line Spiral -->
         <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
             <g id="spiral-group"></g>
         </svg>
@@ -111,20 +122,18 @@
     
     <script>
         const spiralGroup = document.getElementById('spiral-group');
-        let currentTheme = 'dark'; // Track active UI environment
+        let currentTheme = 'dark'; 
         let currentLang = 'EN';
 
-        // Translation Dictionary (Easy to scale up with more elements or a dictionary file later)
+        // Expanded Translation Matrix Dictionary
         const translations = {
-            EN: {
-                tagline: "Creative Multidisciplinary"
-            },
-            UR: { // Urdu example—you can change this to any second language (e.g. TR for Turkish, etc.)
-                tagline: "تخلیقی تکنیکی ماہر" 
-            }
+            EN: { tagline: "Creative Multidisciplinary" },
+            UR: { tagline: "تخلیقی تکنیکی ماہر" },
+            TR: { tagline: "Yaratıcı Multidisipliner" },
+            ES: { tagline: "Multidisciplinario Creativo" }
         };
 
-        // Fetch stroke colors dynamically matching the current active theme
+        // Track dynamic line color based on layout environment
         function getStrokeColor() {
             return currentTheme === 'dark' ? '#f2eae1' : '#1b3322';
         }
@@ -174,92 +183,82 @@
             }
         }
 
-        // --- THEME SWITCHER CONTROLLER ---
+        // --- THEME SWITCHER (DARK & WARM BEIGE LIGHT MODE) ---
         const themeToggle = document.getElementById('theme-toggle');
         const iconPath = document.getElementById('icon-path');
 
         themeToggle.addEventListener('click', () => {
-            const documentBody = document.body;
+            const body = document.body;
             
             if (currentTheme === 'dark') {
-                // Shift to Light Mode
                 currentTheme = 'light';
-                documentBody.classList.remove('bg-brand-darkGreen', 'text-brand-cream', 'dark:bg-brand-darkGreen', 'dark:text-brand-cream');
-                documentBody.classList.add('bg-brand-cream', 'text-brand-darkGreen');
+                body.classList.remove('bg-brand-darkGreen', 'text-brand-cream');
+                body.classList.add('bg-brand-beige', 'text-brand-darkGreen'); // Swaps cleanly to Architectural Beige
                 
-                // Animate/Morph theme icon to a Sun shape
+                // Morph to Sun icon
                 iconPath.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z');
             } else {
-                // Shift back to Dark Mode
                 currentTheme = 'dark';
-                documentBody.classList.remove('bg-brand-cream', 'text-brand-darkGreen');
-                documentBody.classList.add('bg-brand-darkGreen', 'text-brand-cream');
+                body.classList.remove('bg-brand-beige', 'text-brand-darkGreen');
+                body.classList.add('bg-brand-darkGreen', 'text-brand-cream');
                 
-                // Morph icon back to a Moon crescent shape
+                // Morph to Moon icon
                 iconPath.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z');
             }
-
-            // Instantly re-render vector lines with the correct inverted contrast hex value
             generateMultiSpirals();
         });
 
-        // --- MULTI-LANGUAGE CONTROLLER ---
-        const langToggle = document.getElementById('lang-toggle');
+        // --- INTERACTIVE DROPDOWN LANGUAGES CONTROLLER ---
+        const langMenuBtn = document.getElementById('lang-menu-btn');
+        const langDropdown = document.getElementById('lang-dropdown');
         const langActive = document.getElementById('lang-active');
         const heroTagline = document.getElementById('hero-tagline');
 
-        langToggle.addEventListener('click', () => {
-            // Toggle local state strings
-            currentLang = currentLang === 'EN' ? 'UR' : 'EN';
-            langActive.innerText = currentLang;
+        // Open/Close Dropdown Panel Panel
+        langMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = !langDropdown.classList.contains('opacity-0');
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                langDropdown.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+                langDropdown.classList.add('opacity-100', 'translate-y-0');
+            }
+        });
 
-            // Fluidly drop opacity to mask text layout shift
+        function closeDropdown() {
+            langDropdown.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+            langDropdown.classList.remove('opacity-100', 'translate-y-0');
+        }
+
+        // Global click check to close open lists automatically
+        document.addEventListener('click', closeDropdown);
+
+        function changeLanguage(langCode) {
+            currentLang = langCode;
+            langActive.innerText = langCode;
+
+            // Fluid mask text reveal animation sequence
             heroTagline.style.opacity = '0';
             heroTagline.style.transform = 'translateY(10px)';
 
             setTimeout(() => {
-                // Inject target localized content string values
-                heroTagline.innerText = translations[currentLang].tagline;
-                
-                // Pop visibility back smoothly
+                heroTagline.innerText = translations[langCode].tagline;
                 heroTagline.style.opacity = '0.7';
                 heroTagline.style.transform = 'translateY(0)';
             }, 300);
-        });
+        }
 
-        // --- ANIMATION INITIALIZER ---
+        // --- INITIALIZATION ---
         generateMultiSpirals();
         window.addEventListener('resize', generateMultiSpirals);
 
         window.addEventListener('DOMContentLoaded', () => {
             const tl = gsap.timeline();
-
-            tl.to("#portrait-wrapper", {
-                opacity: 1,
-                scale: 1,
-                duration: 1.2,
-                ease: "power4.out"
-            });
-
-            tl.fromTo(".spiral-line", 
-                { strokeDasharray: "2000", strokeDashoffset: "2000" },
-                { strokeDashoffset: "0", duration: 2.2, ease: "power2.inOut", stagger: 0.07 },
-                "-=0.9"
-            );
-
-            tl.to("#hero-name", {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            }, "-=1.2");
-
-            tl.to("#hero-tagline", {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            }, "-=0.9");
+            tl.to("#portrait-wrapper", { opacity: 1, scale: 1, duration: 1.2, ease: "power4.out" });
+            tl.fromTo(".spiral-line", { strokeDasharray: "2000", strokeDashoffset: "2000" }, { strokeDashoffset: "0", duration: 2.2, ease: "power2.inOut", stagger: 0.07 }, "-=0.9");
+            tl.to("#hero-name", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=1.2");
+            tl.to("#hero-tagline", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.9");
         });
     </script>
 </body>
