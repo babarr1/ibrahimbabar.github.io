@@ -230,98 +230,144 @@
     </section>
 
 <!-- MINIMALIST ACADEMIC LAYOUTS SECTION -->
+
+<!-- MINIMALIST ENGINEERING DASHBOARD -->
     <section id="projects-section" class="relative w-full py-24 px-6 md:px-12 bg-[#0f172a] select-none">
-        <div class="max-w-4xl w-full mx-auto space-y-16">
+        <div class="max-w-6xl w-full mx-auto space-y-12">
             
-            <!-- Section Header Title -->
-            <div class="border-b border-white/5 pb-6">
-                <p class="text-[10px] font-mono tracking-[0.3em] uppercase text-brand-cream/30 mb-2">Selected Executions</p>
-                <h2 class="font-display text-2xl font-medium tracking-tight text-brand-cream">Academic Layouts</h2>
+            <!-- Minimal Section Header -->
+            <div class="flex items-center justify-between border-b border-white/5 pb-4">
+                <div class="flex items-center gap-3">
+                    <span class="w-2 h-2 rounded-full bg-[#22c55e]"></span>
+                    <h2 class="font-mono text-xs tracking-[0.2em] uppercase text-brand-cream/60">System_Executions / Logs</h2>
+                </div>
+                <span class="font-mono text-[10px] text-white/20">Active: 04</span>
             </div>
 
-            <!-- Borderless Project Pipeline List -->
-            <div class="divide-y divide-white/5 space-y-12">
+            <!-- Dashboard Grid Framework -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
-                <!-- Project 1: AI Quiz Generator -->
-                <div class="pt-8 first:pt-0 group flex flex-col md:flex-row md:items-start justify-between gap-6 transition-all duration-300">
-                    <div class="space-y-3 max-w-2xl">
-                        <div class="flex items-baseline gap-4">
-                            <h3 class="font-display text-xl font-medium tracking-tight text-brand-cream/90">AI-Powered Quiz Generator</h3>
-                            <span class="text-[10px] font-mono opacity-30 tracking-wider">01</span>
+                <!-- Card 1: AI Quiz Gen -->
+                <div class="bg-[#090d16] border border-white/5 p-5 rounded flex flex-col justify-between h-[210px] hover:border-white/20 transition-all duration-300 group">
+                    <div class="space-y-4">
+                        <!-- Top Row: Custom Project Logo & Source Link -->
+                        <div class="flex items-center justify-between">
+                            <!-- Project Logo: AI/Quiz Terminal Element -->
+                            <div class="text-[#22c55e] opacity-80 group-hover:opacity-100 transition-opacity">
+                                <svg class="w-6 h-6 stroke-current fill-none" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                </svg>
+                            </div>
+                            <!-- Minimal Source Link -->
+                            <a href="https://github.com" target="_blank" class="font-mono text-[10px] text-white/30 hover:text-brand-cream tracking-wider flex items-center gap-1 transition-colors">
+                                SRC_CODE ↗
+                            </a>
                         </div>
-                        <p class="text-xs text-brand-cream/60 leading-relaxed font-body">
-                            An automated educational pipeline processing raw text into contextual multiple-choice questions using NLTK. Integrates WordNet distractor generation to formulate challenging choice options, verified via an SVM ensemble architecture for text quality validation.
-                        </p>
+                        <div class="space-y-1.5">
+                            <h3 class="font-display text-base font-medium text-brand-cream/90">AI Quiz Generator[cite: 1]</h3>
+                            <p class="text-[11px] text-brand-cream/50 font-body leading-relaxed line-clamp-3">
+                                Automated processing pipeline converting text into MCQ logs using NLTK[cite: 1] and an SVM verification layer[cite: 1].
+                            </p>
+                        </div>
                     </div>
-                    <!-- Seamless Inline Stack Logos -->
-                    <div class="flex items-center gap-3 md:pt-1 shrink-0 opacity-40 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-5 h-5" alt="Python" />
-                        <span class="font-display italic font-semibold text-sm tracking-tight text-[#ff4b4b] leading-none select-none">St.</span>
+                    <!-- Footer Stack Silhouettes -->
+                    <div class="flex items-center gap-2 opacity-30 filter grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-4 h-4" alt="Python" />
+                        <span class="font-display italic font-semibold text-xs text-[#ff4b4b] leading-none">St.</span>
                     </div>
                 </div>
 
-                <!-- Project 2: Android Real-Time App -->
-                <div class="pt-8 group flex flex-col md:flex-row md:items-start justify-between gap-6 transition-all duration-300">
-                    <div class="space-y-3 max-w-2xl">
-                        <div class="flex items-baseline gap-4">
-                            <h3 class="font-display text-xl font-medium tracking-tight text-brand-cream/90">Real-Time Social Platform</h3>
-                            <span class="text-[10px] font-mono opacity-30 tracking-wider">02</span>
+                <!-- Card 2: Android Application -->
+                <div class="bg-[#090d16] border border-white/5 p-5 rounded flex flex-col justify-between h-[210px] hover:border-white/20 transition-all duration-300 group">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <!-- Project Logo: Connected Nodes -->
+                            <div class="text-[#38bdf8] opacity-80 group-hover:opacity-100 transition-opacity">
+                                <svg class="w-6 h-6 stroke-current fill-none" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 12h9M12 7.5v9M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <a href="https://github.com" target="_blank" class="font-mono text-[10px] text-white/30 hover:text-brand-cream tracking-wider flex items-center gap-1 transition-colors">
+                                SRC_CODE ↗
+                            </a>
                         </div>
-                        <p class="text-xs text-brand-cream/60 leading-relaxed font-body">
-                            A real-time native application utilizing Kotlin and MVVM structure for advanced state tracking. Implements secure user authentication streams and establishes low-latency video communication pipelines via integrated WebRTC frameworks.
-                        </p>
+                        <div class="space-y-1.5">
+                            <h3 class="font-display text-base font-medium text-brand-cream/90">Real-Time Platform[cite: 1]</h3>
+                            <p class="text-[11px] text-brand-cream/50 font-body leading-relaxed line-clamp-3">
+                                Native Kotlin app using MVVM architecture[cite: 1] running integrated real-time WebRTC communications[cite: 1].
+                            </p>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-3 md:pt-1 shrink-0 opacity-40 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" class="w-5 h-5" alt="Kotlin" />
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" class="w-5 h-5" alt="Firebase" />
+                    <div class="flex items-center gap-2 opacity-30 filter grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg" class="w-4 h-4" alt="Kotlin" />
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" class="w-4 h-4" alt="Firebase" />
                     </div>
                 </div>
 
-                <!-- Project 3: Desktop Task Platform -->
-                <div class="pt-8 group flex flex-col md:flex-row md:items-start justify-between gap-6 transition-all duration-300">
-                    <div class="space-y-3 max-w-2xl">
-                        <div class="flex items-baseline gap-4">
-                            <h3 class="font-display text-xl font-medium tracking-tight text-brand-cream/90">Task Management Platform</h3>
-                            <span class="text-[10px] font-mono opacity-30 tracking-wider">03</span>
+                <!-- Card 3: Desktop Task Owner -->
+                <div class="bg-[#090d16] border border-white/5 p-5 rounded flex flex-col justify-between h-[210px] hover:border-white/20 transition-all duration-300 group">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <!-- Project Logo: Board Matrix -->
+                            <div class="text-[#a855f7] opacity-80 group-hover:opacity-100 transition-opacity">
+                                <svg class="w-6 h-6 stroke-current fill-none" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6z" />
+                                </svg>
+                            </div>
+                            <a href="https://github.com" target="_blank" class="font-mono text-[10px] text-white/30 hover:text-brand-cream tracking-wider flex items-center gap-1 transition-colors">
+                                SRC_CODE ↗
+                            </a>
                         </div>
-                        <p class="text-xs text-brand-cream/60 leading-relaxed font-body">
-                            Engineered as Product Owner under a Scrum workspace matrix to structure a work distribution platform. Maps technical framework topologies, maintains detailed backlog stories, and integrates automated sprint tracking logic.
-                        </p>
+                        <div class="space-y-1.5">
+                            <h3 class="font-display text-base font-medium text-brand-cream/90">Task Hub Scrum[cite: 1]</h3>
+                            <p class="text-[11px] text-brand-cream/50 font-body leading-relaxed line-clamp-3">
+                                Platform framework managing automated allocations[cite: 1] and sprint logs in a structured workspace[cite: 1].
+                            </p>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-3 md:pt-1 shrink-0 opacity-40 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/trello/trello-plain.svg" class="w-5 h-5" alt="Trello" />
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" class="w-5 h-5" alt="Jira" />
+                    <div class="flex items-center gap-2 opacity-30 filter grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/trello/trello-plain.svg" class="w-4 h-4" alt="Trello" />
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" class="w-4 h-4" alt="Jira" />
                     </div>
                 </div>
 
-                <!-- Project 4: Arcade Suite -->
-                <div class="pt-8 group flex flex-col md:flex-row md:items-start justify-between gap-6 transition-all duration-300">
-                    <div class="space-y-3 max-w-2xl">
-                        <div class="flex items-baseline gap-4">
-                            <h3 class="font-display text-xl font-medium tracking-tight text-brand-cream/90">Arcade Game Suite</h3>
-                            <span class="text-[10px] font-mono opacity-30 tracking-wider">04</span>
+                <!-- Card 4: Arcade Suite -->
+                <div class="bg-[#090d16] border border-white/5 p-5 rounded flex flex-col justify-between h-[210px] hover:border-white/20 transition-all duration-300 group">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <!-- Project Logo: System Joystick Element -->
+                            <div class="text-[#f43f5e] opacity-80 group-hover:opacity-100 transition-opacity">
+                                <svg class="w-6 h-6 stroke-current fill-none" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.63 8.41a14.97 14.97 0 00-6.16 12.11 14.96 14.96 0 0012.12-6.15z" />
+                                </svg>
+                            </div>
+                            <a href="https://github.com" target="_blank" class="font-mono text-[10px] text-white/30 hover:text-brand-cream tracking-wider flex items-center gap-1 transition-colors">
+                                SRC_CODE ↗
+                            </a>
                         </div>
-                        <p class="text-xs text-brand-cream/60 leading-relaxed font-body">
-                            High-performance structural recreations of classic vector properties using object-oriented C++ architectures. Deploys algorithmic matrices mapping real-time hardware input handling loops and precise collision boundaries.
-                        </p>
+                        <div class="space-y-1.5">
+                            <h3 class="font-display text-base font-medium text-brand-cream/90">Arcade Game Suite[cite: 1]</h3>
+                            <p class="text-[11px] text-brand-cream/50 font-body leading-relaxed line-clamp-3">
+                                OOP recreations built using C++ and SFML mapping collision algorithms and custom handling loops[cite: 1].
+                            </p>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-3 md:pt-1 shrink-0 opacity-40 group-hover:opacity-100 transition-opacity duration-300 filter grayscale group-hover:grayscale-0">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="w-5 h-5" alt="C++" />
+                    <div class="flex items-center gap-2 opacity-30 filter grayscale group-hover:grayscale-0 group-hover:opacity-60 transition-all">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="w-4 h-4" alt="C++" />
                     </div>
                 </div>
 
             </div>
 
-            <!-- ULTRA-SLIM CORE DRIVE TEXT INTERMISSION -->
-            <div class="pt-20 text-center select-none">
-                <div class="inline-flex flex-col md:flex-row items-center justify-center gap-x-3 gap-y-1 font-mono text-[10px] tracking-[0.25em] uppercase text-brand-cream/30">
-                    <span>My main drive outside the tech bubble is to do good for animals and nature.</span>
-                    <span class="hidden md:inline text-brand-cream/10">&bull;</span>
-                    <span class="text-brand-cream/50 tracking-normal italic font-serif">the living reality</span>
-                </div>
+            <!-- SLIM PILL TRANSITION ROW -->
+            <div class="pt-12 text-center select-none">
+                <p class="font-mono text-[9px] tracking-[0.25em] uppercase text-brand-cream/30">
+                    My main drive outside the tech bubble is to do good for animals and nature.
+                </p>
             </div>
 
         </div>
+    
 
         <div class="py-12 border-t border-b border-brand-cream/10 bg-[#0f172a] shadow-inner overflow-hidden w-full select-none mt-12 rounded-sm">
                 <div class="marquee-container relative w-full overflow-hidden flex">
